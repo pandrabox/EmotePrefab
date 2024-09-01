@@ -1,7 +1,10 @@
 name: Build Release
 
 on: 
-  workflow_dispatch:
+  push:   # Pushイベントをトリガーに追加
+    branches:
+      - main  # 対象ブランチを指定
+  workflow_dispatch:  # 手動実行も可能に
 
 jobs:
 
@@ -42,6 +45,16 @@ jobs:
             file_path: "${{ env.packagePath }}/package.json"
             prop_path: "version"
     
+
+      # Check if Tag already exists
+      - name: Check if Tag Exists
+        id: check_tag
+        run: |
+          if git rev-parse "refs/tags/${{ steps.version.outputs.value }}" >/dev/null 2>&1; then
+            echo "Tag already exists"
+            exit 1
+          fi
+
       # Configure the Environment Variables needed for releasing the Package
       - name: Set Environment Variables
         run: |
