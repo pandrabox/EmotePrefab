@@ -10,4 +10,4 @@ jobs:
     steps:
       - name : Set Environment Variables
         run: |
-           echo "RepoName=${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}" >> $GITHUB_ENV
+           echo "RepoName=${{GITHUB_REPOSITORY#${{GITHUB_REPOSITORY_OWNER}}/}}" >> $GITHUB_ENV
