@@ -1,0 +1,9 @@
+name: test
+
+on:
+  workflow_dispatch:
+jobs:
+  build:
+    steps:
+        run: |
+          echo "${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}"
