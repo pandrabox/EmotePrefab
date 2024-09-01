@@ -42,9 +42,9 @@ jobs:
             prop_path: "version"
 
       # Check Exist
-      #- uses: actions/checkout@v3
-      #  with:
-      #    fetch-depth: 0
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - uses: rickstaa/action-contains-tag@v1
         id: contains_tag
         with:
