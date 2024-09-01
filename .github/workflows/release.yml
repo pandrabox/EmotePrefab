@@ -112,4 +112,4 @@ jobs:
             -H "Authorization: token $TOKEN" \
             -H "Accept: application/vnd.github.v3+json" \
             https://api.github.com/repos/pandrabox/vpm/dispatches \
-            -d '{"event_type":"on-demand-test","client_payload":{"env": "dev"}}'
+            -d '{"event_type":"automatic-web-update","client_payload":{"env": "dev"}}'
