@@ -52,14 +52,14 @@ jobs:
           tag: "${{ steps.version.outputs.value }}"
           frail: false
 
-    # Output Result based on condition
-    - name: Output Result
-      if: ${{ steps.contains_tag.outputs.retval == 'true' }}
-      run: echo "Branch/commit did contain the tag."
+      # Output Result based on condition
+      - name: Output Result
+        if: ${{ steps.contains_tag.outputs.retval == 'true' }}
+        run: echo "Branch/commit did contain the tag."
 
-    - name: Output No Tag
-      if: ${{ steps.contains_tag.outputs.retval != 'true' }}
-      run: echo "Branch/commit did not contain the tag."
+      - name: Output No Tag
+        if: ${{ steps.contains_tag.outputs.retval != 'true' }}
+        run: echo "Branch/commit did not contain the tag."
 
   # Build and release the Package
   # If the repository is not configured properly, this job will be skipped
