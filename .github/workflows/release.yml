@@ -79,7 +79,7 @@ jobs:
 
       #Get VersionEnv
       - name : Set VersionEnv
-        run: echo "version=${{ needs.GetTargetVersion.outputs.TargetVersion.value }}" >> $GITHUB_ENV
+        run: echo "version=${{ needs.GetTargetVersion.outputs.TargetVersion }}" >> $GITHUB_ENV
     
       # Configure the Environment Variables needed for releasing the Package
       - name: Set Environment Variables
@@ -102,7 +102,6 @@ jobs:
         with:
           package-path: ${{ env.unityPackage }}
           include-files: metaList
-      
       
       # Make a release tag of the version from the package.json file 
       - name: Create Tag
