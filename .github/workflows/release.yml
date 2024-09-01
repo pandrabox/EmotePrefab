@@ -1,24 +1,24 @@
 name: Build Release
 
 on: 
-  push:
-    branches:
-      - main
   workflow_dispatch:
 
 jobs:
+
   # Validate Repository Configuration
   config:
     runs-on: ubuntu-latest
     outputs:
       config_package: ${{ steps.config_package.outputs.configPackage }}
-    steps:
-        # Ensure that required repository variable has been created for the Package
+        steps:
+    # Ensure that required repository variable has been created for the Package
     - name: Validate Package Config
       id: config_package
       run: |
           echo "configPackage=true" >> $GITHUB_OUTPUT;
 
+  # Build and release the Package
+  # If the repository is not configured properly, this job will be skipped
   build:
     needs: config
     runs-on: ubuntu-latest
@@ -28,6 +28,7 @@ jobs:
       packagePath: .
     if: needs.config.outputs.config_package == 'true'
     steps:
+
       # Checkout Local Repository
       - name: Checkout
         uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac
@@ -39,14 +40,14 @@ jobs:
         with: 
             file_path: "${{ env.packagePath }}/package.json"
             prop_path: "version"
-
+    
       # Configure the Environment Variables needed for releasing the Package
       - name: Set Environment Variables
         run: |
           echo "zipFile=${{ vars.PACKAGE_NAME }}-${{ steps.version.outputs.value }}".zip >> $GITHUB_ENV
           echo "unityPackage=${{ vars.PACKAGE_NAME }}-${{ steps.version.outputs.value }}.unitypackage" >> $GITHUB_ENV
           echo "version=${{ steps.version.outputs.value }}" >> $GITHUB_ENV
-          
+
       # Zip the Package for release
       - name: Create Package Zip
         working-directory: "${{ env.packagePath }}"
@@ -63,22 +64,19 @@ jobs:
           package-path: ${{ env.unityPackage }}
           include-files: metaList
       
-      if: 'true' == 'true'
-      step: 
+      # Make a release tag of the version from the package.json file 
+      - name: Create Tag
+        id: tag_version
+        uses: rickstaa/action-create-tag@88dbf7ff6fe2405f8e8f6c6fdfd78829bc631f83
+        with:
+          tag: "${{ env.version }}"
       
-        # Make a release tag of the version from the package.json file 
-        - name: Create Tag
-          id: tag_version
-          uses: rickstaa/action-create-tag@88dbf7ff6fe2405f8e8f6c6fdfd78829bc631f83
-          with:
-            tag: "${{ env.version }}"
-        
-        # Publish the Release to GitHub
-        - name: Make Release
-          uses: softprops/action-gh-release@de2c0eb89ae2a093876385947365aca7b0e5f844
-          with:
-            files: |
-              ${{ env.zipFile }}
-              ${{ env.unityPackage }}
-              ${{ env.packagePath }}/package.json
-            tag_name: ${{ env.version }}
+      # Publish the Release to GitHub
+      - name: Make Release
+        uses: softprops/action-gh-release@de2c0eb89ae2a093876385947365aca7b0e5f844
+        with:
+          files: |
+            ${{ env.zipFile }}
+            ${{ env.unityPackage }}
+            ${{ env.packagePath }}/package.json
+          tag_name: ${{ env.version }}
