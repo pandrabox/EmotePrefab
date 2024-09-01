@@ -83,37 +83,35 @@ jobs:
       - name: Check if tag exists
         id: check_tag_exists
         run: |
-          if [ "${{ steps.Tag_exists_check.outputs.retval }}" == "true" ]; then
-            echo "Tag already exists. Exiting workflow."
-            exit 1
-          fi
+          if: "${{ steps.Tag_exists_check.outputs.retval }}" == "false" 
+          steps:
 
 
-      # Make a release tag of the version from the package.json file 
-      - name: Create Tag
-        id: tag_version
-        uses: rickstaa/action-create-tag@88dbf7ff6fe2405f8e8f6c6fdfd78829bc631f83
-        with:
-          tag: "${{ env.version }}"
+        # Make a release tag of the version from the package.json file 
+        - name: Create Tag
+          id: tag_version
+          uses: rickstaa/action-create-tag@88dbf7ff6fe2405f8e8f6c6fdfd78829bc631f83
+          with:
+            tag: "${{ env.version }}"
 
 
-      
-      # Publish the Release to GitHub
-      - name: Make Release
-        uses: softprops/action-gh-release@de2c0eb89ae2a093876385947365aca7b0e5f844
-        with:
-          files: |
-            ${{ env.zipFile }}
-            ${{ env.unityPackage }}
-            ${{ env.packagePath }}/package.json
-          tag_name: ${{ env.version }}
+        
+        # Publish the Release to GitHub
+        - name: Make Release
+          uses: softprops/action-gh-release@de2c0eb89ae2a093876385947365aca7b0e5f844
+          with:
+            files: |
+              ${{ env.zipFile }}
+              ${{ env.unityPackage }}
+              ${{ env.packagePath }}/package.json
+            tag_name: ${{ env.version }}
 
 
-      # Trigger the build-listing workflow
-      - name: Trigger build-listing Workflow
-        run: |
-          curl -X POST \
-            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-            -H "Accept: application/vnd.github.v3+json" \
-            https://api.github.com/repos/pandrabox/vpm/dispatches \
-            -d '{"event_type": "trigger-build-listing"}'
+        # Trigger the build-listing workflow
+        - name: Trigger build-listing Workflow
+          run: |
+            curl -X POST \
+              -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+              -H "Accept: application/vnd.github.v3+json" \
+              https://api.github.com/repos/pandrabox/vpm/dispatches \
+              -d '{"event_type": "trigger-build-listing"}'
