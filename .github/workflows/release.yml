@@ -49,11 +49,21 @@ jobs:
       # Check if Tag already exists
       - name: Check if Tag Exists
         id: check_tag
-        run: |
-          if git rev-parse "refs/tags/${{ steps.version.outputs.value }}" >/dev/null 2>&1; then
-            echo "Tag already exists"
-            exit 1
-          fi
+        
+        steps:
+          - uses: rickstaa/action-contains-tag@v1
+            id: contains_tag
+            with:
+              reference: "main"
+              tag: {{ steps.version.outputs.value }}
+          - run: |
+              if [[ ${{ steps.contains_tag.outputs.retval }} != 'true' ]]; then
+                echo "Branch/commit already contain the tag."
+                exit 1
+              else
+                echo "Branch/commit did not contain the tag."
+              fi
+
 
       # Configure the Environment Variables needed for releasing the Package
       - name: Set Environment Variables
