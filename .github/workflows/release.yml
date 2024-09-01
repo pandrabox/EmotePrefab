@@ -62,7 +62,7 @@ jobs:
       contents: write
     env:
       packagePath: .
-    if: always() && (needs.GetTargetVersion.outputs.TagExist.value == 'false')
+    if: always() && (needs.GetTargetVersion.outputs.TagExist == 'false')
     steps:
 
       # Checkout Local Repository
