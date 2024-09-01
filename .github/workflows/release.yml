@@ -68,22 +68,31 @@ jobs:
           package-path: ${{ env.unityPackage }}
           include-files: metaList
       
+
+      # Tag_exists_check
+      - name: Tag_exists_check
+        uses: rickstaa/action-contains-tag@v1
+        with:
+          reference: "main"
+          tag: "${{ env.version }}"
+      
+      # If Tag exists quit
+      - name: Check if tag exists
+        id: check_tag_exists
+        run: |
+          if [ "${{ steps.Tag_exists_check.outputs.retval }}" == "true" ]; then
+            echo "Tag already exists. Exiting workflow."
+            exit 1
+          fi
+
+
       # Make a release tag of the version from the package.json file 
       - name: Create Tag
         id: tag_version
         uses: rickstaa/action-create-tag@88dbf7ff6fe2405f8e8f6c6fdfd78829bc631f83
         with:
           tag: "${{ env.version }}"
-          tag_exists_error: false
 
-      # If Tag exists quit
-      - name: Check if tag exists
-        id: check_tag_exists
-        run: |
-          if [ "${{ steps.tag_version.outputs.tag_exists }}" == "true" ]; then
-            echo "Tag already exists. Exiting workflow."
-            exit 1
-          fi
 
       
       # Publish the Release to GitHub
