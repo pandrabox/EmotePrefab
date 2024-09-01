@@ -35,7 +35,7 @@ jobs:
 
       # Checkout Local Repository
       - name: Checkout
-        uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac
+        uses: actions/checkout@v3
 
       # Get the Package version based on the package.json file
       - name: Get Version
@@ -48,7 +48,7 @@ jobs:
       # Configure the Environment Variables needed for releasing the Package
       - name: Set Environment Variables
         run: |
-          echo "zipFile=${{ vars.PACKAGE_NAME }}-${{ steps.version.outputs.value }}".zip >> $GITHUB_ENV
+          echo "zipFile=${{ vars.PACKAGE_NAME }}-${{ steps.version.outputs.value }}.zip" >> $GITHUB_ENV
           echo "unityPackage=${{ vars.PACKAGE_NAME }}-${{ steps.version.outputs.value }}.unitypackage" >> $GITHUB_ENV
           echo "version=${{ steps.version.outputs.value }}" >> $GITHUB_ENV
 
@@ -67,24 +67,24 @@ jobs:
         with:
           package-path: ${{ env.unityPackage }}
           include-files: metaList
-      
 
       # Tag_exists_check
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - name: Tag_exists_check
+      - name: Tag exists check
         uses: rickstaa/action-contains-tag@v1
         with:
           reference: "main"
           tag: "${{ env.version }}"
-      
+
       # If Tag exists quit
       - name: Check if tag exists
         id: check_tag_exists
-        if: "${{ steps.Tag_exists_check.outputs.retval }}" == "false" 
-        steps:
+        if: ${{ steps.Tag_exists_check.outputs.retval }} == 'true'
+        run: echo "Tag already exists. Exiting..."
 
+      # Only continue if the tag doesn't exist
+      - name: Continue if no tag exists
+        if: ${{ steps.check_tag_exists.conclusion }} == 'success'
+        run: echo "No existing tag. Continuing with release..."
 
         # Make a release tag of the version from the package.json file 
         - name: Create Tag
@@ -93,8 +93,6 @@ jobs:
           with:
             tag: "${{ env.version }}"
 
-
-        
         # Publish the Release to GitHub
         - name: Make Release
           uses: softprops/action-gh-release@de2c0eb89ae2a093876385947365aca7b0e5f844
@@ -104,7 +102,6 @@ jobs:
               ${{ env.unityPackage }}
               ${{ env.packagePath }}/package.json
             tag_name: ${{ env.version }}
-
 
         # Trigger the build-listing workflow
         - name: Trigger build-listing Workflow
