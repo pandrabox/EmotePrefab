@@ -1,4 +1,3 @@
-
 name: test
 
 on:
@@ -8,6 +7,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name : Set Environment Variables
+      - name: Set Environment Variables
         run: |
-           echo "RepoName=${{GITHUB_REPOSITORY#${{GITHUB_REPOSITORY_OWNER}}/}}" >> $GITHUB_ENV
+          echo "RepoName=${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}" >> $GITHUB_ENV
+          echo ${{ env.RepoName }}
+
+      - name: Display RepoName
+        run: echo "RepoName is $RepoName"
+        env:
+          RepoName: ${{ env.RepoName }}
