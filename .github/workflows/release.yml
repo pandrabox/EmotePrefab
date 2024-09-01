@@ -93,8 +93,8 @@ jobs:
       - name: Create UnityPackage
         uses: pCYSl5EDgo/create-unitypackage@cfcd3cf0391a5ef1306342794866a9897c32af0b
         with:
-          working-directory: "${{ env.packagePath }}"
-          package-path: "${{ github.workspace }}/${{ env.unityPackage }}"
+          working-folder: "${{ env.packagePath }}"
+          package-path: "${{ env.unityPackage }}"
           include-files: metaList
       
       # Make a release tag of the version from the package.json file 
