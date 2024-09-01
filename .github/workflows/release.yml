@@ -94,7 +94,7 @@ jobs:
         uses: pCYSl5EDgo/create-unitypackage@master
         with:
           working-folder: "${{ github.workspace }}"
-          package-path: "${{ env.unityPackage }}"
+          package-path: "${{ github.workspace }}/${{ env.unityPackage }}"
           include-files: metaList
       
       # Make a release tag of the version from the package.json file 
