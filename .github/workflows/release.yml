@@ -47,8 +47,7 @@ jobs:
 
       - name: Appear Version
         run: echo "Package version: ${{ steps.version.outputs.value }}"
-    
-
+      
       # Check if Tag already exists
       - name: Check if Tag Exists
         id: check_tag
