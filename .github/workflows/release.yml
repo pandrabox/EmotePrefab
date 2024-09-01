@@ -82,9 +82,8 @@ jobs:
       # If Tag exists quit
       - name: Check if tag exists
         id: check_tag_exists
-        run: |
-          if: "${{ steps.Tag_exists_check.outputs.retval }}" == "false" 
-          steps:
+        if: "${{ steps.Tag_exists_check.outputs.retval }}" == "false" 
+        steps:
 
 
         # Make a release tag of the version from the package.json file 
