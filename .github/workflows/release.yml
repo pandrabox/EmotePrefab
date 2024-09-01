@@ -104,36 +104,29 @@ jobs:
           include-files: metaList
       
       
-      #if: needs.config.outputs.config_package == 'false'
-      #step: 
-      #  # Make a release tag of the version from the package.json file 
-      #  - name: Create Tag
-      #    id: tag_version
-      #    uses: rickstaa/action-create-tag@88dbf7ff6fe2405f8e8f6c6fdfd78829bc631f83
-      #    with:
-      #      tag: "${{ env.version }}"
-      #  
-      #  # Publish the Release to GitHub
-      #  - name: Make Release
-      #    uses: softprops/action-gh-release@de2c0eb89ae2a093876385947365aca7b0e5f844
-      #    with:
-      #      files: |
-      #        ${{ env.zipFile }}
-      #        ${{ env.unityPackage }}
-      #        ${{ env.packagePath }}/package.json
-      #      tag_name: ${{ env.version }}
-
+      # Make a release tag of the version from the package.json file 
+      - name: Create Tag
+        id: tag_version
+        uses: rickstaa/action-create-tag@88dbf7ff6fe2405f8e8f6c6fdfd78829bc631f83
+        with:
+          tag: "${{ env.version }}"
       
-  vpmWebsiteUpload:
-    needs: build
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    steps:
-    - name: Trigger build-listing workflow
-      run: |
-        curl -X POST \
-          -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-          -H "Accept: application/vnd.github.v3+json" \
-          https://api.github.com/repos/pandrabox/vpm/dispatches \
-          -d '{"event_type": "trigger-build-listing"}'
+      # Publish the Release to GitHub
+      - name: Make Release
+        uses: softprops/action-gh-release@de2c0eb89ae2a093876385947365aca7b0e5f844
+        with:
+          files: |
+            ${{ env.zipFile }}
+            ${{ env.unityPackage }}
+            ${{ env.packagePath }}/package.json
+          tag_name: ${{ env.version }}
+
+      - name: Update Website
+        run: |
+          TOKEN=${{ secrets.MY_PAT }}
+          curl \
+            -X POST \
+            -H "Authorization: token $TOKEN" \
+            -H "Accept: application/vnd.github.v3+json" \
+            https://api.github.com/repos/pandrabox/vpm/dispatches \
+            -d '{"event_type":"on-demand-test","client_payload":{"env": "dev"}}'
