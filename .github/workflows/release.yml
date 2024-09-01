@@ -45,9 +45,8 @@ jobs:
             file_path: "${{ env.packagePath }}/package.json"
             prop_path: "version"
 
-      -name: Appear Version
-        run: |
-            echo {{ steps.version.outputs.value }}
+      - name: Appear Version
+        run: echo "Package version: ${{ steps.version.outputs.value }}"
     
 
       # Check if Tag already exists
