@@ -56,6 +56,12 @@ jobs:
         with:
           reference: "main"
           tag: ${{ steps.version.outputs.value }}
+          verbose: true
+          frail: false
+
+      # Appear Tagcheck retval
+      - name : Appear Tagcheck retval
+        run: echo "${{ steps.check_tag.outputs.retval }}"
 
       # Process Tag Check Result
       - name: Process Tag Check Result
