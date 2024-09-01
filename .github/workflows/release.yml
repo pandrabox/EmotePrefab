@@ -47,7 +47,7 @@ jobs:
 
       # Current Version
       - name : Current Version
-        run: echo "Version ${{ env.packagePath }}"
+        run: echo "Version ${{ steps.version.outputs.value }}"
 
       # Check if Tag already exists
       - name: Check if Tag Exists
@@ -57,6 +57,7 @@ jobs:
           reference: "main"
           tag: ${{ steps.version.outputs.value }}
 
+      # Process Tag Check Result
       - name: Process Tag Check Result
         if: ${{ steps.check_tag.outputs.retval == 'true' }}
         run: |
