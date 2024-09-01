@@ -44,6 +44,8 @@ jobs:
         with: 
             file_path: "${{ env.packagePath }}/package.json"
             prop_path: "version"
+        run:
+            echo {{ steps.version.outputs.value }}
     
 
       # Check if Tag already exists
