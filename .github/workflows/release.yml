@@ -45,31 +45,6 @@ jobs:
             file_path: "${{ env.packagePath }}/package.json"
             prop_path: "version"
 
-      # Current Version
-      - name : Current Version
-        run: echo "Version ${{ steps.version.outputs.value }}"
-
-      # Check if Tag already exists
-      - name: Check if Tag Exists
-        id: check_tag
-        uses: rickstaa/action-contains-tag@v1
-        with:
-          reference: "main"
-          tag: ${{ steps.version.outputs.value }}
-          verbose: true
-          frail: false
-
-      # Appear Tagcheck retval
-      - name : Appear Tagcheck retval
-        run: echo "${{ steps.check_tag.outputs.retval }}"
-
-      # Process Tag Check Result
-      - name: Process Tag Check Result
-        if: ${{ steps.check_tag.outputs.retval == 'true' }}
-        run: |
-          echo "Branch/commit already contains the tag. Exiting."
-          exit 1
-
       # Configure the Environment Variables needed for releasing the Package
       - name: Set Environment Variables
         run: |
@@ -99,6 +74,17 @@ jobs:
         uses: rickstaa/action-create-tag@88dbf7ff6fe2405f8e8f6c6fdfd78829bc631f83
         with:
           tag: "${{ env.version }}"
+          tag_exists_error: false
+
+      # If Tag exists quit
+      - name: Check if tag exists
+        id: check_tag_exists
+        run: |
+          if [ "${{ steps.tag_version.outputs.tag_exists }}" == "true" ]; then
+            echo "Tag already exists. Exiting workflow."
+            exit 1
+          fi
+
       
       # Publish the Release to GitHub
       - name: Make Release
