@@ -39,6 +39,22 @@ jobs:
             file_path: "${{ env.packagePath }}/package.json"
             prop_path: "version"
 
+      # Check Exist
+      #- uses: actions/checkout@v3
+      #  with:
+      #    fetch-depth: 0
+      - uses: rickstaa/action-contains-tag@v1
+        id: contains_tag
+        with:
+          reference: "main"
+          tag: "${{ env.packagePath }}"
+      - run: |
+          if [[ ${{ steps.contains_tag.outputs.retval }} != 'true' ]]; then
+            echo "Branch/commit did contain the tag."
+          else
+            echo "Branch/commit did not contain the tag."
+          fi
+
   # Build and release the Package
   # If the repository is not configured properly, this job will be skipped
   build:
