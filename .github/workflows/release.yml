@@ -1,28 +1,24 @@
 name: Build Release
 
 on: 
-  push:   # Pushイベントをトリガーに追加
+  push:
     branches:
-      - main  # 対象ブランチを指定
-  workflow_dispatch:  # 手動実行も可能に
+      - main
+  workflow_dispatch:
 
 jobs:
-
   # Validate Repository Configuration
   config:
     runs-on: ubuntu-latest
     outputs:
       config_package: ${{ steps.config_package.outputs.configPackage }}
     steps:
-
-    # Ensure that required repository variable has been created for the Package
+        # Ensure that required repository variable has been created for the Package
     - name: Validate Package Config
       id: config_package
       run: |
           echo "configPackage=true" >> $GITHUB_OUTPUT;
 
-  # Build and release the Package
-  # If the repository is not configured properly, this job will be skipped
   build:
     needs: config
     runs-on: ubuntu-latest
@@ -32,10 +28,9 @@ jobs:
       packagePath: .
     if: needs.config.outputs.config_package == 'true'
     steps:
-
       # Checkout Local Repository
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@3df4ab11eba7bda6032a0b82a6bb43b11571feac
 
       # Get the Package version based on the package.json file
       - name: Get Version
@@ -48,10 +43,10 @@ jobs:
       # Configure the Environment Variables needed for releasing the Package
       - name: Set Environment Variables
         run: |
-          echo "zipFile=${{ vars.PACKAGE_NAME }}-${{ steps.version.outputs.value }}.zip" >> $GITHUB_ENV
+          echo "zipFile=${{ vars.PACKAGE_NAME }}-${{ steps.version.outputs.value }}".zip >> $GITHUB_ENV
           echo "unityPackage=${{ vars.PACKAGE_NAME }}-${{ steps.version.outputs.value }}.unitypackage" >> $GITHUB_ENV
           echo "version=${{ steps.version.outputs.value }}" >> $GITHUB_ENV
-
+          
       # Zip the Package for release
       - name: Create Package Zip
         working-directory: "${{ env.packagePath }}"
@@ -67,32 +62,17 @@ jobs:
         with:
           package-path: ${{ env.unityPackage }}
           include-files: metaList
-
-      # Tag_exists_check
-      - name: Tag exists check
-        uses: rickstaa/action-contains-tag@v1
-        with:
-          reference: "main"
-          tag: "${{ env.version }}"
-
-      # If Tag exists quit
-      - name: Check if tag exists
-        id: check_tag_exists
-        if: ${{ steps.Tag_exists_check.outputs.retval }} == 'true'
-        run: echo "Tag already exists. Exiting..."
-
-      # Only continue if the tag doesn't exist
-      - name: Continue if no tag exists
-        if: ${{ steps.check_tag_exists.conclusion }} == 'success'
-        run: echo "No existing tag. Continuing with release..."
-
+      
+      if: 'true' == 'true'
+      step: 
+      
         # Make a release tag of the version from the package.json file 
         - name: Create Tag
           id: tag_version
           uses: rickstaa/action-create-tag@88dbf7ff6fe2405f8e8f6c6fdfd78829bc631f83
           with:
             tag: "${{ env.version }}"
-
+        
         # Publish the Release to GitHub
         - name: Make Release
           uses: softprops/action-gh-release@de2c0eb89ae2a093876385947365aca7b0e5f844
@@ -102,12 +82,3 @@ jobs:
               ${{ env.unityPackage }}
               ${{ env.packagePath }}/package.json
             tag_name: ${{ env.version }}
-
-        # Trigger the build-listing workflow
-        - name: Trigger build-listing Workflow
-          run: |
-            curl -X POST \
-              -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-              -H "Accept: application/vnd.github.v3+json" \
-              https://api.github.com/repos/pandrabox/vpm/dispatches \
-              -d '{"event_type": "trigger-build-listing"}'
