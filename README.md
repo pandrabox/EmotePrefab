@@ -9,5 +9,5 @@
 -- メニュー作成等で利用しています。githubの使用方法、コーディング方法などの参考に大きくお世話になりました
 - [Non-Destructive Modular Framework](https://github.com/bdunderscore/ndmf)
 -- 完全に依存しています
-
-
+- [HyakuashiUdonMotionRecorder](https://github.com/mukaderabbit/mukaderabbit-HyakuashiUdonMotionRecorder-HUMR-)
+-- モーションデータの作成に使用させて頂いています
