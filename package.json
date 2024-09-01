@@ -1,6 +1,6 @@
 {
     "name" : "com.github.pandrabox.emoteprefab",
-    "version" : "1.0.0",
+    "version" : "1.0.1",
     "displayName" : "Emoteprefab",
     "author": {
       "name": "pandra"
@@ -8,7 +8,7 @@
     "unity" : "2019.4",
     "description" : "A tool for assembling Action layer out of reusable components",
     "vpmDependencies" : {
-      "com.vrchat.avatars" : ">=3.7.0",
+      "com.vrchat.avatars" : ">=3.4.0",
       "nadena.dev.modular-avatar" : ">=1.9.0"
     },
     "legacyFolders" : {
