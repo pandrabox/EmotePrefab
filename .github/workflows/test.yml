@@ -8,6 +8,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Hello World
+      - name : Set Environment Variables
         run: |
-          echo "${GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}"
+           echo "RepoName=${{GITHUB_REPOSITORY#${GITHUB_REPOSITORY_OWNER}/}}" >> $GITHUB_ENV
