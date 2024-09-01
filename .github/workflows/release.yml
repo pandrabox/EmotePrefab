@@ -70,6 +70,9 @@ jobs:
       
 
       # Tag_exists_check
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - name: Tag_exists_check
         uses: rickstaa/action-contains-tag@v1
         with:
