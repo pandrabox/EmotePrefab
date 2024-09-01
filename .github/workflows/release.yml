@@ -55,13 +55,17 @@ jobs:
           tag: ${{ steps.version.outputs.value }}
 
       - name: Process Tag Check Result
+        if: ${{ steps.check_tag.outputs.retval == 'true' }}
         run: |
-          if [[ "${{ steps.check_tag.outputs.retval }}" == 'true' ]]; then
-            echo "Branch/commit already contains the tag."
-            exit 1
-          else
-            echo "Branch/commit did not contain the tag."
-          fi
+          echo "Branch/commit already contains the tag. Exiting."
+          exit 1
+
+      - name: Create Tag
+        if: ${{ steps.check_tag.outputs.retval != 'true' }}
+        id: tag_version
+        uses: rickstaa/action-create-tag@88dbf7ff6fe2405f8e8f6c6fdfd78829bc631f83
+        with:
+          tag: "${{ env.version }}"
 
 
       # Configure the Environment Variables needed for releasing the Package
