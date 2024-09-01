@@ -2,6 +2,8 @@ name: Build Release
 
 on: 
   workflow_dispatch:
+  push:
+    branch: "main"
 
 jobs:
 
@@ -47,7 +49,8 @@ jobs:
         id: contains_tag
         with:
           reference: "main"
-          tag: "${{ env.packagePath }}"
+          tag: "${{ steps.version.outputs.value }}"
+          frail: false
       - run: |
           if [[ ${{ steps.contains_tag.outputs.retval }} != 'true' ]]; then
             echo "Branch/commit did contain the tag."
