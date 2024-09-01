@@ -10,7 +10,8 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       config_package: ${{ steps.config_package.outputs.configPackage }}
-        steps:
+    steps:
+
     # Ensure that required repository variable has been created for the Package
     - name: Validate Package Config
       id: config_package
