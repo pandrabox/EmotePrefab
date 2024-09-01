@@ -72,3 +72,4 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 README.md.meta
 package.json.meta
+LICENSE.meta
