@@ -45,9 +45,10 @@ jobs:
             file_path: "${{ env.packagePath }}/package.json"
             prop_path: "version"
 
-      - name: Appear Version
-        run: echo "Package version: ${{ steps.version.outputs.value }}"
-      
+      # Current Version
+      - name : Current Version
+        run: echo "Version ${{ env.packagePath }}"
+
       # Check if Tag already exists
       - name: Check if Tag Exists
         id: check_tag
@@ -61,8 +62,6 @@ jobs:
         run: |
           echo "Branch/commit already contains the tag. Exiting."
           exit 1
-
-
 
       # Configure the Environment Variables needed for releasing the Package
       - name: Set Environment Variables
