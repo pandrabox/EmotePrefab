@@ -60,6 +60,8 @@ namespace com.github.pandrabox.emoteprefab.editor
     public class EmotePrefabMain : MonoBehaviour
     {
         VRCAvatarDescriptor AvatarDescriptor;
+        AnimatorController ActionController;
+        ChildAnimatorStateMachine[] TopLevelStateMachines;
         public void Run(VRCAvatarDescriptor AvatarDescriptor)//,GameObject AvatarRootObject
         {
             this.AvatarDescriptor = AvatarDescriptor;
@@ -67,14 +69,22 @@ namespace com.github.pandrabox.emoteprefab.editor
         }
         private void ActionLayerReplace()
         {
-            string ActionAnimatorPath = $@"Packages\com.github.pandrabox.emoteprefab\Assets\BearsDen\CustomAnimatorControllers\Action.controller";
-            var AssignController= AssetDatabase.LoadAssetAtPath<AnimatorController>(ActionAnimatorPath);
+            string OrgActionAnimatorPath = $@"Packages\com.github.pandrabox.emoteprefab\Assets\BearsDen\CustomAnimatorControllers\Action.controller";
+            string WorkActionAnimatorPath = $@"Packages\com.github.pandrabox.emoteprefab\Assets\BearsDen\CustomAnimatorControllers\Action_Work.controller";
+            AssetDatabase.CopyAsset(OrgActionAnimatorPath, WorkActionAnimatorPath);
+
+            var AssignController = AssetDatabase.LoadAssetAtPath<AnimatorController>(WorkActionAnimatorPath);
             if (AssignController == null) {
                 throw new Exception("EmotePrefab ActionLayerReplace AssignController Not Found");
             }
-            var DuplicateController = UnityEngine.Object.Instantiate(AssignController);
             AvatarDescriptor.baseAnimationLayers[3].isDefault = false;
-            AvatarDescriptor.baseAnimationLayers[3].animatorController = DuplicateController;
+            AvatarDescriptor.baseAnimationLayers[3].animatorController = AssignController;
+            ActionController = (AnimatorController)(AvatarDescriptor.baseAnimationLayers[3].animatorController);
+            TopLevelStateMachines = ActionController.layers[0].stateMachine.stateMachines;
+            var standingEmoteStateMachine = TopLevelStateMachines.FirstOrDefault(sm => sm.stateMachine.name == "Custom Standing Emote");
+            string MotionPath = $@"Packages\com.github.pandrabox.emoteprefab\Assets\Pan\Motion\kickstep.anim";
+            Motion TestMotion = AssetDatabase.LoadAssetAtPath<Motion>(MotionPath);
+            standingEmoteStateMachine.stateMachine.stateMachines[0].stateMachine.states[1].state.motion = TestMotion;
         }
     }
 }
