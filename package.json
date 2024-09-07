@@ -1,18 +1,18 @@
 {
-    "name" : "com.github.pandrabox.emoteprefab",
-    "version" : "1.0.18",
-    "displayName" : "EmotePrefab",
-    "author": {
-      "name": "pandra"
-    },
-    "unity" : "2019.4",
-    "description" : "A tool for assembling Action layer out of reusable components",
-    "vpmDependencies" : {
-      "com.vrchat.avatars" : ">=3.4.0",
-      "nadena.dev.modular-avatar" : ">=1.9.0"
-    },
-    "legacyFolders" : {
-      "Assets\\Pan\\EmotePrefab": ""
-    },
-    "license":"MIT"
+  "name": "com.github.pandrabox.emoteprefab",
+  "version": "1.0.19",
+  "displayName": "EmotePrefab",
+  "author": {
+    "name": "pandra"
+  },
+  "unity": "2019.4",
+  "description": "A tool for assembling Action layer out of reusable components",
+  "vpmDependencies": {
+    "com.vrchat.avatars": ">=3.4.0",
+    "nadena.dev.modular-avatar": ">=1.9.0"
+  },
+  "legacyFolders": {
+    "Assets\\Pan\\EmotePrefab": ""
+  },
+  "license": "MIT"
 }

@@ -1,0 +1,37 @@
+﻿{
+    "name": "com.github.pandrabox.emoteprefab.editor",
+    "references": [
+        "nadena.dev.modular-avatar.core",
+        "nadena.dev.modular-avatar.core.editor",
+        "VRC.SDK3A",
+        "VRC.SDKBase",
+        "nadena.dev.ndmf",
+        "nadena.dev.ndmf.vrchat",
+        "VRC.SDK3A.Editor",
+        "com.github.pandrabox.emoteprefab.runtime"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "Newtonsoft.Json.dll",
+        "System.Collections.Immutable.dll",
+        "VRCSDKBase.dll",
+        "VRCSDKBase-Editor.dll",
+        "VRCSDK3A.dll",
+        "VRCSDK3A-Editor.dll",
+        "VRC.Dynamics.dll",
+        "VRC.SDK3.Dynamics.Contact.dll",
+        "VRC.SDK3.Dynamics.Contact.Editor.dll",
+        "VRC.SDK3.Dynamics.PhysBone.dll",
+        "VRC.SDK3.Dynamics.PhysBone.Editor.dll",
+        "VRCCore-Editor.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
