@@ -72,8 +72,9 @@ namespace com.github.pandrabox.emoteprefab.editor
             if (AssignController == null) {
                 throw new Exception("EmotePrefab ActionLayerReplace AssignController Not Found");
             }
+            var DuplicateController = UnityEngine.Object.Instantiate(AssignController);
             AvatarDescriptor.baseAnimationLayers[3].isDefault = false;
-            AvatarDescriptor.baseAnimationLayers[3].animatorController = AssignController;
+            AvatarDescriptor.baseAnimationLayers[3].animatorController = DuplicateController;
         }
     }
 }
