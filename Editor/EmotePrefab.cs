@@ -11,7 +11,6 @@ using VRC.SDK3.Avatars.Components;
 using com.github.pandrabox.emoteprefab.runtime;
 using static com.github.pandrabox.emoteprefab.runtime.Generic;
 using com.github.pandrabox.emoteprefab.editor;
-using Pan.Lib;
 
 [assembly: ExportsPlugin(typeof(EmotePrefabPass))]
 

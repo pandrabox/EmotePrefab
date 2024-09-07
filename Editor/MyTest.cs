@@ -9,11 +9,12 @@ using UnityEditor;
 using UnityEditor.Animations;
 using VRC.SDK3.Avatars.Components;
 using com.github.pandrabox.emoteprefab.runtime;
-using Pan.Lib;
+using static com.github.pandrabox.emoteprefab.runtime.Generic;
+using com.github.pandrabox.emoteprefab.editor;
 
 [assembly: ExportsPlugin(typeof(MyTestPass))]
 
-namespace Pan.Lib
+namespace com.github.pandrabox.emoteprefab.runtime
 {
     /// <summary>
     /// To call from Unity menu (Debug Only, Comment out upon release.)
