@@ -107,6 +107,7 @@ namespace com.github.pandrabox.emoteprefab.editor
             {
                 PAL.AddEmote(i + 1, SortedComponents[i]);
             }
+            new NonAAPPart(AvatarDescriptor, SortedComponents).Run();
             CreateMAMenu(SortedComponents);
         }
         private void CreateMAMenu(EmotePrefab[] SortedEP)
