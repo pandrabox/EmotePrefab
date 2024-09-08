@@ -90,7 +90,7 @@ namespace com.github.pandrabox.emoteprefab.editor
         private void AddEmotes()
         {
             var PAL = new PanActionLayer(AvatarDescriptor);
-            PAL.AddLoopEmote(17, $@"Packages\com.github.pandrabox.emoteprefab\Assets\Pan\Motion\kickstep.anim");
+            PAL.AddOneShotEmote(17, $@"Packages\com.github.pandrabox.emoteprefab\Assets\Pan\Motion\kickstep.anim");
         }
     }
 }

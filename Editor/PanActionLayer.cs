@@ -40,6 +40,16 @@ public class PanActionLayer
         TranditionToRecovery_LoopHold(EmoteID);
         TranditionToForceExit();
     }
+    public void AddOneShotEmote(int EmoteID, string MotionPath)
+    {
+        Motion CurrentMotion = AssetDatabase.LoadAssetAtPath<Motion>(MotionPath);
+        CurrentState = EmoteStateMachine.AddState($@"E{EmoteID:D3}");
+        CurrentState.motion = CurrentMotion;
+        CurrentState.writeDefaultValues = false;
+        TranditionFromPrepare(EmoteID);
+        TranditionToRecovery_OneShot();
+        TranditionToForceExit();
+    }
     private void TranditionFromPrepare(int EmoteID)
     {
         AnimatorState FromState = GetEmoteState("Prepare standing");
@@ -50,6 +60,16 @@ public class PanActionLayer
         T.duration = 0.25f;
         T.offset = 0;
         T.AddCondition(AnimatorConditionMode.Equals, EmoteID,"VRCEmote");
+    }
+    private void TranditionToRecovery_OneShot()
+    {
+        AnimatorState ToState = GetEmoteState("Recovery standing");
+        AnimatorStateTransition T = CurrentState.AddTransition(ToState);
+        T.hasExitTime = true;
+        T.exitTime = 0.75f;
+        T.hasFixedDuration = true;
+        T.duration = 0.25f;
+        T.offset = 0;
     }
     private void TranditionToRecovery_LoopHold(int EmoteID)
     {
