@@ -1,7 +1,8 @@
 # EmotePrefab
-[EmotePrefabをVCCに追加](vcc://vpm/addRepo?url=https://pandrabox.github.io/vpm/index.json)
-[EmotePrefabをunitypackageで追加](https://api.anatawa12.com/create-vpai/?name=EmotePrefab-installer.unitypackage&repo=https://pandrabox.github.io/vpm/index.json&package=com.github.pandrabox.emoteprefab&version=>=1.0.20)
- A tool for assembling Action layer out of reusable components
+- A tool for assembling Action layer out of reusable components
+- [EmotePrefabをVCCに追加](vcc://vpm/addRepo?url=https://pandrabox.github.io/vpm/index.json)
+- [EmotePrefabをunitypackageで追加](https://api.anatawa12.com/create-vpai/?name=EmotePrefab-installer.unitypackage&repo=https://pandrabox.github.io/vpm/index.json&package=com.github.pandrabox.emoteprefab&version=>=1.1.0)
+---
 - 現在完成している機能
     - EmotePrefabコンポーネント
         - Motion…Emoteのモーションデータ
