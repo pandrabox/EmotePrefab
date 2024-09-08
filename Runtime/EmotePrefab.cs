@@ -28,7 +28,10 @@ namespace com.github.pandrabox.emoteprefab.runtime
                 if (EditorGUI.EndChangeCheck())
                 {
                     IsChanged = true;
-                    NowInstance.Name = NowInstance.Motion.name;
+                    var name = NowInstance.Motion.name;
+                    name = name.Replace("proxy_stand_", "");
+                    name = name.Replace("proxy_", "");
+                    NowInstance.Name = name;
                     RenewPrefabName();
                     NowInstance.IsOneShot = !NowInstance.Motion.isLooping;
                 }
@@ -57,7 +60,8 @@ namespace com.github.pandrabox.emoteprefab.runtime
             }
             private void RenewPrefabName()
             {
-                NowInstance.gameObject.name = $@"E_{NowInstance.Name}";
+                var name = $@"E_{NowInstance.Name}";
+                NowInstance.gameObject.name = name;
             }
         }
 #endif

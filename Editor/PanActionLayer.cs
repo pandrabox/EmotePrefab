@@ -19,6 +19,8 @@ public class PanActionLayer
     AnimatorController RootController;
     AnimatorStateMachine EmoteStateMachine;
     AnimatorState CurrentState;
+    EmotePrefab CurrentEmotePrefab;
+    int CurrentID;
     public PanActionLayer(VRCAvatarDescriptor AvatarDescriptor)
     {
         this.AvatarDescriptor = AvatarDescriptor;
@@ -26,29 +28,43 @@ public class PanActionLayer
         var TopLevelStateMachines = RootController.layers[0].stateMachine.stateMachines;
         EmoteStateMachine = TopLevelStateMachines.FirstOrDefault(sm => sm.stateMachine.name == "Emote").stateMachine;
     }
+    public void AddEmote(int EmoteID, EmotePrefab EP)
+    {
+        this.CurrentID=EmoteID;
+        this.CurrentEmotePrefab = EP;
+        if (EP.IsOneShot)
+        {
+            AddOneShotEmote();
+        }
+        else
+        {
+            AddLoopEmote();
+        }
+    }
+
     public AnimatorState GetEmoteState(string name)
     {
         return EmoteStateMachine.states.FirstOrDefault(s => s.state.name == name).state;
     }
-    public void AddLoopEmote(int EmoteID, Motion CurrentMotion)
+    public void AddLoopEmote()
     {
-        CurrentState = EmoteStateMachine.AddState($@"E{EmoteID:D3}");
-        CurrentState.motion = CurrentMotion;
+        CurrentState = EmoteStateMachine.AddState($@"E{CurrentID:D3}");
+        CurrentState.motion = CurrentEmotePrefab.Motion;
         CurrentState.writeDefaultValues = false;
-        TranditionFromPrepare(EmoteID);
-        TranditionToRecovery_LoopHold(EmoteID);
+        TranditionFromPrepare();
+        TranditionToRecovery_LoopHold();
         TranditionToForceExit();
     }
-    public void AddOneShotEmote(int EmoteID, Motion CurrentMotion)
+    public void AddOneShotEmote()
     {
-        CurrentState = EmoteStateMachine.AddState($@"E{EmoteID:D3}");
-        CurrentState.motion = CurrentMotion;
+        CurrentState = EmoteStateMachine.AddState($@"E{CurrentID:D3}");
+        CurrentState.motion = CurrentEmotePrefab.Motion;
         CurrentState.writeDefaultValues = false;
-        TranditionFromPrepare(EmoteID);
+        TranditionFromPrepare();
         TranditionToRecovery_OneShot();
         TranditionToForceExit();
     }
-    private void TranditionFromPrepare(int EmoteID)
+    private void TranditionFromPrepare()
     {
         AnimatorState FromState = GetEmoteState("Prepare standing");
         AnimatorStateTransition T = FromState.AddTransition(CurrentState);
@@ -57,7 +73,7 @@ public class PanActionLayer
         T.hasFixedDuration = true;
         T.duration = 0.25f;
         T.offset = 0;
-        T.AddCondition(AnimatorConditionMode.Equals, EmoteID,"VRCEmote");
+        T.AddCondition(AnimatorConditionMode.Equals, CurrentID,"VRCEmote");
     }
     private void TranditionToRecovery_OneShot()
     {
@@ -69,7 +85,7 @@ public class PanActionLayer
         T.duration = 0.25f;
         T.offset = 0;
     }
-    private void TranditionToRecovery_LoopHold(int EmoteID)
+    private void TranditionToRecovery_LoopHold()
     {
         AnimatorState ToState = GetEmoteState("Recovery standing");
         AnimatorStateTransition T = CurrentState.AddTransition(ToState);
@@ -78,7 +94,7 @@ public class PanActionLayer
         T.hasFixedDuration = true;
         T.duration = 0.25f;
         T.offset = 0;
-        T.AddCondition(AnimatorConditionMode.NotEqual, EmoteID, "VRCEmote");
+        T.AddCondition(AnimatorConditionMode.NotEqual, CurrentID, "VRCEmote");
     }
     private void TranditionToForceExit()
     {
