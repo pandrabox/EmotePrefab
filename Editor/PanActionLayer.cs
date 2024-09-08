@@ -30,9 +30,8 @@ public class PanActionLayer
     {
         return EmoteStateMachine.states.FirstOrDefault(s => s.state.name == name).state;
     }
-    public void AddLoopEmote(int EmoteID, string MotionPath)
+    public void AddLoopEmote(int EmoteID, Motion CurrentMotion)
     {
-        Motion CurrentMotion = AssetDatabase.LoadAssetAtPath<Motion>(MotionPath);
         CurrentState = EmoteStateMachine.AddState($@"E{EmoteID:D3}");
         CurrentState.motion = CurrentMotion;
         CurrentState.writeDefaultValues = false;
@@ -40,9 +39,8 @@ public class PanActionLayer
         TranditionToRecovery_LoopHold(EmoteID);
         TranditionToForceExit();
     }
-    public void AddOneShotEmote(int EmoteID, string MotionPath)
+    public void AddOneShotEmote(int EmoteID, Motion CurrentMotion)
     {
-        Motion CurrentMotion = AssetDatabase.LoadAssetAtPath<Motion>(MotionPath);
         CurrentState = EmoteStateMachine.AddState($@"E{EmoteID:D3}");
         CurrentState.motion = CurrentMotion;
         CurrentState.writeDefaultValues = false;

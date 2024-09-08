@@ -90,7 +90,17 @@ namespace com.github.pandrabox.emoteprefab.editor
         private void AddEmotes()
         {
             var PAL = new PanActionLayer(AvatarDescriptor);
-            PAL.AddOneShotEmote(17, $@"Packages\com.github.pandrabox.emoteprefab\Assets\Pan\Motion\kickstep.anim");
+            string MotionPath = $@"Packages\com.github.pandrabox.emoteprefab\Assets\Pan\Motion\kickstep.anim";
+            Motion CurrentMotion = AssetDatabase.LoadAssetAtPath<Motion>(MotionPath);
+            int EmoteID = 17;
+            if (CurrentMotion.isLooping)
+            {
+                PAL.AddLoopEmote(EmoteID, CurrentMotion);
+            }
+            else
+            {
+                PAL.AddOneShotEmote(EmoteID, CurrentMotion);
+            }
         }
     }
 }
