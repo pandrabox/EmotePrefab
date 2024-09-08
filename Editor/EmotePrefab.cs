@@ -38,15 +38,15 @@ namespace com.github.pandrabox.emoteprefab.editor
         {
             //try
             //{
-                InPhase(BuildPhase.Transforming).BeforePlugin("nadena.dev.modular-avatar").Run("PanEmotePrefab", ctx =>
+            InPhase(BuildPhase.Transforming).BeforePlugin("nadena.dev.modular-avatar").Run("PanEmotePrefab", ctx =>
+            {
+                var TargetComponents = ctx.AvatarRootTransform.GetComponentsInChildren<EmotePrefab>(false);
+                foreach (var T in TargetComponents)
                 {
-                    var TargetComponents = ctx.AvatarRootTransform.GetComponentsInChildren<EmotePrefab>(false);
-                    foreach (var T in TargetComponents)
-                    {
-                        new EmotePrefabMain().Run(ctx.AvatarDescriptor);
-                        return;
-                    }
-                });
+                    new EmotePrefabMain().Run(ctx.AvatarDescriptor);
+                    return;
+                }
+            });
             //}
             //catch (Exception e)
             //{
@@ -64,8 +64,14 @@ namespace com.github.pandrabox.emoteprefab.editor
         ChildAnimatorStateMachine[] TopLevelStateMachines;
         public void Run(VRCAvatarDescriptor AvatarDescriptor)//,GameObject AvatarRootObject
         {
+            if(AvatarDescriptor == null)
+            {
+                Debug.LogError("[EmotePrefab] AvatarDescriptor==null");
+                return;
+            }
             this.AvatarDescriptor = AvatarDescriptor;
             ActionLayerReplace();
+            AddEmotes();
         }
         private void ActionLayerReplace()
         {
@@ -74,17 +80,18 @@ namespace com.github.pandrabox.emoteprefab.editor
             AssetDatabase.CopyAsset(OrgActionAnimatorPath, WorkActionAnimatorPath);
 
             var AssignController = AssetDatabase.LoadAssetAtPath<AnimatorController>(WorkActionAnimatorPath);
-            if (AssignController == null) {
+            if (AssignController == null)
+            {
                 throw new Exception("EmotePrefab ActionLayerReplace AssignController Not Found");
             }
             AvatarDescriptor.baseAnimationLayers[3].isDefault = false;
             AvatarDescriptor.baseAnimationLayers[3].animatorController = AssignController;
-            ActionController = (AnimatorController)(AvatarDescriptor.baseAnimationLayers[3].animatorController);
-            TopLevelStateMachines = ActionController.layers[0].stateMachine.stateMachines;
-            var standingEmoteStateMachine = TopLevelStateMachines.FirstOrDefault(sm => sm.stateMachine.name == "Custom Standing Emote");
-            string MotionPath = $@"Packages\com.github.pandrabox.emoteprefab\Assets\Pan\Motion\kickstep.anim";
-            Motion TestMotion = AssetDatabase.LoadAssetAtPath<Motion>(MotionPath);
-            standingEmoteStateMachine.stateMachine.stateMachines[0].stateMachine.states[1].state.motion = TestMotion;
+        }
+        private void AddEmotes()
+        {
+            var PAL = new PanActionLayer(AvatarDescriptor);
+            PAL.AddLoopEmote(17, $@"Packages\com.github.pandrabox.emoteprefab\Assets\Pan\Motion\kickstep.anim");
         }
     }
 }
+
