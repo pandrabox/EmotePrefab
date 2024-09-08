@@ -86,9 +86,8 @@ namespace com.github.pandrabox.emoteprefab.editor
         }
         private void ActionLayerReplace()
         {
-            string OrgActionAnimatorPath = $@"Packages\com.github.pandrabox.emoteprefab\Assets\BearsDen\CustomAnimatorControllers\Action.controller";
-            string WorkActionAnimatorPath = $@"{CONST.WORKDIR}\Action.controller";
-            AssetDatabase.CopyAsset(OrgActionAnimatorPath, WorkActionAnimatorPath);
+            string WorkActionAnimatorPath = $@"{CONST.WORKDIR}Action.controller";
+            AssetDatabase.CopyAsset(CONST.OrgActionAnimatorPath, WorkActionAnimatorPath);
 
             var AssignController = AssetDatabase.LoadAssetAtPath<AnimatorController>(WorkActionAnimatorPath);
             if (AssignController == null)
