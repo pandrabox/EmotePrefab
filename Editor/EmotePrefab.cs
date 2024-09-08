@@ -97,6 +97,47 @@ namespace com.github.pandrabox.emoteprefab.editor
             {
                 PAL.AddEmote(i + 1, SortedComponents[i]);
             }
+            CreateMAMenu(SortedComponents);
+        }
+        private void CreateMAMenu(EmotePrefab[] SortedEP)
+        {
+            //Objectの作成
+            var EPMenuObj = new GameObject("Emote");
+
+            //Parameter定義とInstaller
+            var EPParams = EPMenuObj.AddComponent<ModularAvatarParameters>();
+            EPParams.parameters.Add(new ParameterConfig()
+            {
+                nameOrPrefix = "VRCEmote",
+                syncType = ParameterSyncType.Int,
+            });
+            EPMenuObj.AddComponent<ModularAvatarMenuInstaller>();
+
+            //Menuの親生成
+            EPMenuObj.transform.SetParent(AvatarDescriptor.transform);
+            var EPMenu = EPMenuObj.AddComponent<ModularAvatarMenuItem>();
+            EPMenu.Control.type = VRC.SDK3.Avatars.ScriptableObjects.VRCExpressionsMenu.Control.ControlType.SubMenu;
+            EPMenu.MenuSource = SubmenuSource.Children;
+
+            //Menuの実体生成
+            for (int i = 0;i < SortedEP.Length;i++)
+            {
+                int ID = i+1;
+                var CurrentEP = SortedEP[i];
+                var UnitMenuObj = new GameObject(CurrentEP.Name);
+                UnitMenuObj.transform.SetParent(EPMenuObj.transform);
+                var UnitMenu = UnitMenuObj.AddComponent<ModularAvatarMenuItem>();
+                if (CurrentEP.IsOneShot)
+                {
+                    UnitMenu.Control.type = VRC.SDK3.Avatars.ScriptableObjects.VRCExpressionsMenu.Control.ControlType.Button;
+                }
+                else
+                {
+                    UnitMenu.Control.type = VRC.SDK3.Avatars.ScriptableObjects.VRCExpressionsMenu.Control.ControlType.Toggle;
+                }
+                UnitMenu.Control.parameter = new VRC.SDK3.Avatars.ScriptableObjects.VRCExpressionsMenu.Control.Parameter() { name = "VRCEmote" };
+                UnitMenu.Control.value = ID;
+            }
         }
     }
 }
