@@ -1,12 +1,23 @@
-# Emoteprefab
+# EmotePrefab
  A tool for assembling Action layer out of reusable components
-- 誠意制作中
+- 現在完成している機能
+    - EmotePrefabコンポーネント
+        - Motion…Emoteのモーションデータ
+        - Name…メニューに表示する名前
+        - IsOneShot…1回で終了する場合True
+    - EmotePrefabコンポーネントに定義されているモーションを選択できるメニュー作成
+    - メニューから実行すると該当モーションを実行
+- 今後実装する機能
+    - Issue参照
+- 注意事項
+    - 本アセットはActionレイヤの既存の設定を完全に無視して上書きします。アバターに設定済みのモーション・AFK等は無視されます
+    - 関連アセットとの同時使用は未検証で、不具合が予見されます。お気づきの点あればお気軽にIssue登録下さい
 
 # thanks
 - [VRChat向けCustom Animator Controllers](https://booth.pm/ja/items/4424448)
 -- v2.0よりActionレイヤを使用しています
 - [Modular Avatar](https://github.com/bdunderscore/modular-avatar)
--- メニュー作成等で利用しています。githubの使用方法、コーディング方法などの参考に大きくお世話になりました
+-- メニュー作成等で利用しています。その他、githubの使用方法、コーディング方法などの参考として大いにお世話になりました
 - [Non-Destructive Modular Framework](https://github.com/bdunderscore/ndmf)
 -- 完全に依存しています
 - [HyakuashiUdonMotionRecorder](https://github.com/mukaderabbit/mukaderabbit-HyakuashiUdonMotionRecorder-HUMR-)
