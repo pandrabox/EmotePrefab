@@ -105,6 +105,7 @@ jobs:
           tag_name: ${{ env.version }}
 
       - name: Update Website
+        if: ${{ !contains(env.version, 'Beta') && !contains(env.version, 'beta') }}
         run: |
           TOKEN=${{ secrets.MY_PAT }}
           curl \
