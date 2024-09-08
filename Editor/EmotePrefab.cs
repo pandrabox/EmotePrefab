@@ -11,6 +11,8 @@ using VRC.SDK3.Avatars.Components;
 using com.github.pandrabox.emoteprefab.runtime;
 using static com.github.pandrabox.emoteprefab.runtime.Generic;
 using com.github.pandrabox.emoteprefab.editor;
+using static UnityEditor.ShaderData;
+using System.IO;
 
 [assembly: ExportsPlugin(typeof(EmotePrefabPass))]
 
@@ -62,6 +64,7 @@ namespace com.github.pandrabox.emoteprefab.editor
         VRCAvatarDescriptor AvatarDescriptor;
         AnimatorController ActionController;
         ChildAnimatorStateMachine[] TopLevelStateMachines;
+        string WorkFolderPath;
         public void Run(VRCAvatarDescriptor AvatarDescriptor)//,GameObject AvatarRootObject
         {
             if(AvatarDescriptor == null)
@@ -70,13 +73,23 @@ namespace com.github.pandrabox.emoteprefab.editor
                 return;
             }
             this.AvatarDescriptor = AvatarDescriptor;
+            CreateWorkFolder();
             ActionLayerReplace();
             AddEmotes();
+        }
+        private void CreateWorkFolder()
+        {
+            WorkFolderPath = "Packages/com.github.pandrabox.emoteprefab/Work";
+            DirectoryInfo di = new DirectoryInfo(WorkFolderPath);
+            if (!di.Exists)
+            {
+                di.Create();
+            }
         }
         private void ActionLayerReplace()
         {
             string OrgActionAnimatorPath = $@"Packages\com.github.pandrabox.emoteprefab\Assets\BearsDen\CustomAnimatorControllers\Action.controller";
-            string WorkActionAnimatorPath = $@"Packages\com.github.pandrabox.emoteprefab\Assets\BearsDen\CustomAnimatorControllers\Action_Work.controller";
+            string WorkActionAnimatorPath = $@"{WorkFolderPath}\Action.controller";
             AssetDatabase.CopyAsset(OrgActionAnimatorPath, WorkActionAnimatorPath);
 
             var AssignController = AssetDatabase.LoadAssetAtPath<AnimatorController>(WorkActionAnimatorPath);
