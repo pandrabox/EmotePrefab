@@ -17,8 +17,8 @@ namespace com.github.pandrabox.emoteprefab.editor
 {
     public class SplittedAnimation
     {
-        AnimationClip Target, AAPClip, NotAAPClip;
-        bool IsBlendShapeClip, IsOtherClip;
+        public AnimationClip Target, AAPClip, NotAAPClip;
+        public bool IsBlendShapeClip, IsOtherClip;
         public SplittedAnimation(AnimationClip Target)
         {
             this.Target = Target;
@@ -37,24 +37,23 @@ namespace com.github.pandrabox.emoteprefab.editor
 
         private void CreateClips()
         {
-            AAPClip = new AnimationClip();
-            NotAAPClip = new AnimationClip();
+            AAPClip = UnityEngine.Object.Instantiate(Target) as AnimationClip;
+            NotAAPClip = UnityEngine.Object.Instantiate(Target) as AnimationClip;
 
-            foreach (var binding in AnimationUtility.GetCurveBindings(Target))
+            RemoveUnwantedCurves(AAPClip, isAAP: true);
+            RemoveUnwantedCurves(NotAAPClip, isAAP: false);
+        }
+        private void RemoveUnwantedCurves(AnimationClip clip, bool isAAP)
+        {
+            foreach (var binding in AnimationUtility.GetCurveBindings(clip))
             {
-                if (binding.type == typeof(Animator))
+                if (isAAP && binding.type != typeof(Animator))
                 {
-                    AnimationCurve curve = AnimationUtility.GetEditorCurve(Target, binding);
-                    AnimationUtility.SetEditorCurve(AAPClip, binding, curve);
+                    AnimationUtility.SetEditorCurve(clip, binding, null);
                 }
-            }
-
-            foreach (var binding in AnimationUtility.GetCurveBindings(Target))
-            {
-                if (binding.type != typeof(Animator))
+                else if (!isAAP && binding.type == typeof(Animator))
                 {
-                    AnimationCurve curve = AnimationUtility.GetEditorCurve(Target, binding);
-                    AnimationUtility.SetEditorCurve(NotAAPClip, binding, curve);
+                    AnimationUtility.SetEditorCurve(clip, binding, null);
                 }
             }
         }

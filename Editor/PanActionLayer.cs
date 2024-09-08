@@ -22,6 +22,7 @@ namespace com.github.pandrabox.emoteprefab.editor
         AnimatorStateMachine EmoteStateMachine;
         AnimatorState CurrentState;
         EmotePrefab CurrentEmotePrefab;
+        SplittedAnimation CurrentSplittedAnimation;
         int CurrentID;
         public PanActionLayer(VRCAvatarDescriptor AvatarDescriptor)
         {
@@ -34,6 +35,7 @@ namespace com.github.pandrabox.emoteprefab.editor
         {
             this.CurrentID = EmoteID;
             this.CurrentEmotePrefab = EP;
+            CurrentSplittedAnimation = new SplittedAnimation((AnimationClip)EP.Motion);
             if (EP.IsOneShot)
             {
                 AddOneShotEmote();
@@ -51,7 +53,7 @@ namespace com.github.pandrabox.emoteprefab.editor
         public void AddLoopEmote()
         {
             CurrentState = EmoteStateMachine.AddState($@"E{CurrentID:D3}");
-            CurrentState.motion = CurrentEmotePrefab.Motion;
+            CurrentState.motion = CurrentSplittedAnimation.AAPClip;
             CurrentState.writeDefaultValues = false;
             TranditionFromPrepare();
             TranditionToRecovery_LoopHold();
@@ -60,7 +62,7 @@ namespace com.github.pandrabox.emoteprefab.editor
         public void AddOneShotEmote()
         {
             CurrentState = EmoteStateMachine.AddState($@"E{CurrentID:D3}");
-            CurrentState.motion = CurrentEmotePrefab.Motion;
+            CurrentState.motion = CurrentSplittedAnimation.AAPClip;
             CurrentState.writeDefaultValues = false;
             TranditionFromPrepare();
             TranditionToRecovery_OneShot();
