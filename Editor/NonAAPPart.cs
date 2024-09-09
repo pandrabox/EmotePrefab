@@ -53,21 +53,20 @@ namespace com.github.pandrabox.emoteprefab.editor
         }
         private void AddFX()
         {
-            if (CurrentSplittedAnimation.IsBlendShapeClip)
-            {
-                AddBlendShape0();
-            }
-            if (CurrentSplittedAnimation.IsBlendShapeClip || CurrentSplittedAnimation.IsOtherClip)
-            {
-                AddNonAAPAnim();
-            }
+            AddBlendShape0(CurrentSplittedAnimation.IsBlendShapeClip);
+            bool IsOthers = CurrentSplittedAnimation.IsBlendShapeClip || CurrentSplittedAnimation.IsOtherClip;
+            AddNonAAPAnim(IsOthers);
         }
         private void AddBlendShape0State()
         {
-            CurrentStateMachine = BlendShape0.stateMachine;
+            CurrentStateMachine = GetEmoteStateMachine(BlendShape0);
             CurrentState = CurrentStateMachine.AddState($@"BlendShape0");
             CurrentState.motion = BodyBlendShape0Anim();
             CurrentState.writeDefaultValues = false;
+        }
+        private AnimatorStateMachine GetEmoteStateMachine(AnimatorControllerLayer Target)
+        {
+            return Target.stateMachine.stateMachines.FirstOrDefault(sm => sm.stateMachine.name == "Emote").stateMachine;
         }
         private AnimationClip BodyBlendShape0Anim()
         {
@@ -78,27 +77,42 @@ namespace com.github.pandrabox.emoteprefab.editor
             for (int i = 0; i < blendShapeCount; i++)
             {
                 var name = BodyMesh.sharedMesh.GetBlendShapeName(i);
-                Debug.LogWarning(name);
                 AnimationCurve curve = AnimationCurve.Constant(0, clip.length, 0);
                 clip.SetCurve("", typeof(SkinnedMeshRenderer), $"blendShape.{name}", curve);
             }
             return clip;
         }
-        private void AddBlendShape0()
+        private void AddBlendShape0(bool IsBlandShape)
         {
-            CurrentStateMachine = BlendShape0.stateMachine;
-            CurrentState = GetState("BlendShape0");
-            TransitionFromInitial();
-            TransitionToExit();
+            CurrentStateMachine = GetEmoteStateMachine(BlendShape0);
+            if (IsBlandShape)
+            {
+                CurrentState = GetState("BlendShape0");
+                TransitionFromPrepare();
+                TransitionToRecovery();
+                TransitionToForceExit();
+            }
+            else
+            {
+                TransitionFromPrepareToForceExit();
+            }
         }
-        private void AddNonAAPAnim()
+        private void AddNonAAPAnim(bool IsOthers)
         {
-            CurrentStateMachine = NonAAPAnim.stateMachine;
-            CurrentState = CurrentStateMachine.AddState($@"E{CurrentID:D3}");
-            CurrentState.motion = CurrentSplittedAnimation.NotAAPClip;
-            CurrentState.writeDefaultValues = false;
-            TransitionFromInitial();
-            TransitionToExit();
+            CurrentStateMachine = GetEmoteStateMachine(NonAAPAnim);
+            if (IsOthers)
+            {
+                CurrentState = CurrentStateMachine.AddState($@"E{CurrentID:D3}");
+                CurrentState.motion = CurrentSplittedAnimation.NotAAPClip;
+                CurrentState.writeDefaultValues = false;
+                TransitionFromPrepare();
+                TransitionToRecovery();
+                TransitionToForceExit();
+            }
+            else
+            {
+                TransitionFromPrepareToForceExit();
+            }
         }
         private void SetMergeAnimator()
         {
@@ -110,9 +124,13 @@ namespace com.github.pandrabox.emoteprefab.editor
             MergeAnimator.matchAvatarWriteDefaults = true;
             MergeAnimator.layerPriority = 9999999;
         }
-        private void TransitionFromInitial()
+        public AnimatorState GetState(string name)
         {
-            AnimatorState FromState = GetState("Initial");
+            return CurrentStateMachine.states.FirstOrDefault(s => s.state.name == name).state;
+        }
+        private void TransitionFromPrepare()
+        {
+            AnimatorState FromState = GetState("Prepare standing");
             AnimatorStateTransition T = FromState.AddTransition(CurrentState);
             T.hasExitTime = false;
             T.exitTime = 0.75f;
@@ -120,12 +138,32 @@ namespace com.github.pandrabox.emoteprefab.editor
             T.duration = 0.25f;
             T.offset = 0;
             T.AddCondition(AnimatorConditionMode.Equals, CurrentID, "VRCEmote");
-            T.AddCondition(AnimatorConditionMode.IfNot, 0, "Seated");
         }
-        private void TransitionToExit()
+        private void TransitionToRecovery()
         {
-            AnimatorStateTransition T = CurrentState.AddExitTransition();
-            T.destinationState = GetState("Exit");
+            if (CurrentEmotePrefab.IsOneShot)
+            {
+                TransitionToRecovery_OneShot();
+            }
+            else
+            {
+                TransitionToRecovery_LoopHold();
+            }
+        }
+        private void TransitionToRecovery_OneShot()
+        {
+            AnimatorState ToState = GetState("Recovery standing");
+            AnimatorStateTransition T = CurrentState.AddTransition(ToState);
+            T.hasExitTime = true;
+            T.exitTime = 0.75f;
+            T.hasFixedDuration = true;
+            T.duration = 0.25f;
+            T.offset = 0;
+        }
+        private void TransitionToRecovery_LoopHold()
+        {
+            AnimatorState ToState = GetState("Recovery standing");
+            AnimatorStateTransition T = CurrentState.AddTransition(ToState);
             T.hasExitTime = false;
             T.exitTime = 0.75f;
             T.hasFixedDuration = true;
@@ -133,9 +171,28 @@ namespace com.github.pandrabox.emoteprefab.editor
             T.offset = 0;
             T.AddCondition(AnimatorConditionMode.NotEqual, CurrentID, "VRCEmote");
         }
-        public AnimatorState GetState(string name)
+        private void TransitionToForceExit()
         {
-            return CurrentStateMachine.states.FirstOrDefault(s => s.state.name == name).state;
+            AnimatorState ToState = GetState("Force Exit");
+            AnimatorStateTransition T = CurrentState.AddTransition(ToState);
+            T.hasExitTime = false;
+            T.exitTime = 0.75f;
+            T.hasFixedDuration = true;
+            T.duration = 0;
+            T.offset = 0;
+            T.AddCondition(AnimatorConditionMode.If, 0, "Seated");
+        }
+        private void TransitionFromPrepareToForceExit()
+        {
+            AnimatorState FromState = GetState("Prepare standing");
+            AnimatorState ToState = GetState("Force Exit");
+            AnimatorStateTransition T = FromState.AddTransition(ToState);
+            T.hasExitTime = false;
+            T.exitTime = 0;
+            T.hasFixedDuration = true;
+            T.duration = 0;
+            T.offset = 0;
+            T.AddCondition(AnimatorConditionMode.Equals, CurrentID, "VRCEmote");
         }
     }
 }
