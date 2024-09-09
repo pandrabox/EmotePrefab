@@ -41,6 +41,7 @@ namespace com.github.pandrabox.emoteprefab.editor
         }
         public void Run()
         {
+            AddBlendShape0State();
             for (int i = 0; i < SortedEPs.Length; i++)
             {
                 CurrentID = i + 1;
@@ -61,9 +62,34 @@ namespace com.github.pandrabox.emoteprefab.editor
                 AddNonAAPAnim();
             }
         }
+        private void AddBlendShape0State()
+        {
+            CurrentStateMachine = BlendShape0.stateMachine;
+            CurrentState = CurrentStateMachine.AddState($@"BlendShape0");
+            CurrentState.motion = BodyBlendShape0Anim();
+            CurrentState.writeDefaultValues = false;
+        }
+        private AnimationClip BodyBlendShape0Anim()
+        {
+            SkinnedMeshRenderer BodyMesh = AvatarDescriptor.transform?.Find("Body")?.GetComponent<SkinnedMeshRenderer>();
+            AnimationClip clip = new AnimationClip();
+            clip.wrapMode = WrapMode.ClampForever;
+            int blendShapeCount = BodyMesh.sharedMesh.blendShapeCount;
+            for (int i = 0; i < blendShapeCount; i++)
+            {
+                var name = BodyMesh.sharedMesh.GetBlendShapeName(i);
+                Debug.LogWarning(name);
+                AnimationCurve curve = AnimationCurve.Constant(0, clip.length, 0);
+                clip.SetCurve("", typeof(SkinnedMeshRenderer), $"blendShape.{name}", curve);
+            }
+            return clip;
+        }
         private void AddBlendShape0()
         {
             CurrentStateMachine = BlendShape0.stateMachine;
+            CurrentState = GetState("BlendShape0");
+            TransitionFromInitial();
+            TransitionToExit();
         }
         private void AddNonAAPAnim()
         {
@@ -71,20 +97,45 @@ namespace com.github.pandrabox.emoteprefab.editor
             CurrentState = CurrentStateMachine.AddState($@"E{CurrentID:D3}");
             CurrentState.motion = CurrentSplittedAnimation.NotAAPClip;
             CurrentState.writeDefaultValues = false;
-            TranditionFromPrepare();
-            TranditionToExit();
+            TransitionFromInitial();
+            TransitionToExit();
         }
         private void SetMergeAnimator()
         {
-
+            GameObject TargetObj = new GameObject("EmotePrefabNonAAPPart");
+            TargetObj.transform.SetParent(AvatarDescriptor.transform);
+            var MergeAnimator = TargetObj.AddComponent<ModularAvatarMergeAnimator>();
+            MergeAnimator.animator = NonAAPFX;
+            MergeAnimator.pathMode = MergeAnimatorPathMode.Absolute;
+            MergeAnimator.matchAvatarWriteDefaults = true;
+            MergeAnimator.layerPriority = 9999999;
         }
-        private void TranditionFromPrepare()
+        private void TransitionFromInitial()
         {
-
+            AnimatorState FromState = GetState("Initial");
+            AnimatorStateTransition T = FromState.AddTransition(CurrentState);
+            T.hasExitTime = false;
+            T.exitTime = 0.75f;
+            T.hasFixedDuration = true;
+            T.duration = 0.25f;
+            T.offset = 0;
+            T.AddCondition(AnimatorConditionMode.Equals, CurrentID, "VRCEmote");
+            T.AddCondition(AnimatorConditionMode.IfNot, 0, "Seated");
         }
-        private void TranditionToExit()
+        private void TransitionToExit()
         {
-
+            AnimatorStateTransition T = CurrentState.AddExitTransition();
+            T.destinationState = GetState("Exit");
+            T.hasExitTime = false;
+            T.exitTime = 0.75f;
+            T.hasFixedDuration = true;
+            T.duration = 0.25f;
+            T.offset = 0;
+            T.AddCondition(AnimatorConditionMode.NotEqual, CurrentID, "VRCEmote");
+        }
+        public AnimatorState GetState(string name)
+        {
+            return CurrentStateMachine.states.FirstOrDefault(s => s.state.name == name).state;
         }
     }
 }
