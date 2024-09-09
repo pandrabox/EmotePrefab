@@ -1,17 +1,6 @@
-﻿using System;
-using System.Linq;
-using System.Collections.Generic;
-using nadena.dev.ndmf;
-using nadena.dev.modular_avatar.core;
-using nadena.dev.modular_avatar.core.editor;
-using UnityEngine;
+﻿using System.Linq;
 using UnityEditor;
-using UnityEditor.Animations;
-using VRC.SDK3.Avatars.Components;
-using com.github.pandrabox.emoteprefab.runtime;
-using static com.github.pandrabox.emoteprefab.runtime.Generic;
-using com.github.pandrabox.emoteprefab.editor;
-
+using UnityEngine;
 
 namespace com.github.pandrabox.emoteprefab.editor
 {
@@ -19,12 +8,38 @@ namespace com.github.pandrabox.emoteprefab.editor
     {
         public AnimationClip Target, AAPClip, NotAAPClip;
         public bool IsBlendShapeClip, IsOtherClip;
-        public SplittedAnimation(AnimationClip Target)
+
+        public SplittedAnimation(AnimationClip input)
         {
-            this.Target = Target;
+            Target = UnityEngine.Object.Instantiate(input) as AnimationClip;
+            AddKeyframesAtEnd();
             split();
             CreateClips();
         }
+
+        // 全てのカーブに最後のフレームでキーフレームを追加
+        private void AddKeyframesAtEnd()
+        {
+            float clipLength = Target.length;
+            EditorCurveBinding[] curves = AnimationUtility.GetCurveBindings(Target);
+
+            foreach (var binding in curves)
+            {
+                AnimationCurve curve = AnimationUtility.GetEditorCurve(Target, binding);
+
+                if (curve != null && curve.keys.Length > 0)
+                {
+                    Keyframe lastKey = curve.keys[curve.keys.Length - 1];
+                    if (lastKey.time < clipLength)
+                    {
+                        // 最後のフレームにキーフレームを追加
+                        curve.AddKey(new Keyframe(clipLength, lastKey.value, lastKey.inTangent, lastKey.outTangent));
+                        AnimationUtility.SetEditorCurve(Target, binding, curve);
+                    }
+                }
+            }
+        }
+
         public void split()
         {
             EditorCurveBinding[] curves = AnimationUtility.GetCurveBindings(Target);
@@ -43,6 +58,7 @@ namespace com.github.pandrabox.emoteprefab.editor
             RemoveUnwantedCurves(AAPClip, isAAP: true);
             RemoveUnwantedCurves(NotAAPClip, isAAP: false);
         }
+
         private void RemoveUnwantedCurves(AnimationClip clip, bool isAAP)
         {
             foreach (var binding in AnimationUtility.GetCurveBindings(clip))
