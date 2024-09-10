@@ -1,5 +1,5 @@
 # EmotePrefab
-- [sample](.github\Img\sample.png)
+![sample](/.github/Img/sample.png)
 - A tool for assembling Action layer out of reusable components
 - [EmotePrefabをVCCに追加](https://pandrabox.github.io/vpm/)
 - [EmotePrefabをunitypackage(VPAI)で追加](https://api.anatawa12.com/create-vpai/?name=EmotePrefab-installer.unitypackage&repo=https://pandrabox.github.io/vpm/index.json&package=com.github.pandrabox.emoteprefab&version=>=1.1.0)
