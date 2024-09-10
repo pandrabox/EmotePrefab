@@ -75,6 +75,7 @@ namespace com.github.pandrabox.emoteprefab.editor
             CreateWorkFolder();
             ActionLayerReplace();
             AddEmotes();
+            BaseAnimationSync();
         }
         private void CreateWorkFolder()
         {
@@ -149,6 +150,30 @@ namespace com.github.pandrabox.emoteprefab.editor
                 UnitMenu.Control.parameter = new VRC.SDK3.Avatars.ScriptableObjects.VRCExpressionsMenu.Control.Parameter() { name = "VRCEmote" };
                 UnitMenu.Control.value = ID;
             }
+        }
+        private void BaseAnimationSync()
+        {
+            GameObject Obj = new GameObject("EmotePrefab_BaseAnimationSync");
+            Obj.transform.SetParent(AvatarDescriptor.transform);
+            ModularAvatarParameters Params= Obj.AddComponent<ModularAvatarParameters>();
+            Params.parameters.Add(new ParameterConfig()
+            {
+                nameOrPrefix = "CN_IS_ACTION_ACTIVE",
+                syncType = ParameterSyncType.Bool,
+                localOnly = true,
+            });
+            Params.parameters.Add(new ParameterConfig()
+            {
+                nameOrPrefix = "CN_IS_ACTION_ACTIVE_FX1",
+                syncType = ParameterSyncType.Bool,
+                localOnly = true,
+            });
+            Params.parameters.Add(new ParameterConfig()
+            {
+                nameOrPrefix = "CN_IS_ACTION_ACTIVE_FX2",
+                syncType = ParameterSyncType.Bool,
+                localOnly = true,
+            });
         }
     }
 }
