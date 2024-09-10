@@ -55,20 +55,20 @@ namespace com.github.pandrabox.emoteprefab.editor
             CurrentState = EmoteStateMachine.AddState($@"E{CurrentID:D3}");
             CurrentState.motion = CurrentSplittedAnimation.AAPClip;
             CurrentState.writeDefaultValues = false;
-            TranditionFromPrepare();
-            TranditionToRecovery_LoopHold();
-            TranditionToForceExit();
+            TransitionFromPrepare();
+            TransitionToRecovery_LoopHold();
+            TransitionToForceExit();
         }
         public void AddOneShotEmote()
         {
             CurrentState = EmoteStateMachine.AddState($@"E{CurrentID:D3}");
             CurrentState.motion = CurrentSplittedAnimation.AAPClip;
             CurrentState.writeDefaultValues = false;
-            TranditionFromPrepare();
-            TranditionToRecovery_OneShot();
-            TranditionToForceExit();
+            TransitionFromPrepare();
+            TransitionToRecovery_OneShot();
+            TransitionToForceExit();
         }
-        private void TranditionFromPrepare()
+        private void TransitionFromPrepare()
         {
             AnimatorState FromState = GetEmoteState("Prepare standing");
             AnimatorStateTransition T = FromState.AddTransition(CurrentState);
@@ -79,7 +79,7 @@ namespace com.github.pandrabox.emoteprefab.editor
             T.offset = 0;
             T.AddCondition(AnimatorConditionMode.Equals, CurrentID, "VRCEmote");
         }
-        private void TranditionToRecovery_OneShot()
+        private void TransitionToRecovery_OneShot()
         {
             AnimatorState ToState = GetEmoteState("Recovery standing");
             AnimatorStateTransition T = CurrentState.AddTransition(ToState);
@@ -89,7 +89,7 @@ namespace com.github.pandrabox.emoteprefab.editor
             T.duration = 0.25f;
             T.offset = 0;
         }
-        private void TranditionToRecovery_LoopHold()
+        private void TransitionToRecovery_LoopHold()
         {
             AnimatorState ToState = GetEmoteState("Recovery standing");
             AnimatorStateTransition T = CurrentState.AddTransition(ToState);
@@ -100,7 +100,7 @@ namespace com.github.pandrabox.emoteprefab.editor
             T.offset = 0;
             T.AddCondition(AnimatorConditionMode.NotEqual, CurrentID, "VRCEmote");
         }
-        private void TranditionToForceExit()
+        private void TransitionToForceExit()
         {
             AnimatorState ToState = GetEmoteState("Force Exit");
             AnimatorStateTransition T = CurrentState.AddTransition(ToState);
