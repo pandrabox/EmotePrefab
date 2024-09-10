@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace com.github.pandrabox.emoteprefab.runtime
 {
+    [DisallowMultipleComponent]
     [AddComponentMenu("Pan/EmotePrefab")]
     public class EmotePrefab : MonoBehaviour, VRC.SDKBase.IEditorOnly
     {
