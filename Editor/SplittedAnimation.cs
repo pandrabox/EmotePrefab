@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using UnityEditor;
 using UnityEngine;
 
@@ -6,11 +7,13 @@ namespace com.github.pandrabox.emoteprefab.editor
 {
     public class SplittedAnimation
     {
-        public AnimationClip Target, AAPClip, NotAAPClip;
+        public AnimationClip Target, AAPClip, NotAAPClip, DefaultValueClip;
         public bool IsBlendShapeClip, IsOtherClip;
+        GameObject AnimRootObject;
 
-        public SplittedAnimation(AnimationClip input)
+        public SplittedAnimation(GameObject AnimRootObject, AnimationClip input)
         {
+            this.AnimRootObject = AnimRootObject;
             Target = UnityEngine.Object.Instantiate(input) as AnimationClip;
             AddKeyframesAtEnd();
             split();
@@ -40,6 +43,7 @@ namespace com.github.pandrabox.emoteprefab.editor
             }
         }
 
+
         public void split()
         {
             EditorCurveBinding[] curves = AnimationUtility.GetCurveBindings(Target);
@@ -57,6 +61,8 @@ namespace com.github.pandrabox.emoteprefab.editor
 
             RemoveUnwantedCurves(AAPClip, isAAP: true);
             RemoveUnwantedCurves(NotAAPClip, isAAP: false);
+
+            DefaultValueClip = CreateDefaultValueClip();
         }
 
         private void RemoveUnwantedCurves(AnimationClip clip, bool isAAP)
@@ -72,6 +78,28 @@ namespace com.github.pandrabox.emoteprefab.editor
                     AnimationUtility.SetEditorCurve(clip, binding, null);
                 }
             }
+        }
+
+
+        // GameObject AnimRootObjectのAnimatorにNotAAPClipがアタッチされている
+        // NotAAPClipに含まれる全てのカーブの値を現行の値にした1Fのアニメを作成する
+        private AnimationClip CreateDefaultValueClip()
+        {
+            if (!IsOtherClip && !IsBlendShapeClip)
+            {
+                return null;
+            }
+            EditorCurveBinding[] bindings = AnimationUtility.GetCurveBindings(NotAAPClip);
+            AnimationClip clip = new AnimationClip();
+            foreach (EditorCurveBinding binding in bindings)
+            {
+                float currentValue;
+                AnimationUtility.GetFloatValue(AnimRootObject, binding, out currentValue);
+                Keyframe keyframe = new Keyframe(0, currentValue);
+                AnimationCurve curve = new AnimationCurve(keyframe);
+                AnimationUtility.SetEditorCurve(clip, binding, curve);
+            }
+            return clip;
         }
     }
 }

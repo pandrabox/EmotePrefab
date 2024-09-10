@@ -35,7 +35,7 @@ namespace com.github.pandrabox.emoteprefab.editor
         {
             this.CurrentID = EmoteID;
             this.CurrentEmotePrefab = EP;
-            CurrentSplittedAnimation = new SplittedAnimation((AnimationClip)EP.Motion);
+            CurrentSplittedAnimation = new SplittedAnimation(AvatarDescriptor.gameObject, (AnimationClip)EP.Motion);
             if (EP.IsOneShot)
             {
                 AddOneShotEmote();
