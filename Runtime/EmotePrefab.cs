@@ -13,11 +13,15 @@ namespace com.github.pandrabox.emoteprefab.runtime
     public class EmotePrefab : MonoBehaviour, VRC.SDKBase.IEditorOnly
     {
         [SerializeField]
-        private AnimationClip _motion=null;
+        private AnimationClip _motion;
         [SerializeField]
-        private string _name="";
+        private string _name;
         [SerializeField]
-        private bool _isOneShot=false;
+        private bool _isOneShot;
+        [SerializeField]
+        private bool _isEmote;
+        [SerializeField]
+        private bool _isAFK;
 
 #if UNITY_EDITOR
         /// <summary>
@@ -36,12 +40,14 @@ namespace com.github.pandrabox.emoteprefab.runtime
                     {
                         Name = _motion.name.Replace("proxy_stand_", string.Empty).Replace("proxy_", string.Empty);
                         _isOneShot = !_motion.isLooping;
+                        _isEmote = true;
                     }
                     else
                     {
                         Name = string.Empty;
                         _isOneShot = false;
                     }
+
                     EditorUtility.SetDirty(this);
                 }
             }
@@ -80,17 +86,58 @@ namespace com.github.pandrabox.emoteprefab.runtime
             }
         }
 
+        /// <summary>
+        /// ExpressionMenuから選択可能ならばtrue
+        /// </summary>
+        public bool IsEmote
+        {
+            get => _isEmote;
+            set
+            {
+                if (_isEmote != value)
+                {
+                    _isEmote = value;
+                    EditorUtility.SetDirty(this);
+                }
+            }
+        }
+
+        /// <summary>
+        /// AFKのさい選択される対象ならばtrue
+        /// </summary>
+        public bool IsAFK
+        {
+            get => _isAFK;
+            set
+            {
+                if (_isAFK != value)
+                {
+                    _isAFK = value;
+                    EditorUtility.SetDirty(this);
+                }
+            }
+        }
+
+        /// <summary>
+        /// EmotePrefabのGUIクラス
+        /// </summary>
         [ExecuteInEditMode]
         [CustomEditor(typeof(EmotePrefab))]
         public class EmotePrefabEditor : UnityEditor.Editor, VRC.SDKBase.IEditorOnly
         {
-            EmotePrefab NowInstance;
+            private EmotePrefab nowInstance;
+
+            /// <summary>
+            /// EmotePrefabのGUI
+            /// </summary>
             public override void OnInspectorGUI()
             {
-                NowInstance = (EmotePrefab)target;
-                NowInstance.Motion = (AnimationClip)EditorGUILayout.ObjectField("Motion", NowInstance.Motion, typeof(AnimationClip), false);
-                NowInstance.Name = EditorGUILayout.TextField("Name", NowInstance.Name);
-                NowInstance.IsOneShot = EditorGUILayout.Toggle("IsOneShot", NowInstance.IsOneShot);
+                nowInstance = (EmotePrefab)target;
+                nowInstance.Motion = (AnimationClip)EditorGUILayout.ObjectField("Motion", nowInstance.Motion, typeof(AnimationClip), false);
+                nowInstance.Name = EditorGUILayout.TextField("Name", nowInstance.Name);
+                nowInstance.IsOneShot = EditorGUILayout.Toggle("IsOneShot", nowInstance.IsOneShot);
+                nowInstance.IsEmote = EditorGUILayout.Toggle("IsEmote", nowInstance.IsEmote);
+                nowInstance.IsAFK = EditorGUILayout.Toggle("IsAFK", nowInstance.IsAFK);
             }
         }
 #endif

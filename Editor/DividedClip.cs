@@ -26,9 +26,9 @@ namespace com.github.pandrabox.emoteprefab.editor
         /// EmoteClipの分割
         /// </summary>
         /// <param name="clip">分割するClip</param>
-        public DividedClip()
+        public DividedClip(int eI)
         {
-            Original = UnityEngine.Object.Instantiate(EmoteManager.EmotePrefab.Motion);
+            Original = UnityEngine.Object.Instantiate(EmoteManager.EmotePrefab(eI).Motion);
             AddKeyframesAtEnd();
             TypeCheck();
             CreateHumanoidClip();

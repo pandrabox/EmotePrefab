@@ -28,11 +28,12 @@ namespace com.github.pandrabox.emoteprefab.editor
         public TransitionInfo RegularExitTransitionInfo;
         public TransitionInfo ForceExitTransitionInfo;
         public DividedClip Dividedclip;
+        private string name;
 
-        public EmoteProperty()
+        public EmoteProperty(int eI)
         {
             StartTransitionInfo = new TransitionInfo(false, 0.75f, true, 0.25f, 0);
-            if (EmoteManager.IsOneShot)
+            if (EmoteManager.IsOneShot(eI))
             {
                 RegularExitTransitionInfo = new TransitionInfo(true, 0.75f, true, 0.25f, 0);
             }
@@ -42,7 +43,8 @@ namespace com.github.pandrabox.emoteprefab.editor
             }
 
             ForceExitTransitionInfo = new TransitionInfo(false, 0, false, 0, 0);
-            Dividedclip = new DividedClip();
+            Dividedclip = new DividedClip(eI);
+            name = EmoteManager.EmoteName(eI);
         }
     }
 }

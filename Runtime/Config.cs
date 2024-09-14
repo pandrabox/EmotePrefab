@@ -18,14 +18,19 @@ namespace com.github.pandrabox.emoteprefab.runtime
         public static readonly string WorkDir = $@"{ProjectDir}Work/";
 
         /// <summary>
+        /// テンプレートフォルダのパス
+        /// </summary>
+        public static readonly string TemplateDir = $@"{ProjectDir}Assets/";
+
+        /// <summary>
         /// ActionLayer雛形のパス
         /// </summary>
-        public static readonly string OriginalActionLayer = $@"{ProjectDir}Assets/BearsDen/CustomAnimatorControllers/Action.controller";
+        public static readonly string OriginalActionLayer = $@"{TemplateDir}Action.controller";
 
         /// <summary>
         /// FXLayer雛形のパス
         /// </summary>
-        public static readonly string OriginalFXLayer = $@"{ProjectDir}Assets/Pan/NonAAPPart/NonAAPPart.controller";
+        public static readonly string OriginalFXLayer = $@"{TemplateDir}NonAAPPart.controller";
 
         /// <summary>
         /// 生成ActionLayerのパス
@@ -38,6 +43,21 @@ namespace com.github.pandrabox.emoteprefab.runtime
         public static readonly string GeneratedFXLayer = $@"{WorkDir}FX.controller";
 
         /// <summary>
+        /// ダミー用2Fクリップのパス
+        /// </summary>
+        public static readonly string Dummy2FClip = $@"{TemplateDir}dummy2F.anim";
+
+        /// <summary>
+        /// Official AFKClipのパス
+        /// </summary>
+        public static readonly string OfficialAFKClip = $@"Packages/com.vrchat.avatars/Samples/AV3 Demo Assets/Animation/ProxyAnim/proxy_afk.anim";
+
+        /// <summary>
+        /// BackupAFKClipのパス(Officialが見つからなかった時用)
+        /// </summary>
+        public static readonly string BackupAFKClip = $@"{TemplateDir}proxy_afk.anim";
+
+        /// <summary>
         /// EmotePrefabObjectの前置詞
         /// </summary>
         public static readonly string EmotePrefabObjectPrefix = "E_";
@@ -46,6 +66,26 @@ namespace com.github.pandrabox.emoteprefab.runtime
         /// 各EmoteLayerにおけるEmoteStatemachineの名称
         /// </summary>
         public static readonly string EmoteStatemachineName = "Emote";
+
+        /// <summary>
+        /// ActionレイヤにおけるAFKControllerレイヤのIndex
+        /// </summary>
+        public static readonly int ActionAFKControllerIndex = 0;
+
+        /// <summary>
+        /// ActionレイヤにおけるBaseレイヤのIndex
+        /// </summary>
+        public static readonly int ActionBaseIndex = 1;
+
+        /// <summary>
+        /// GemeratedFXにおけるBodyShapeBlockerレイヤのIndex
+        /// </summary>
+        public static readonly int FXBodyShapeBlockerIndex = 0;
+
+        /// <summary>
+        /// ActionレイヤにおけるUnhumanoidレイヤのIndex
+        /// </summary>
+        public static readonly int FXUnhumanoidIndex = 1;
     }
 }
 

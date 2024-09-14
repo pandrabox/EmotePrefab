@@ -1,5 +1,4 @@
 ﻿// <copyright file="EmoteManager.cs"></copyright>
-#pragma warning disable SA1201 // Elements should appear in the correct order
 
 using System;
 using System.Collections.Generic;
@@ -22,269 +21,224 @@ namespace com.github.pandrabox.emoteprefab.editor
     /// </summary>
     public static class EmoteManager
     {
-        private static bool _initialized;
-        private static int _currentIndex = 0;
+        private static bool _prefabInitialized;
+        private static bool _paramInitialized;
+        //private static int _currentIndex = 0;
         private static EmotePrefab[] _emotePrefabs;
         private static EmoteProperty[] _emoteProperties;
-
-        public static void clear()
-        {
-            _initialized = false;
-        }
-
-        /// <summary>
-        /// EmoteManagerの初期化
-        /// </summary>
-        /// <returns>初期化成功フラグ</returns>
-        public static bool Init()
-        {
-            if (_initialized)
-            {
-                WriteWarning("EmoteManager.Init", "EmoteManager has been initialized twice, which is not allowed.");
-                return false;
-            }
-
-            _initialized = true;
-            _emotePrefabs = Avatar.RootTransform.GetComponentsInChildren<EmotePrefab>(false)
-                .Where(emote => emote.Motion != null)
-                .ToArray();
-            if (_emotePrefabs.Length == 0)
-            {
-                return false;
-            }
-
-            _emotePrefabs = _emotePrefabs.OrderBy(c => c.Name).ToArray();
-            _currentIndex = 0;
-            InitEmoteProperties();
-            return true;
-        }
-
-        /// <summary>
-        /// EmoteManagerの初期化チェック
-        /// </summary>
-        private static void InitCheck()
-        {
-            if (!_initialized)
-            {
-                Init();
-            }
-        }
-
-        /// <summary>
-        /// EmotePropertiesの初期化
-        /// </summary>
-        private static void InitEmoteProperties()
-        {
-            _emoteProperties = new EmoteProperty[_emotePrefabs.Length];
-            MoveFirst();
-            while (Enable)
-            {
-                _emoteProperties[_currentIndex] = new EmoteProperty();
-                Next();
-            }
-        }
 
         /// <summary>
         /// 現行のEmotePrefab
         /// </summary>
-        public static EmotePrefab EmotePrefab
+        public static EmotePrefab EmotePrefab(int n)
         {
-            get
-            {
-                InitCheck();
-                return _emotePrefabs[_currentIndex];
-            }
+            return EmotePrefabs[n];
         }
 
         /// <summary>
         /// 現行のEmoteProperty
         /// </summary>
-        public static EmoteProperty EmoteProperty
+        public static EmoteProperty EmoteProperty(int n)
         {
-            get
-            {
-                InitCheck();
-                return _emoteProperties[_currentIndex];
-            }
+            return EmoteProperties[n];
         }
 
         /// <summary>
         /// CurrentがOneShotかどうか
         /// </summary>
-        public static bool IsOneShot
+        public static bool IsOneShot(int n)
         {
-            get
-            {
-                InitCheck();
-                return EmotePrefab.IsOneShot;
-            }
+            return EmotePrefab(n).IsOneShot;
         }
 
         /// <summary>
         /// 現行のID(=VRCEmoteの値)
         /// </summary>
-        public static int ID
+        public static int ID(int n)
         {
-            get
-            {
-                InitCheck();
-                return _currentIndex + 1;
-            }
+            return n + 1;
         }
 
         /// <summary>
         /// 現行のエモート名
         /// </summary>
-        public static string EmoteName
+        public static string EmoteName(int n)
         {
-            get
-            {
-                InitCheck();
-                return EmotePrefab.Name;
-            }
+            return EmotePrefab(n).Name;
         }
 
         /// <summary>
         /// 現行のState名
         /// </summary>
-        public static string StateName
+        public static string StateName(int n)
         {
-            get
-            {
-                InitCheck();
-                return $@"E{ID:D3}";
-            }
+            return $@"E{ID(n):D3}";
+        }
+
+        /// <summary>
+        /// 現行のState名
+        /// </summary>
+        public static string AFKName(int n)
+        {
+            return $@"A{ID(n):D3}";
         }
 
         /// <summary>
         /// WDのState名
         /// </summary>
-        public static string WDStateName
+        public static string WDStateName(int n)
         {
-            get
-            {
-                InitCheck();
-                return $@"WD{ID:D3}";
-            }
+            return $@"WD{ID(n):D3}";
         }
 
         /// <summary>
         /// エモートへ入る遷移条件
         /// </summary>
-        public static TransitionInfo StartTransitionInfo
+        public static TransitionInfo StartTransitionInfo(int n)
         {
-            get
-            {
-                InitCheck();
-                return EmoteProperty.StartTransitionInfo;
-            }
+            return EmoteProperty(n).StartTransitionInfo;
         }
 
         /// <summary>
         /// 正常終了の遷移条件
         /// </summary>
-        public static TransitionInfo RegularExitTransitionInfo
+        public static TransitionInfo RegularExitTransitionInfo(int n)
         {
-            get
-            {
-                InitCheck();
-                return EmoteProperty.RegularExitTransitionInfo;
-            }
+            return EmoteProperty(n).RegularExitTransitionInfo;
         }
 
         /// <summary>
         /// 強制終了の遷移条件
         /// </summary>
-        public static TransitionInfo ForceExitTransitionInfo
+        public static TransitionInfo ForceExitTransitionInfo(int n)
         {
-            get
-            {
-                InitCheck();
-                return EmoteProperty.ForceExitTransitionInfo;
-            }
+            return EmoteProperty(n).ForceExitTransitionInfo;
         }
 
         /// <summary>
         /// 現行のHumanoidClip
         /// </summary>
-        public static AnimationClip HumanoidClip
+        public static AnimationClip HumanoidClip(int n)
         {
-            get
-            {
-                InitCheck();
-                return EmoteProperty.Dividedclip.HumanoidClip;
-            }
+            return EmoteProperty(n).Dividedclip.HumanoidClip;
         }
 
         /// <summary>
         /// 現行のBodyShapeBlockerClip
         /// </summary>
-        public static AnimationClip BodyShapeBlockerClip
+        public static AnimationClip BodyShapeBlockerClip(int n)
         {
-            get
-            {
-                InitCheck();
-                return EmoteProperty.Dividedclip.BodyShapeBlockerClip;
-            }
+            return EmoteProperty(n).Dividedclip.BodyShapeBlockerClip;
         }
 
         /// <summary>
         /// 現行のUnhumanoidClip
         /// </summary>
-        public static AnimationClip UnhumanoidClip
+        public static AnimationClip UnhumanoidClip(int n)
         {
-            get
-            {
-                InitCheck();
-                return EmoteProperty.Dividedclip.UnhumanoidClip;
-            }
+            return EmoteProperty(n).Dividedclip.UnhumanoidClip;
         }
 
         /// <summary>
         /// 現行のFakeWriteDefaultClip
         /// </summary>
-        public static AnimationClip FakeWriteDefaultClip
+        public static AnimationClip FakeWriteDefaultClip(int n)
         {
-            get
-            {
-                InitCheck();
-                return EmoteProperty.Dividedclip.FakeWriteDefaultClip;
-            }
+            return EmoteProperty(n).Dividedclip.FakeWriteDefaultClip;
         }
 
         /// <summary>
         /// BodyShapeの有無
         /// </summary>
-        public static bool HasBodyShape
+        public static bool HasBodyShape(int n)
         {
-            get
-            {
-                InitCheck();
-                return EmoteProperty.Dividedclip.HasBodyShape;
-            }
+            return EmoteProperty(n).Dividedclip.HasBodyShape;
         }
 
         /// <summary>
         /// Humanoidの有無
         /// </summary>
-        public static bool HasHumanoid
+        public static bool HasHumanoid(int n)
         {
-            get
-            {
-                InitCheck();
-                return EmoteProperty.Dividedclip.HasHumanoid;
-            }
+            return EmoteProperty(n).Dividedclip.HasHumanoid;
         }
 
         /// <summary>
         /// Unhumanoidの有無
         /// </summary>
-        public static bool HasUnhumanoid
+        public static bool HasUnhumanoid(int n)
+        {
+            return EmoteProperty(n).Dividedclip.HasUnhumanoid;
+        }
+
+        /// <summary>
+        /// Expressionに表示するエモートかどうか
+        /// </summary>
+        public static bool IsEmote(int n)
+        {
+            return EmotePrefab(n).IsEmote;
+        }
+
+        /// <summary>
+        /// AFK選定対象かどうか
+        /// </summary>
+        public static bool IsAFK(int n)
+        {
+            return EmotePrefab(n).IsAFK;
+        }
+
+        /// <summary>
+        /// 長さ
+        /// </summary>
+        public static int Length
         {
             get
             {
-                InitCheck();
-                return EmoteProperty.Dividedclip.HasUnhumanoid;
+                return EmotePrefabs.Length;
+            }
+        }
+
+        /// <summary>
+        /// Expression Emoteが1つ以上あるかどうか
+        /// </summary>
+        public static bool HasEmote
+        {
+            get
+            {
+                return EmotePrefabs.Where(emote => emote.IsEmote).Any();
+            }
+        }
+
+        /// <summary>
+        /// AFKが1つ以上あるかどうか
+        /// </summary>
+        public static bool HasAFK
+        {
+            get
+            {
+                return EmotePrefabs.Where(emote => emote.IsAFK).Any();
+            }
+        }
+
+        /// <summary>
+        /// Emote又はAFKが1つ以上あるかどうか
+        /// </summary>
+        public static bool HasItem
+        {
+            get
+            {
+                return HasEmote || HasAFK;
+            }
+        }
+
+        /// <summary>
+        /// AFKの数
+        /// </summary>
+        public static int AFKCount
+        {
+            get
+            {
+                return EmotePrefabs.Where(emote => emote.IsAFK).Count();
             }
         }
 
@@ -292,35 +246,99 @@ namespace com.github.pandrabox.emoteprefab.editor
         /// 有効性確認
         /// </summary>
         /// <returns>有効かどうか</returns>
-        public static bool Enable
+        public static bool Enable(int n)
+        {
+            return n < Length;
+        }
+
+        /// <summary>
+        /// EmotePrefabsアクセス用
+        /// </summary>
+        private static EmotePrefab[] EmotePrefabs
         {
             get
             {
-                InitCheck();
-                return _currentIndex < _emotePrefabs.Length;
+                if (!_prefabInitialized)
+                {
+                    _prefabInitialized = true;
+                    LoadEmotePrefabs();
+                    _emotePrefabs = _emotePrefabs.OrderBy(c => c.Name).ToArray();
+                }
+
+                return _emotePrefabs;
+
+                void LoadEmotePrefabs()
+                {
+                    void RenewEmotePrefabs()
+                    {
+                        _paramInitialized = false;
+                        _emotePrefabs = Avatar.RootTransform.GetComponentsInChildren<EmotePrefab>(false)
+                            .Where(emote => emote.Motion != null)
+                            .Where(emote => emote.IsAFK || emote.IsEmote)
+                            .ToArray();
+                    }
+                    RenewEmotePrefabs();
+                    if (CreateDefaultAFK())
+                    {
+                        RenewEmotePrefabs();
+                    }
+                }
             }
         }
 
         /// <summary>
-        /// Currentを次に進める
+        /// EmotePropertiesアクセス用
         /// </summary>
-        /// <returns>成否</returns>
-        public static void Next()
+        private static EmoteProperty[] EmoteProperties
         {
-            InitCheck();
-            if (Enable)
+            get
             {
-                _currentIndex++;
+                if (!_paramInitialized)
+                {
+                    _paramInitialized = true;
+                    _emoteProperties = new EmoteProperty[EmotePrefabs.Length];
+                    for (int i = 0; i < Length; i++)
+                    {
+                        _emoteProperties[i] = new EmoteProperty(i);
+                    }
+                }
+
+                return _emoteProperties;
             }
         }
 
         /// <summary>
-        /// 最初に戻る
+        /// 初期化済状態の解除
         /// </summary>
-        public static void MoveFirst()
+        public static void Clear()
         {
-            InitCheck();
-            _currentIndex = 0;
+            _prefabInitialized = false;
+            _paramInitialized = false;
+        }
+
+        /// <summary>
+        /// Itemがあり、AFKがない場合、DefaultAFKを作成
+        /// </summary>
+        /// <returns>作成処理をした場合true, しなかった場合false</returns>
+        private static bool CreateDefaultAFK()
+        {
+            if (!HasItem || HasAFK)
+            {
+                return false;
+            }
+
+            var obj = new GameObject();
+            obj.transform.SetParent(Avatar.RootTransform);
+            var emotePrefab = obj.AddComponent<EmotePrefab>();
+            emotePrefab.Motion = AssetDatabase.LoadAssetAtPath<AnimationClip>(Config.OfficialAFKClip) ?? AssetDatabase.LoadAssetAtPath<AnimationClip>(Config.BackupAFKClip);
+            if (emotePrefab.Motion == null) 
+            {
+                WriteWarning("EmoteManager.CreateDefaultAFK", "AFK Clip Not Found");
+            }
+            obj.name = "EmotePrefab_DefaultAFK";
+            emotePrefab.IsAFK = true;
+            emotePrefab.IsEmote = false;
+            return true;
         }
     }
 }

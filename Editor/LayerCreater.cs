@@ -29,13 +29,11 @@ namespace com.github.pandrabox.emoteprefab.editor
             var actionLayer = new ActionLayer();
             var bodyShapeBlockerLayer = new BodyShapeBlockerLayer();
             var unhumanoidLayer = new UnhumanoidLayer();
-            EmoteManager.MoveFirst();
-            while (EmoteManager.Enable)
+            for (int i = 0; i < EmoteManager.Length; i++)
             {
-                actionLayer.AddEmote();
-                bodyShapeBlockerLayer.AddEmote();
-                unhumanoidLayer.AddEmote();
-                EmoteManager.Next();
+                actionLayer.AddEmote(i);
+                bodyShapeBlockerLayer.AddEmote(i);
+                unhumanoidLayer.AddEmote(i);
             }
         }
     }
@@ -49,12 +47,12 @@ namespace com.github.pandrabox.emoteprefab.editor
     {
         public ActionLayer() : base(LayerType.Action) { }
 
-        public void AddEmote()
+        public void AddEmote(int eI)
         {
-            CreateState(EmoteManager.StateName, EmoteManager.HumanoidClip, true);
-            Transition_PrepareToCurrent();
-            Transition_CurrentToRegularExit("Recovery standing");
-            Transition_CurrentToForceExit("Force Exit");
+            CreateState(EmoteManager.StateName(eI), EmoteManager.HumanoidClip(eI), true);
+            Transition_PrepareToCurrent(eI);
+            Transition_CurrentToRegularExit("Recovery standing",eI);
+            Transition_CurrentToForceExit("Force Exit", eI);
         }
     }
 
@@ -62,18 +60,18 @@ namespace com.github.pandrabox.emoteprefab.editor
     {
         public BodyShapeBlockerLayer() : base(LayerType.BodyShapeBlocker) { }
 
-        public void AddEmote()
+        public void AddEmote(int eI)
         {
-            if (EmoteManager.HasBodyShape)
+            if (EmoteManager.IsOneShot(eI))
             {
-                CreateState(EmoteManager.StateName, EmoteManager.BodyShapeBlockerClip, true);
-                Transition_PrepareToCurrent();
-                Transition_CurrentToRegularExit("Exit");
-                Transition_CurrentToForceExit("Exit");
+                CreateState(EmoteManager.StateName(eI), EmoteManager.BodyShapeBlockerClip(eI), true);
+                Transition_PrepareToCurrent(eI);
+                Transition_CurrentToRegularExit("Exit", eI);
+                Transition_CurrentToForceExit("Exit", eI);
             }
             else
             {
-                Transition_PrepareToExit();
+                Transition_PrepareToExit(eI);
             }
         }
     }
@@ -82,20 +80,20 @@ namespace com.github.pandrabox.emoteprefab.editor
     {
         public UnhumanoidLayer() : base(LayerType.Unhumanoid) { }
 
-        public void AddEmote()
+        public void AddEmote(int eI)
         {
-            if (EmoteManager.HasUnhumanoid)
+            if (EmoteManager.HasUnhumanoid(eI))
             {
-                CreateState(EmoteManager.WDStateName, EmoteManager.FakeWriteDefaultClip, false);
-                CreateState(EmoteManager.StateName, EmoteManager.UnhumanoidClip, true);
-                Transition_PrepareToCurrent();
-                Transition_CurrentToRegularExit(EmoteManager.WDStateName);
-                Transition_CurrentToForceExit(EmoteManager.WDStateName);
-                Transition_WDtoExit();
+                CreateState(EmoteManager.WDStateName(eI), EmoteManager.FakeWriteDefaultClip(eI), false);
+                CreateState(EmoteManager.StateName(eI), EmoteManager.UnhumanoidClip(eI), true);
+                Transition_PrepareToCurrent(eI);
+                Transition_CurrentToRegularExit(EmoteManager.WDStateName(eI), eI);
+                Transition_CurrentToForceExit(EmoteManager.WDStateName(eI), eI);
+                Transition_WDtoExit(eI);
             }
             else
             {
-                Transition_PrepareToExit();
+                Transition_PrepareToExit(eI);
             }
         }
     }

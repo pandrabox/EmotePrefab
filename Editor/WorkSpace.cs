@@ -44,8 +44,14 @@ namespace com.github.pandrabox.emoteprefab.editor
         /// </summary>
         private static void CopyControllers()
         {
-            AssetDatabase.CopyAsset(Config.OriginalActionLayer, Config.GeneratedActionLayer);
-            AssetDatabase.CopyAsset(Config.OriginalFXLayer, Config.GeneratedFXLayer);
+            if(!AssetDatabase.CopyAsset(Config.OriginalActionLayer, Config.GeneratedActionLayer))
+            {
+                WriteWarning("WorkSpace", "GeneratedActionLayerの生成に失敗しました");
+            }
+            if(!AssetDatabase.CopyAsset(Config.OriginalFXLayer, Config.GeneratedFXLayer))
+            {
+                WriteWarning("WorkSpace", "GeneratedFXLayerの生成荷失敗しました");
+            }
         }
     }
 }

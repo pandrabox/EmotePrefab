@@ -48,6 +48,11 @@ namespace com.github.pandrabox.emoteprefab.editor
         [MenuItem("PanDev/EmotePrefab")]
         public static void GenEmotePrefab()
         {
+            GameObject[] EmotePrefab_s = FindObjectsOfType<GameObject>().Where(g => g.name.StartsWith("Emot")).ToArray();
+            foreach (GameObject e in EmotePrefab_s)
+            {
+                DestroyImmediate(e);
+            }
             var avatarDescriptor = FindObjectOfType<VRCAvatarDescriptor>();
             new EmotePrefabMain().Run(avatarDescriptor);
         }
@@ -70,21 +75,20 @@ namespace com.github.pandrabox.emoteprefab.editor
                 return;
             }
 
-            if (!avatarDescriptor.transform.GetComponentsInChildren<EmotePrefab>(false)
-                .Where(emote => emote.Motion != null)
-                .Any())
+            Avatar.Clear();
+            EmoteManager.Clear();
+            WorkSpace.Create();
+            Avatar.Init(avatarDescriptor);
+            if (!EmoteManager.HasItem)
             {
                 WriteWarning("EmotePrefabMain.Run", "Nothing to do");
                 return;
             }
 
-            WorkSpace.Create();
-            Avatar.clear();
-            EmoteManager.clear();
-            Avatar.Init(avatarDescriptor);
-            EmoteManager.Init();
+
             new LayerCreater();
             new ExpressionCreater();
+            new AFKLayer();
         }
     }
 }

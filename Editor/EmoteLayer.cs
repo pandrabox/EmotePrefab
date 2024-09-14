@@ -70,15 +70,15 @@ namespace com.github.pandrabox.emoteprefab.editor
             AnimatorControllerLayer target;
             if (layerType == LayerType.Action)
             {
-                target = Avatar.ActionController.layers[0];
+                target = Avatar.ActionController.layers[Config.ActionBaseIndex];
             }
             else if (layerType == LayerType.BodyShapeBlocker)
             {
-                target = Avatar.FXController.layers[0];
+                target = Avatar.FXController.layers[Config.FXBodyShapeBlockerIndex];
             }
             else
             {
-                target = Avatar.FXController.layers[1];
+                target = Avatar.FXController.layers[Config.FXUnhumanoidIndex];
             }
 
             _currentLayer = target ?? throw new System.IO.FileNotFoundException($@"Layer {Enum.GetName(typeof(LayerType), layerType)}({layerType}) Not Found");
@@ -135,9 +135,11 @@ namespace com.github.pandrabox.emoteprefab.editor
         /// <returns>設定したTransition</returns>
         protected AnimatorStateTransition SetTransition(AnimatorState fromState, AnimatorState toState, TransitionInfo transitionInfo)
         {
-            if (fromState == null) {
+            if (fromState == null)
+            {
                 WriteWarning("SetTransition", "fromStateがnullです。これは予期されていません。");
             }
+
             AnimatorStateTransition transition = toState == null ? fromState.AddExitTransition() : fromState.AddTransition(toState);
             transition.hasExitTime = transitionInfo.HasExitTime;
             transition.exitTime = transitionInfo.ExitTime;
@@ -149,31 +151,31 @@ namespace com.github.pandrabox.emoteprefab.editor
         /// <summary>
         /// PrepareからCurrentへの遷移設定
         /// </summary>
-        protected void Transition_PrepareToCurrent()
+        protected void Transition_PrepareToCurrent(int eI)
         {
-            SetTransition(_prepareState, _currentState, EmoteManager.StartTransitionInfo)
-             .AddCondition(AnimatorConditionMode.Equals, EmoteManager.ID, "VRCEmote");
+            SetTransition(_prepareState, _currentState, EmoteManager.StartTransitionInfo(eI))
+             .AddCondition(AnimatorConditionMode.Equals, EmoteManager.ID(eI), "VRCEmote");
         }
 
         /// <summary>
         /// PrepareからExitへの遷移設定
         /// </summary>
-        protected void Transition_PrepareToExit()
+        protected void Transition_PrepareToExit(int eI)
         {
-            SetTransition(_prepareState, null, EmoteManager.ForceExitTransitionInfo)
-             .AddCondition(AnimatorConditionMode.Equals, EmoteManager.ID, "VRCEmote");
+            SetTransition(_prepareState, null, EmoteManager.ForceExitTransitionInfo(eI))
+             .AddCondition(AnimatorConditionMode.Equals, EmoteManager.ID(eI), "VRCEmote");
         }
 
         /// <summary>
         /// Currentが正常終了時の遷移設定
         /// </summary>
         /// <param name="toStateName">遷移先Stateの名称 ("Exit"の場合Unity標準Exit)</param>
-        protected void Transition_CurrentToRegularExit(string toStateName)
+        protected void Transition_CurrentToRegularExit(string toStateName, int eI)
         {
-            var transition = SetTransition(_currentState, GetState(toStateName), EmoteManager.RegularExitTransitionInfo);
-            if (!EmoteManager.IsOneShot)
+            var transition = SetTransition(_currentState, GetState(toStateName), EmoteManager.RegularExitTransitionInfo(eI));
+            if (!EmoteManager.IsOneShot(eI))
             {
-                transition.AddCondition(AnimatorConditionMode.NotEqual, EmoteManager.ID, "VRCEmote");
+                transition.AddCondition(AnimatorConditionMode.NotEqual, EmoteManager.ID(eI), "VRCEmote");
             }
         }
 
@@ -181,18 +183,18 @@ namespace com.github.pandrabox.emoteprefab.editor
         /// Currentが異常終了時の遷移設定
         /// </summary>
         /// <param name="toStateName">遷移先Stateの名称 ("Exit"の場合Unity標準Exit)</param>
-        protected void Transition_CurrentToForceExit(string toStateName)
+        protected void Transition_CurrentToForceExit(string toStateName, int eI)
         {
-            SetTransition(_currentState, GetState(toStateName), EmoteManager.ForceExitTransitionInfo)
+            SetTransition(_currentState, GetState(toStateName), EmoteManager.ForceExitTransitionInfo(eI))
              .AddCondition(AnimatorConditionMode.If, 0, "Seated");
         }
 
         /// <summary>
         /// WDからExitへの遷移設定
         /// </summary>
-        protected void Transition_WDtoExit()
+        protected void Transition_WDtoExit(int eI)
         {
-            SetTransition(GetState(EmoteManager.WDStateName), null, EmoteManager.ForceExitTransitionInfo)
+            SetTransition(GetState(EmoteManager.WDStateName(eI)), null, EmoteManager.ForceExitTransitionInfo(eI))
              .AddCondition(AnimatorConditionMode.IfNot, 0, "Dummy");
         }
     }

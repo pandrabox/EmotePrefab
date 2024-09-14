@@ -26,6 +26,11 @@ namespace com.github.pandrabox.emoteprefab.editor
 
         public ExpressionCreater()
         {
+            if (!EmoteManager.HasItem)
+            {
+                return;
+            }
+
             _emoteObjRoot = new GameObject("Emote");
             _emoteObjRoot.transform.SetParent(Avatar.RootTransform);
 
@@ -42,22 +47,23 @@ namespace com.github.pandrabox.emoteprefab.editor
             menu.Control.type = VRC.SDK3.Avatars.ScriptableObjects.VRCExpressionsMenu.Control.ControlType.SubMenu;
             menu.MenuSource = SubmenuSource.Children;
 
-            EmoteManager.MoveFirst();
-            while (EmoteManager.Enable)
+            for (int i = 0; i < EmoteManager.Length; i++)
             {
-                CreateUnitMenu();
-                EmoteManager.Next();
+                if (EmoteManager.IsEmote(i))
+                {
+                    CreateUnitMenu(i);
+                }
             }
         }
 
-        private void CreateUnitMenu()
+        private void CreateUnitMenu(int eI)
         {
-            var obj = new GameObject(EmoteManager.EmoteName);
+            var obj = new GameObject(EmoteManager.EmoteName(eI));
             obj.transform.SetParent(_emoteObjRoot.transform);
             var unitMenu = obj.AddComponent<ModularAvatarMenuItem>();
             unitMenu.Control.parameter = new VRC.SDK3.Avatars.ScriptableObjects.VRCExpressionsMenu.Control.Parameter() { name = "VRCEmote" };
-            unitMenu.Control.value = EmoteManager.ID;
-            if (EmoteManager.IsOneShot)
+            unitMenu.Control.value = EmoteManager.ID(eI);
+            if (EmoteManager.IsOneShot(eI))
             {
                 unitMenu.Control.type = VRC.SDK3.Avatars.ScriptableObjects.VRCExpressionsMenu.Control.ControlType.Button;
             }

@@ -35,6 +35,7 @@ namespace com.github.pandrabox.emoteprefab.editor
                 return _actionController;
             }
         }
+
         public static AnimatorController FXController
         {
             get
@@ -80,7 +81,10 @@ namespace com.github.pandrabox.emoteprefab.editor
             }
         }
 
-        public static void clear()
+        /// <summary>
+        /// 初期化済状態の解除
+        /// </summary>
+        public static void Clear()
         {
             _initialized = false;
         }

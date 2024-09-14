@@ -73,8 +73,6 @@ crashlytics-build.properties
 README.md.meta
 package.json.meta
 LICENSE.meta
-Assets/BearsDen/CustomAnimatorControllers/Action_Work.controller
-Assets/BearsDen/CustomAnimatorControllers/Action_Work.controller.meta
-Assets/BearsDen/CustomAnimatorControllers/~*
+Assets/~*
 /Work
 Work.meta
