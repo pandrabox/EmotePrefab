@@ -52,6 +52,7 @@ namespace com.github.pandrabox.emoteprefab.editor
             CreateState(EmoteManager.StateName(eI), EmoteManager.HumanoidClip(eI), true);
             Transition_PrepareToCurrent(eI);
             Transition_CurrentToRegularExit("Recovery standing",eI);
+            Transition_OneshotCancel("Recovery standing", eI);
             Transition_CurrentToForceExit("Force Exit", eI);
         }
     }
@@ -67,6 +68,7 @@ namespace com.github.pandrabox.emoteprefab.editor
                 CreateState(EmoteManager.StateName(eI), EmoteManager.BodyShapeBlockerClip(eI), true);
                 Transition_PrepareToCurrent(eI);
                 Transition_CurrentToRegularExit("Exit", eI);
+                Transition_OneshotCancel("Exit", eI);
                 Transition_CurrentToForceExit("Exit", eI);
             }
             else
@@ -88,6 +90,7 @@ namespace com.github.pandrabox.emoteprefab.editor
                 CreateState(EmoteManager.StateName(eI), EmoteManager.UnhumanoidClip(eI), true);
                 Transition_PrepareToCurrent(eI);
                 Transition_CurrentToRegularExit(EmoteManager.WDStateName(eI), eI);
+                Transition_OneshotCancel(EmoteManager.WDStateName(eI), eI);
                 Transition_CurrentToForceExit(EmoteManager.WDStateName(eI), eI);
                 Transition_WDtoExit(eI);
             }

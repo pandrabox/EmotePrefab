@@ -189,6 +189,15 @@ namespace com.github.pandrabox.emoteprefab.editor
              .AddCondition(AnimatorConditionMode.If, 0, "Seated");
         }
 
+        protected void Transition_OneshotCancel(string toStateName, int eI)
+        {
+            if (EmoteManager.IsOneShot(eI))
+            {
+                SetTransition(_currentState, GetState(toStateName), EmoteManager.ForceExitTransitionInfo(eI))
+                 .AddCondition(AnimatorConditionMode.NotEqual, EmoteManager.ID(eI), "VRCEmote");
+            }
+        }
+
         /// <summary>
         /// WDからExitへの遷移設定
         /// </summary>

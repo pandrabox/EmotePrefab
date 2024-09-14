@@ -63,14 +63,14 @@ namespace com.github.pandrabox.emoteprefab.editor
             var unitMenu = obj.AddComponent<ModularAvatarMenuItem>();
             unitMenu.Control.parameter = new VRC.SDK3.Avatars.ScriptableObjects.VRCExpressionsMenu.Control.Parameter() { name = "VRCEmote" };
             unitMenu.Control.value = EmoteManager.ID(eI);
-            if (EmoteManager.IsOneShot(eI))
-            {
-                unitMenu.Control.type = VRC.SDK3.Avatars.ScriptableObjects.VRCExpressionsMenu.Control.ControlType.Button;
-            }
-            else
-            {
+            //if (EmoteManager.IsOneShot(eI))
+            //{
+            //    unitMenu.Control.type = VRC.SDK3.Avatars.ScriptableObjects.VRCExpressionsMenu.Control.ControlType.Button;
+            //}
+            //else
+            //{
                 unitMenu.Control.type = VRC.SDK3.Avatars.ScriptableObjects.VRCExpressionsMenu.Control.ControlType.Toggle;
-            }
+            //}
         }
     }
 }
