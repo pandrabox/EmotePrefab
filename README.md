@@ -20,10 +20,12 @@
 
 # thanks
 - [VRChat向けCustom Animator Controllers](https://booth.pm/ja/items/4424448)
--- v2.0よりActionレイヤを使用しています
+-- v2.0 Actionレイヤをベースに作成しました
 - [Modular Avatar](https://github.com/bdunderscore/modular-avatar)
 -- メニュー作成等で利用しています。その他、githubの使用方法、コーディング方法などの参考として大いにお世話になりました
 - [Non-Destructive Modular Framework](https://github.com/bdunderscore/ndmf)
 -- 完全に依存しています
 - [HyakuashiUdonMotionRecorder](https://github.com/mukaderabbit/mukaderabbit-HyakuashiUdonMotionRecorder-HUMR-)
 -- モーションデータの作成に使用させて頂いています
+- [AvatarParametersDriver](https://github.com/Narazaka/AvatarParametersDriver)
+-- VRC_AvatarParametersDriverのコーディングの参考にさせて頂きました
