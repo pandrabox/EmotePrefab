@@ -58,6 +58,11 @@ namespace com.github.pandrabox.emoteprefab.runtime
         public static readonly string BackupAFKClip = $@"{TemplateDir}proxy_afk.anim";
 
         /// <summary>
+        /// Iconのパス
+        /// </summary>
+        public static readonly string EmotePrefabIcon = $@"{TemplateDir}Ico/EmotePrefab.png";
+
+        /// <summary>
         /// EmotePrefabObjectの前置詞
         /// </summary>
         public static readonly string EmotePrefabObjectPrefix = "E_";

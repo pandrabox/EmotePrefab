@@ -46,6 +46,7 @@ namespace com.github.pandrabox.emoteprefab.editor
             var menu = _emoteObjRoot.AddComponent<ModularAvatarMenuItem>();
             menu.Control.type = VRC.SDK3.Avatars.ScriptableObjects.VRCExpressionsMenu.Control.ControlType.SubMenu;
             menu.MenuSource = SubmenuSource.Children;
+            menu.Control.icon = AssetDatabase.LoadAssetAtPath<Texture2D>(Config.EmotePrefabIcon);
 
             for (int i = 0; i < EmoteManager.Length; i++)
             {
