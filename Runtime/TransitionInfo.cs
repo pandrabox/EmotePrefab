@@ -1,26 +1,17 @@
 ﻿// <copyright file="TransitionInfo.cs"></copyright>
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using com.github.pandrabox.emoteprefab.editor;
-using com.github.pandrabox.emoteprefab.runtime;
-using nadena.dev.modular_avatar.core;
-using nadena.dev.modular_avatar.core.editor;
-using nadena.dev.ndmf;
-using UnityEditor;
-using UnityEditor.Animations;
-using UnityEngine;
-using VRC.SDK3.Avatars.Components;
-using static com.github.pandrabox.emoteprefab.runtime.Generic;
+#if UNITY_EDITOR
 
 #pragma warning disable SA1401 // Fields should be private
 
-namespace com.github.pandrabox.emoteprefab.editor
+using System;
+
+namespace com.github.pandrabox.emoteprefab.runtime
 {
     /// <summary>
     /// Transitionパラメータを管理するクラス
     /// </summary>
+    [Serializable]
     public class TransitionInfo
     {
         public bool HasExitTime;
@@ -47,3 +38,5 @@ namespace com.github.pandrabox.emoteprefab.editor
         }
     }
 }
+
+#endif
