@@ -5,8 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using nadena.dev.ndmf;
+#if UNITY_EDITOR
 using UnityEditor;
 using UnityEditor.Animations;
+#endif
 using UnityEngine;
 using VRC.SDK3.Avatars.Components;
 
@@ -17,6 +19,7 @@ namespace com.github.pandrabox.emoteprefab.runtime
     /// </summary>
     public static class Generic
     {
+#if UNITY_EDITOR
         public static void WriteWarning(string functionname, string msg)
         {
             Debug.LogWarning($@"[EmotePrefab][{functionname}][{msg}]");
@@ -38,6 +41,7 @@ namespace com.github.pandrabox.emoteprefab.runtime
 
             return null;
         }
+#endif
     }
 }
 
