@@ -65,7 +65,7 @@ namespace com.github.pandrabox.emoteprefab.editor
 
         public void AddEmote(int eI)
         {
-            if (EmoteManager.IsOneShot(eI))
+            if (EmoteManager.HasBodyShape(eI))
             {
                 CreateState(EmoteManager.StateName(eI), EmoteManager.BodyShapeBlockerClip(eI), true);
                 Transition_PrepareToCurrent(eI);
