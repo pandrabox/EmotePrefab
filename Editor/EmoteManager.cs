@@ -12,6 +12,7 @@ using UnityEditor;
 using UnityEditor.Animations;
 using UnityEngine;
 using VRC.SDK3.Avatars.Components;
+using VRC.SDK3.Dynamics.PhysBone.Components;
 using static com.github.pandrabox.emoteprefab.runtime.Generic;
 
 namespace com.github.pandrabox.emoteprefab.editor
@@ -239,6 +240,26 @@ namespace com.github.pandrabox.emoteprefab.editor
             get
             {
                 return EmotePrefabs.Where(emote => emote.IsAFK).Count();
+            }
+        }
+
+        public static bool HasAnimateAllPhysBones
+        {
+            get
+            {
+                return EmotePrefabs.Where(emote => emote.AnimateAllPhysBones).Any();
+            }
+        }
+
+        public static VRCPhysBone[] AnimatePhysBones
+        {
+            get
+            {
+                return EmotePrefabs
+                    .Where(prefab => prefab.AnimatePhysBones != null) // nullチェック
+                    .SelectMany(prefab => prefab.AnimatePhysBones.Where(bone => bone != null))
+                    .Distinct()
+                    .ToArray();
             }
         }
 

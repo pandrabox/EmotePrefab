@@ -89,6 +89,7 @@ namespace com.github.pandrabox.emoteprefab.editor
             new LayerCreater();
             new ExpressionCreater();
             new AFKLayer();
+            new AnimatePhysBones();
         }
     }
 }
