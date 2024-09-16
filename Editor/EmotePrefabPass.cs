@@ -37,6 +37,7 @@ namespace com.github.pandrabox.emoteprefab.editor
         }
     }
 
+    /*
     /// <summary>
     /// 適当なアバターで実行する(デバッグ専用)
     /// </summary>
@@ -57,11 +58,12 @@ namespace com.github.pandrabox.emoteprefab.editor
             new EmotePrefabMain().Run(avatarDescriptor);
         }
     }
+    */
 
     /// <summary>
     /// 実際の処理
     /// </summary>
-    public class EmotePrefabMain : MonoBehaviour
+    public class EmotePrefabMain
     {
         /// <summary>
         /// トリガ用
