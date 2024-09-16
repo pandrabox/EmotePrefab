@@ -19,6 +19,7 @@ namespace com.github.pandrabox.emoteprefab.runtime
         public bool IsOneShot;
         public bool IsEmote;
         public bool IsAFK;
+        public Texture2D Icon;
         public bool ViewAdvancedOptions;
         public bool AnimateAllPhysBones;
         public List<VRCPhysBone> AnimatePhysBones;

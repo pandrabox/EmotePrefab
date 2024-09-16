@@ -117,6 +117,16 @@ namespace com.github.pandrabox.emoteprefab.editor
         }
 
         /// <summary>
+        /// アイコン
+        /// </summary>
+        /// <param name="n"></param>
+        /// <returns></returns>
+        public static Texture2D Icon(int n)
+        {
+            return EmotePrefab(n).Icon;
+        }
+
+        /// <summary>
         /// 現行のHumanoidClip
         /// </summary>
         public static AnimationClip HumanoidClip(int n)
