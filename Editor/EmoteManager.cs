@@ -123,7 +123,22 @@ namespace com.github.pandrabox.emoteprefab.editor
         /// <returns></returns>
         public static Texture2D Icon(int n)
         {
-            return EmotePrefab(n).Icon;
+            if (EmotePrefab(n).Icon != null)
+            {
+                return EmotePrefab(n).Icon;
+            }
+            else if (IsOneShot(n))
+            {
+                return AssetDatabase.LoadAssetAtPath<Texture2D>(Config.OneShotIcon);
+            }
+            else if (EmotePrefab(n).Motion.isLooping)
+            {
+                return AssetDatabase.LoadAssetAtPath<Texture2D>(Config.LoopIcon);
+            }
+            else
+            {
+                return AssetDatabase.LoadAssetAtPath<Texture2D>(Config.HoldIcon);
+            }
         }
 
         /// <summary>

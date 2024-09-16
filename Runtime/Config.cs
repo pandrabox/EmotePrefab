@@ -63,6 +63,21 @@ namespace com.github.pandrabox.emoteprefab.runtime
         public static readonly string EmotePrefabIcon = $@"{TemplateDir}Ico/EmotePrefab.png";
 
         /// <summary>
+        /// OneShotIconのパス
+        /// </summary>
+        public static readonly string OneShotIcon = $@"{TemplateDir}Ico/OneShot.png";
+
+        /// <summary>
+        /// LoopIconのパス
+        /// </summary>
+        public static readonly string LoopIcon = $@"{TemplateDir}Ico/Loop.png";
+
+        /// <summary>
+        /// HoldIconのパス
+        /// </summary>
+        public static readonly string HoldIcon = $@"{TemplateDir}Ico/Hold.png";
+
+        /// <summary>
         /// EmotePrefabObjectの前置詞
         /// </summary>
         public static readonly string EmotePrefabObjectPrefix = "E_";
