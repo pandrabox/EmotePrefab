@@ -66,11 +66,9 @@ namespace com.github.pandrabox.emoteprefab.editor
                 .AddCondition(AnimatorConditionMode.IfNot, 0, "AFK");
             currentState.behaviours = new StateMachineBehaviour[]
             {
-                new VRCAvatarParameterDriver
-                {
-                    localOnly = true,
-                },
+                ScriptableObject.CreateInstance<VRCAvatarParameterDriver>()
             };
+            ((VRC_AvatarParameterDriver)currentState.behaviours[0]).localOnly = true;
             ((VRC_AvatarParameterDriver)currentState.behaviours[0]).parameters.Add
                 (
                     new VRC_AvatarParameterDriver.Parameter()
