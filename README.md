@@ -4,11 +4,20 @@
 - [EmotePrefabをVCCに追加](https://pandrabox.github.io/vpm/)
 - [EmotePrefabをunitypackage(VPAI)で追加](https://api.anatawa12.com/create-vpai/?name=EmotePrefab-installer.unitypackage&repo=https://pandrabox.github.io/vpm/index.json&package=com.github.pandrabox.emoteprefab&version=>=1.1.0)
 ---
+- 簡単に言うと
+    - EmoteとAFKを非破壊・プレハブ単位で管理できるようになるツール。ActionLayerに特化したMAのようなもの
 - 現在完成している機能
     - EmotePrefabコンポーネント
         - Motion…Emoteのモーションデータ
         - Name…メニューに表示する名前
         - IsOneShot…1回で終了する場合True
+        - AFKモーションとして使用
+        - アイコン設定
+        - 上級者向け設定
+            - PhysBoneのIsAnimated指定
+            - Emote時PhysBoneColliderのサイズを0に変更
+            - 開始時/終了時Transition数値の変更
+            - 仮想WDクリップの手動指定
     - EmotePrefabコンポーネントに定義されているモーションを選択できるメニュー作成
     - メニューから実行すると該当モーションを実行
     - 非Humanoidアニメ対応
