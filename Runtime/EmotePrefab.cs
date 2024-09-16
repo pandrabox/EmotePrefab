@@ -24,6 +24,9 @@ namespace com.github.pandrabox.emoteprefab.runtime
         public List<VRCPhysBone> AnimatePhysBones;
         public bool ShrinkAllPhysBones;
         public List<VRCPhysBone> ShrinkPhysBones;
+        public bool UseCustomStartTransition;
+        public TransitionInfo StartTransitionInfo;
+        public bool UseCustomExitTransition;
         public TransitionInfo ExitTransitionInfo;
         public AnimationClip FakeWriteDefaultClip;
         [SerializeField]

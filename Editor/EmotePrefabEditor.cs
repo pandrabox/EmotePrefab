@@ -49,7 +49,20 @@ namespace com.github.pandrabox.emoteprefab.editor
                     EditorGUILayout.PropertyField(serializedObject.FindProperty("ShrinkPhysBones"));
                 }
 
-                EditorGUILayout.PropertyField(serializedObject.FindProperty("ExitTransitionInfo"));
+                var spUseCustomStartTransition = serializedObject.FindProperty("UseCustomStartTransition");
+                EditorGUILayout.PropertyField(spUseCustomStartTransition);
+                if (spUseCustomStartTransition.boolValue)
+                {
+                    EditorGUILayout.PropertyField(serializedObject.FindProperty("StartTransitionInfo"));
+                }
+
+                var spUseCustomExitTransition = serializedObject.FindProperty("UseCustomExitTransition");
+                EditorGUILayout.PropertyField(spUseCustomExitTransition);
+                if (spUseCustomExitTransition.boolValue)
+                {
+                    EditorGUILayout.PropertyField(serializedObject.FindProperty("ExitTransitionInfo"));
+                }
+
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("FakeWriteDefaultClip"));
 
             }
