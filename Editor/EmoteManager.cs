@@ -170,7 +170,14 @@ namespace com.github.pandrabox.emoteprefab.editor
         /// </summary>
         public static AnimationClip FakeWriteDefaultClip(int n)
         {
-            return EmotePrefab(n).FakeWriteDefaultClip ?? EmoteProperty(n).Dividedclip.FakeWriteDefaultClip;
+            if (EmotePrefab(n).FakeWriteDefaultClip==null)
+            {
+                return EmoteProperty(n).Dividedclip.FakeWriteDefaultClip;
+            }
+            else
+            {
+                return EmotePrefab(n).FakeWriteDefaultClip;
+            }
         }
 
         /// <summary>
