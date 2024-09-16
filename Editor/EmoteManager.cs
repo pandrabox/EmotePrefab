@@ -180,6 +180,16 @@ namespace com.github.pandrabox.emoteprefab.editor
             }
         }
 
+        public static AnimationClip ShrinkPhysBoneClip(int n)
+        {
+            return EmoteProperty(n).Dividedclip.ShrinkPhysBonesClip;
+        }
+
+        public static AnimationClip ShrinkPhysBoneWriteDefaultClip(int n)
+        {
+            return EmoteProperty(n).Dividedclip.ShrinkPhysBonesWriteDefaultClip;
+        }
+
         /// <summary>
         /// BodyShapeの有無
         /// </summary>
@@ -202,6 +212,14 @@ namespace com.github.pandrabox.emoteprefab.editor
         public static bool HasUnhumanoid(int n)
         {
             return EmoteProperty(n).Dividedclip.HasUnhumanoid;
+        }
+
+        /// <summary>
+        /// ShrinkPhysBonesの有無
+        /// </summary>
+        public static bool HasShrinkPhysBones(int n)
+        {
+            return ShrinkBones(n).Length>0;
         }
 
         /// <summary>

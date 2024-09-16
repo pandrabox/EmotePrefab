@@ -59,6 +59,11 @@ namespace com.github.pandrabox.emoteprefab.editor
             /// EmoteのUnhumanoid部を再生するレイヤ
             /// </summary>
             Unhumanoid,
+
+            /// <summary>
+            /// PhysBoneのサイズを0にするレイヤ
+            /// </summary>
+            ShrinkPhysBones,
         }
 
         /// <summary>
@@ -76,9 +81,13 @@ namespace com.github.pandrabox.emoteprefab.editor
             {
                 target = Avatar.FXController.layers[Config.FXBodyShapeBlockerIndex];
             }
-            else
+            else if (layerType == LayerType.Unhumanoid)
             {
                 target = Avatar.FXController.layers[Config.FXUnhumanoidIndex];
+            }
+            else
+            {
+                target = Avatar.FXController.layers[Config.ShrinkPhysBonesIndex];
             }
 
             _currentLayer = target ?? throw new System.IO.FileNotFoundException($@"Layer {Enum.GetName(typeof(LayerType), layerType)}({layerType}) Not Found");
@@ -151,9 +160,10 @@ namespace com.github.pandrabox.emoteprefab.editor
         /// <summary>
         /// PrepareからCurrentへの遷移設定
         /// </summary>
-        protected void Transition_PrepareToCurrent(int eI)
+        protected void Transition_PrepareToCurrent(int eI, bool instant = false)
         {
-            SetTransition(_prepareState, _currentState, EmoteManager.StartTransitionInfo(eI))
+            TransitionInfo T = instant ? new TransitionInfo(false, 0, false, 0, 0) : EmoteManager.StartTransitionInfo(eI);
+            SetTransition(_prepareState, _currentState, T)
              .AddCondition(AnimatorConditionMode.Equals, EmoteManager.ID(eI), "VRCEmote");
         }
 
@@ -170,9 +180,10 @@ namespace com.github.pandrabox.emoteprefab.editor
         /// Currentが正常終了時の遷移設定
         /// </summary>
         /// <param name="toStateName">遷移先Stateの名称 ("Exit"の場合Unity標準Exit)</param>
-        protected void Transition_CurrentToRegularExit(string toStateName, int eI)
+        protected void Transition_CurrentToRegularExit(string toStateName, int eI, bool instant=false)
         {
-            var transition = SetTransition(_currentState, GetState(toStateName), EmoteManager.RegularExitTransitionInfo(eI));
+            TransitionInfo T = instant ? new TransitionInfo(false, 0, false, 0, 0) : EmoteManager.RegularExitTransitionInfo(eI);
+            var transition = SetTransition(_currentState, GetState(toStateName), T);
             if (!EmoteManager.IsOneShot(eI))
             {
                 transition.AddCondition(AnimatorConditionMode.NotEqual, EmoteManager.ID(eI), "VRCEmote");
@@ -183,17 +194,19 @@ namespace com.github.pandrabox.emoteprefab.editor
         /// Currentが異常終了時の遷移設定
         /// </summary>
         /// <param name="toStateName">遷移先Stateの名称 ("Exit"の場合Unity標準Exit)</param>
-        protected void Transition_CurrentToForceExit(string toStateName, int eI)
+        protected void Transition_CurrentToForceExit(string toStateName, int eI, bool instant=false)
         {
-            SetTransition(_currentState, GetState(toStateName), EmoteManager.ForceExitTransitionInfo(eI))
+            TransitionInfo T = instant ? new TransitionInfo(false, 0, false, 0, 0) : EmoteManager.ForceExitTransitionInfo(eI);
+            SetTransition(_currentState, GetState(toStateName), T)
              .AddCondition(AnimatorConditionMode.If, 0, "Seated");
         }
 
-        protected void Transition_OneshotCancel(string toStateName, int eI)
+        protected void Transition_OneshotCancel(string toStateName, int eI, bool instant = false)
         {
+            TransitionInfo T = instant ? new TransitionInfo(false, 0, false, 0, 0) : EmoteManager.ForceExitTransitionInfo(eI);
             if (EmoteManager.IsOneShot(eI))
             {
-                SetTransition(_currentState, GetState(toStateName), EmoteManager.ForceExitTransitionInfo(eI))
+                SetTransition(_currentState, GetState(toStateName), T)
                  .AddCondition(AnimatorConditionMode.NotEqual, EmoteManager.ID(eI), "VRCEmote");
             }
         }
@@ -201,10 +214,17 @@ namespace com.github.pandrabox.emoteprefab.editor
         /// <summary>
         /// WDからExitへの遷移設定
         /// </summary>
-        protected void Transition_WDtoExit(int eI)
+        protected void Transition_WDtoExit(int eI, bool WaitAnimEnd=false)
         {
-            SetTransition(GetState(EmoteManager.WDStateName(eI)), null, EmoteManager.ForceExitTransitionInfo(eI))
-             .AddCondition(AnimatorConditionMode.IfNot, 0, "Dummy");
+            if (WaitAnimEnd)
+            {
+                SetTransition(GetState(EmoteManager.WDStateName(eI)), null, new TransitionInfo(true, 1, false, 0));
+            }
+            else
+            {
+                SetTransition(GetState(EmoteManager.WDStateName(eI)), null, EmoteManager.ForceExitTransitionInfo(eI))
+                 .AddCondition(AnimatorConditionMode.IfNot, 0, "Dummy");
+            }
         }
     }
 }

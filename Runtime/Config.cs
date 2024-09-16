@@ -30,7 +30,7 @@ namespace com.github.pandrabox.emoteprefab.runtime
         /// <summary>
         /// FXLayer雛形のパス
         /// </summary>
-        public static readonly string OriginalFXLayer = $@"{TemplateDir}NonAAPPart.controller";
+        public static readonly string OriginalFXLayer = $@"{TemplateDir}FX.controller";
 
         /// <summary>
         /// 生成ActionLayerのパス
@@ -103,9 +103,14 @@ namespace com.github.pandrabox.emoteprefab.runtime
         public static readonly int FXBodyShapeBlockerIndex = 0;
 
         /// <summary>
-        /// ActionレイヤにおけるUnhumanoidレイヤのIndex
+        /// GemeratedFXレイヤにおけるUnhumanoidレイヤのIndex
         /// </summary>
         public static readonly int FXUnhumanoidIndex = 1;
+
+        /// <summary>
+        /// GemeratedFXレイヤにおけるShrinkPhysBonesレイヤのIndex
+        /// </summary>
+        public static readonly int ShrinkPhysBonesIndex = 2;
     }
 }
 

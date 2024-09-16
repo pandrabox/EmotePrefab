@@ -2,9 +2,11 @@
 #pragma warning disable SA1600 // Elements should be documented
 #pragma warning disable SA1401 // Fields should be private
 
+using System.IO;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
+using static com.github.pandrabox.emoteprefab.runtime.Generic;
 
 namespace com.github.pandrabox.emoteprefab.editor
 {
@@ -18,6 +20,8 @@ namespace com.github.pandrabox.emoteprefab.editor
         public AnimationClip BodyShapeBlockerClip;
         public AnimationClip UnhumanoidClip;
         public AnimationClip FakeWriteDefaultClip;
+        public AnimationClip ShrinkPhysBonesClip;
+        public AnimationClip ShrinkPhysBonesWriteDefaultClip;
         public bool HasHumanoid;
         public bool HasBodyShape;
         public bool HasUnhumanoid;
@@ -35,6 +39,8 @@ namespace com.github.pandrabox.emoteprefab.editor
             CreateUnhumanoidClip();
             CreateBodyShapeBlockerClip();
             CreateFakeWriteDefaultClip();
+            CreateShrinkPhysBonesClip(eI);
+            CreateShrinkPhysBonesWriteDefaultClip(eI);
         }
 
         /// <summary>
@@ -137,6 +143,56 @@ namespace com.github.pandrabox.emoteprefab.editor
                 AnimationCurve curve = new AnimationCurve(keyframe);
                 AnimationUtility.SetEditorCurve(FakeWriteDefaultClip, binding, curve);
             }
+        }
+
+        /// <summary>
+        /// ShrinkPhysBones関連のクリップを作成
+        /// </summary>
+        /// <param name="eI">Emote番号</param>
+        /// <param name="inverce">Shrinkするときはfalse, 戻すときはtrue</param>
+        /// <returns></returns>
+        private AnimationClip CreateShrinkPhysBonesClipGeneral(int eI, bool inverce)
+        {
+            var clip = new AnimationClip();
+            float setValue;
+            var PhysBoneType = typeof(VRC.SDK3.Dynamics.PhysBone.Components.VRCPhysBone);
+            float exitFlame;
+            float frameRate = 60;
+            foreach (var PB in EmoteManager.ShrinkBones(eI))
+            {
+                var PBPath = FindPathRecursive(Avatar.RootTransform, PB.transform);
+                var bindingPhysBoneRadius = new EditorCurveBinding() { path = PBPath, propertyName = "radius", type = PhysBoneType };
+                if (inverce)
+                {
+                    AnimationUtility.GetFloatValue(Avatar.RootObject, bindingPhysBoneRadius, out setValue);
+                    exitFlame = 4f / frameRate;
+                }
+                else 
+                {
+                    setValue = 0.0001f;
+                    exitFlame = Original.length;
+                }
+                AnimationCurve curve = new AnimationCurve(new Keyframe(0, setValue), new Keyframe(exitFlame, setValue));
+                AnimationUtility.SetEditorCurve(clip, bindingPhysBoneRadius, curve);
+
+                var bindingPhysBoneActive = new EditorCurveBinding() { path = PBPath, propertyName = "m_Enabled", type = PhysBoneType };
+                AnimationCurve curve2 = new AnimationCurve(new Keyframe(1f / frameRate, 1), new Keyframe(2f / frameRate, 0), new Keyframe(3f / frameRate, 0), new Keyframe(4f / frameRate, 1));
+                AnimationUtility.SetEditorCurve(clip, bindingPhysBoneActive, curve2);
+            }
+
+            return clip;
+        }
+
+        private void CreateShrinkPhysBonesClip(int eI)
+        {
+            ShrinkPhysBonesClip = CreateShrinkPhysBonesClipGeneral(eI, false);
+            //AssetDatabase.CreateAsset(ShrinkPhysBonesClip, $@"assets/ShrinkPhysBone{eI}ON.anim");
+        }
+
+        private void CreateShrinkPhysBonesWriteDefaultClip(int eI)
+        {
+            ShrinkPhysBonesWriteDefaultClip = CreateShrinkPhysBonesClipGeneral(eI, true);
+            // AssetDatabase.CreateAsset(ShrinkPhysBonesWriteDefaultClip, $@"assets/ShrinkPhysBone{eI}OFF.anim");
         }
     }
 }
