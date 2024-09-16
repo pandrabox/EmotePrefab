@@ -76,8 +76,6 @@ namespace com.github.pandrabox.emoteprefab.runtime
                 }
             }
         }
-
-
     }
 }
 
