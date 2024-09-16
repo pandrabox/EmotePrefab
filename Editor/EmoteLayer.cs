@@ -204,7 +204,7 @@ namespace com.github.pandrabox.emoteprefab.editor
         protected void Transition_OneshotCancel(string toStateName, int eI, bool instant = false)
         {
             TransitionInfo T = instant ? new TransitionInfo(false, 0, false, 0, 0) : EmoteManager.ForceExitTransitionInfo(eI);
-            if (EmoteManager.IsOneShot(eI))
+            if (EmoteManager.RegularExitTransitionInfo(eI).HasExitTime)
             {
                 SetTransition(_currentState, GetState(toStateName), T)
                  .AddCondition(AnimatorConditionMode.NotEqual, EmoteManager.ID(eI), "VRCEmote");
