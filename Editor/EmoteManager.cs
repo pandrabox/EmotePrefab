@@ -221,6 +221,29 @@ namespace com.github.pandrabox.emoteprefab.editor
         }
 
         /// <summary>
+        /// Shrink0するBoneの配列
+        /// </summary>
+        /// <param name="n"></param>
+        public static VRCPhysBone[] ShrinkBones(int n)
+        {
+            if (EmotePrefab(n).ShrinkAllPhysBones)
+            {
+                return Avatar.RootTransform.GetComponentsInChildren<VRCPhysBone>(true).ToArray();
+            }
+            else
+            {
+                if (EmotePrefab(n).ShrinkPhysBones == null)
+                {
+                    return new VRCPhysBone[0];
+                }
+                return EmotePrefab(n).ShrinkPhysBones
+                    .Where(pb => pb != null)
+                    .Distinct()
+                    .ToArray();
+            }
+        }
+
+        /// <summary>
         /// 長さ
         /// </summary>
         public static int Length
