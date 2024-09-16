@@ -41,6 +41,7 @@ namespace com.github.pandrabox.emoteprefab.editor
             CreateFakeWriteDefaultClip();
             CreateShrinkPhysBonesClip(eI);
             CreateShrinkPhysBonesWriteDefaultClip(eI);
+            // AssetDatabase.CreateAsset(ShrinkPhysBonesClip, $@"assets/AnimDebug{eI}ON.anim");
         }
 
         /// <summary>
@@ -186,13 +187,11 @@ namespace com.github.pandrabox.emoteprefab.editor
         private void CreateShrinkPhysBonesClip(int eI)
         {
             ShrinkPhysBonesClip = CreateShrinkPhysBonesClipGeneral(eI, false);
-            //AssetDatabase.CreateAsset(ShrinkPhysBonesClip, $@"assets/ShrinkPhysBone{eI}ON.anim");
         }
 
         private void CreateShrinkPhysBonesWriteDefaultClip(int eI)
         {
             ShrinkPhysBonesWriteDefaultClip = CreateShrinkPhysBonesClipGeneral(eI, true);
-            // AssetDatabase.CreateAsset(ShrinkPhysBonesWriteDefaultClip, $@"assets/ShrinkPhysBone{eI}OFF.anim");
         }
     }
 }
