@@ -40,3 +40,5 @@
 -- VRC_AvatarParametersDriverのコーディングの参考にさせて頂きました
 - [UnityのInspectorを拡張する。](https://qiita.com/sango/items/b705980ada56ba8ffa04)
 -- Inspector拡張の開発に参考にさせて頂きました
+- [VPAI](https://booth.pm/ja/items/4951120)
+-- 配布に使用させて頂いています。
