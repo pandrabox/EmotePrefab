@@ -6,7 +6,6 @@ using UnityEditor;
 using UnityEngine;
 using System.Collections.Generic;
 using VRC.SDK3.Dynamics.PhysBone.Components;
-using System;
 
 namespace com.github.pandrabox.emoteprefab.runtime
 {
@@ -15,7 +14,6 @@ namespace com.github.pandrabox.emoteprefab.runtime
     /// </summary>
     [DisallowMultipleComponent]
     [AddComponentMenu("Pan/EmotePrefab")]
-    [Serializable]
     public class EmotePrefab : MonoBehaviour, VRC.SDKBase.IEditorOnly
     {
         public bool IsOneShot;
@@ -32,9 +30,6 @@ namespace com.github.pandrabox.emoteprefab.runtime
         public bool UseCustomExitTransition;
         public TransitionInfo ExitTransitionInfo;
         public AnimationClip FakeWriteDefaultClip;
-        public EmotePrefab ChainTo;
-        public EmotePrefab ChainFrom;
-
         [SerializeField]
         private AnimationClip _motion;
         [SerializeField]

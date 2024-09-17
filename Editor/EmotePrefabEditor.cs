@@ -23,26 +23,19 @@ namespace com.github.pandrabox.emoteprefab.editor
     [CustomEditor(typeof(EmotePrefab))]
     public class EmotePrefabEditor : Editor
     {
-        private EmotePrefab _chainToLog;
-        private EmotePrefab _nowInstance;
-
-        void OnEnable()
-        {
-            _nowInstance = (EmotePrefab)target;
-            RenewChain(true);
-        }
-
         public override void OnInspectorGUI()
         {
             serializedObject.Update();
+
+            var nowInstance = (EmotePrefab)target;
 
 
             EditorGUILayout.BeginHorizontal();
 
             EditorGUILayout.BeginVertical();
 
-            _nowInstance.Motion = (AnimationClip)EditorGUILayout.ObjectField("Motion", _nowInstance.Motion, typeof(AnimationClip), false);
-            _nowInstance.Name = EditorGUILayout.TextField("Name", _nowInstance.Name);
+            nowInstance.Motion = (AnimationClip)EditorGUILayout.ObjectField("Motion", nowInstance.Motion, typeof(AnimationClip), false);
+            nowInstance.Name = EditorGUILayout.TextField("Name", nowInstance.Name);
             EditorGUILayout.PropertyField(serializedObject.FindProperty("IsOneShot"));
             EditorGUILayout.PropertyField(serializedObject.FindProperty("IsEmote"));
             EditorGUILayout.PropertyField(serializedObject.FindProperty("IsAFK"));
@@ -110,73 +103,18 @@ namespace com.github.pandrabox.emoteprefab.editor
 
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("FakeWriteDefaultClip"));
 
-
-                /* UIとしては動作するが機能未実装
-                EditorGUILayout.PropertyField(serializedObject.FindProperty("ChainTo"));
-                RenewChain();
-
-                GUI.enabled = false;
-                EditorGUILayout.PropertyField(serializedObject.FindProperty("ChainFrom"));
-                GUI.enabled = true;
-                */
-
-
-
-
-
             }
             serializedObject.ApplyModifiedProperties();
 
 
         }
 
-        private void RenewChain(bool initial = false)
-        {
-            if (initial)
-            {
-                if(_nowInstance.ChainTo==null)
-                {
-                    _nowInstance.ChainTo = null;  // "null"をnullに変換
-                }
-                if (_nowInstance.ChainFrom == null)
-                {
-                    _nowInstance.ChainFrom = null;
-                }
-                _chainToLog = _nowInstance.ChainTo;
-                return;
-            }
-            if (_nowInstance.ChainTo != _chainToLog)
-            {
-                bool doChange = true;
-                WriteWarning("ChangeChain", $@"{_nowInstance?.name} : {_chainToLog?.name} >> {_nowInstance.ChainTo?.name}");
-                if (_nowInstance.ChainTo?.ChainFrom != null)
-                {
-                    doChange = EditorUtility.DisplayDialog(
-                        "Emote Chain", // ダイアログタイトル
-                        $@"{_nowInstance.ChainTo.Name}は既に{_nowInstance.ChainTo.ChainFrom.Name}からチェインされています。実行するとそのチェインが解除されます。実行しますか？",
-                        "Yes", // Yesボタンのラベル
-                        "No" // Noボタンのラベル
-                    );
-                    if (doChange)
-                    {
-                        _nowInstance.ChainTo.ChainFrom.ChainTo = null;
-                        _nowInstance.ChainTo.ChainFrom= null;
-                    }
-                }
-                if (doChange)
-                {
-                    if (_nowInstance.ChainTo != null)
-                    {
-                        _nowInstance.ChainTo.ChainFrom = _nowInstance;
-                    }
-                    RenewChain(true);
-                }
-                else
-                {
-                    _nowInstance.ChainTo = _chainToLog;
-                }
-            }
-        }
 
+        // SceneビューのGizmo描画を抑制
+        [DrawGizmo(GizmoType.NotInSelectionHierarchy | GizmoType.Pickable)]
+        static void DrawGizmoForMyComponent(EmotePrefab component, GizmoType gizmoType)
+        {
+            // ここで何も描画しない、もしくはカスタムの描画ロジックを設定
+        }
     }
 }
