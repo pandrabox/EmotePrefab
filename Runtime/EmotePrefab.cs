@@ -27,11 +27,12 @@ namespace com.github.pandrabox.emoteprefab.runtime
         public List<VRCPhysBone> ShrinkPhysBones;
         public bool UseCustomStartTransition;
         public TransitionInfo StartTransitionInfo;
-        public bool UseCustomExitTransition;
-        public TransitionInfo ExitTransitionInfo;
+        // public TransitionInfo ExitTransitionInfo;
         public AnimationClip FakeWriteDefaultClip;
-        [SerializeField]
-        private AnimationClip _motion;
+        public List<UnitMotion> Motions;
+        // public int Quantitys=1;
+        // [SerializeField]
+        // private AnimationClip _motion;
         [SerializeField]
         private string _name;
 
@@ -40,17 +41,31 @@ namespace com.github.pandrabox.emoteprefab.runtime
         /// </summary>
         public AnimationClip Motion
         {
-            get => _motion;
+            get
+            {
+                if (Motions.Count > 0)
+                {
+                    return Motions[0].Motion;
+                }
+                else
+                {
+                    return null;
+                }
+            } 
             set
             {
-                if (_motion != value)
+                if (Motions.Count == 0)
                 {
-                    _motion = value;
+                    Motions.Add(new UnitMotion());
+                }
+                if (Motions[0].Motion != value)
+                {
+                    Motions[0].Motion = value;
 
-                    if (_motion != null)
+                    if (Motions[0].Motion != null)
                     {
-                        Name = _motion.name.Replace("proxy_stand_", string.Empty).Replace("proxy_", string.Empty);
-                        IsOneShot = !_motion.isLooping;
+                        Name = Motions[0].Motion.name.Replace("proxy_stand_", string.Empty).Replace("proxy_", string.Empty);
+                        IsOneShot = !Motions[0].Motion.isLooping;
                         IsEmote = true;
                     }
                     else

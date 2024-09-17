@@ -105,7 +105,7 @@ namespace com.github.pandrabox.emoteprefab.editor
         /// </summary>
         public static TransitionInfo RegularExitTransitionInfo(int n)
         {
-            return EmotePrefab(n).UseCustomExitTransition ? EmotePrefab(n).ExitTransitionInfo : EmoteProperty(n).RegularExitTransitionInfo;
+            return EmotePrefab(n).Motions[0].UseCustomExitTransition ? EmotePrefab(n).Motions[0].ExitTransitionInfo : EmoteProperty(n).RegularExitTransitionInfo;
         }
 
         /// <summary>

@@ -28,7 +28,8 @@ namespace com.github.pandrabox.emoteprefab.editor
             serializedObject.Update();
 
             var nowInstance = (EmotePrefab)target;
-
+            var spMotions = serializedObject.FindProperty("Motions");
+            var unitMotion = spMotions.GetArrayElementAtIndex(0);
 
             EditorGUILayout.BeginHorizontal();
 
@@ -94,27 +95,67 @@ namespace com.github.pandrabox.emoteprefab.editor
                     EditorGUILayout.PropertyField(serializedObject.FindProperty("StartTransitionInfo"));
                 }
 
-                var spUseCustomExitTransition = serializedObject.FindProperty("UseCustomExitTransition");
-                EditorGUILayout.PropertyField(spUseCustomExitTransition);
-                if (spUseCustomExitTransition.boolValue)
+                EditorGUILayout.PropertyField(unitMotion.FindPropertyRelative("UseCustomExitTransition"));
+                if (nowInstance.Motions[0].UseCustomExitTransition)
                 {
-                    EditorGUILayout.PropertyField(serializedObject.FindProperty("ExitTransitionInfo"));
+                    EditorGUILayout.PropertyField(unitMotion.FindPropertyRelative("ExitTransitionInfo"));
                 }
 
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("FakeWriteDefaultClip"));
 
+
+                GUILayout.Box("", GUILayout.ExpandWidth(true), GUILayout.Height(1));
+                using (new EditorGUILayout.HorizontalScope())
+                {
+                    EditorGUILayout.LabelField("ChainMotion");
+                    if (GUILayout.Button("+"))
+                    {
+                        nowInstance.Motions.Add(new UnitMotion());
+                    }
+                    if (GUILayout.Button("-"))
+                    {
+                        if (nowInstance.Motions.Count > 1)
+                        {
+                            nowInstance.Motions.RemoveAt(nowInstance.Motions.Count - 1);
+                        }
+                    }
+                }
+                for(int i = 1;i<nowInstance.Motions.Count;i++) 
+                {
+                    if (i >= spMotions.arraySize)
+                    {
+                        continue;
+                    }
+                    unitMotion = spMotions.GetArrayElementAtIndex(i);
+                    using (new EditorGUILayout.HorizontalScope())
+                    {
+                        EditorGUILayout.LabelField("", GUILayout.Width(20));
+                        using (new EditorGUILayout.VerticalScope())
+                        {
+                            EditorGUILayout.PropertyField(unitMotion.FindPropertyRelative("Motion"));
+                            EditorGUILayout.PropertyField(unitMotion.FindPropertyRelative("UseCustomExitTransition"));
+                        }
+                        EditorGUILayout.LabelField("", GUILayout.Width(20));
+
+                        if (nowInstance.Motions[i].UseCustomExitTransition)
+                        {
+                            EditorGUILayout.PropertyField(unitMotion.FindPropertyRelative("ExitTransitionInfo"));
+                        }
+
+                    }
+                }
+
+
             }
+
+
+
+
+
+
+
+
             serializedObject.ApplyModifiedProperties();
-
-
-        }
-
-
-        // SceneビューのGizmo描画を抑制
-        [DrawGizmo(GizmoType.NotInSelectionHierarchy | GizmoType.Pickable)]
-        static void DrawGizmoForMyComponent(EmotePrefab component, GizmoType gizmoType)
-        {
-            // ここで何も描画しない、もしくはカスタムの描画ロジックを設定
         }
     }
 }
