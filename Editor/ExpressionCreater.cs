@@ -64,7 +64,28 @@ namespace com.github.pandrabox.emoteprefab.editor
             unitMenu.Control.parameter = new VRC.SDK3.Avatars.ScriptableObjects.VRCExpressionsMenu.Control.Parameter() { name = "VRCEmote" };
             unitMenu.Control.value = eI+1;
             unitMenu.Control.type = VRC.SDK3.Avatars.ScriptableObjects.VRCExpressionsMenu.Control.ControlType.Toggle;
-            unitMenu.Control.icon = EmotePrefabs[eI].Icon;
+            unitMenu.Control.icon = Icon(eI);
+        }
+
+
+        public static Texture2D Icon(int n)
+        {
+            if (EmotePrefabs[n].Icon != null)
+            {
+                return EmotePrefabs[n].Icon;
+            }
+            else if (EmotePrefabs[n].RootMotion.IsOneShot)
+            {
+                return AssetDatabase.LoadAssetAtPath<Texture2D>(Config.OneShotIcon);
+            }
+            else if (EmotePrefabs[n].RootMotion.Clip.Original.isLooping)
+            {
+                return AssetDatabase.LoadAssetAtPath<Texture2D>(Config.LoopIcon);
+            }
+            else
+            {
+                return AssetDatabase.LoadAssetAtPath<Texture2D>(Config.HoldIcon);
+            }
         }
     }
 }
