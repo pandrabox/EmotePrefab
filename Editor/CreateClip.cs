@@ -53,7 +53,7 @@ namespace com.github.pandrabox.emoteprefab.editor
         /// <param name="target"></param>
         private void AddLengthHolder(AnimationClip target)
         {
-            float length = _original.length > 4 ? _original.length : 4; // PBの切り替えに最小4フレーム必要
+            float length = _original.length > 4/60 ? _original.length : 4 / 60; // PBの切り替えに最小4フレーム必要
             AnimationCurve curve = AnimationCurve.Constant(0, length, 0);
             target.SetCurve(string.Empty, typeof(Animator), $"pandrabox/dummy", curve);
         }
