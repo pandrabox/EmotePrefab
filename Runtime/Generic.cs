@@ -41,24 +41,21 @@ namespace com.github.pandrabox.emoteprefab.runtime
 
             return null;
         }
-        public static string FindPathRecursive(Transform parent, Transform target)
+        public static string FindPathRecursive(Transform root, Transform child)
         {
-            if (parent == target)
+            if (root == child) return "";
+
+            List<string> pathSegments = new List<string>();
+            while (child != root && child != null)
             {
-                return "";
+                pathSegments.Add(child.name);
+                child = child.parent;
             }
 
-            // 子要素を再帰的に調べる
-            foreach (Transform child in parent)
-            {
-                string childPath = FindPathRecursive(child, target);
-                if (childPath != null)
-                {
-                    // 親の名前を返さず、子のパスのみを返す
-                    return child.name + (string.IsNullOrEmpty(childPath) ? "" : "/" + childPath);
-                }
-            }
-            return null;
+            if (child == null && root != null) return null;
+
+            pathSegments.Reverse();
+            return String.Join("/", pathSegments);
         }
 #endif
     }

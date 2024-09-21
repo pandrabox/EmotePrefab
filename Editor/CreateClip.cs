@@ -14,6 +14,7 @@ using VRC.SDK3.Avatars.Components;
 using VRC.SDK3.Dynamics.PhysBone.Components;
 using static com.github.pandrabox.emoteprefab.runtime.Generic;
 using static com.github.pandrabox.emoteprefab.editor.EmoteManager;
+using static com.github.pandrabox.emoteprefab.editor.RelativeResolver;
 
 namespace com.github.pandrabox.emoteprefab.editor
 {
@@ -36,7 +37,7 @@ namespace com.github.pandrabox.emoteprefab.editor
                 for (int n = 0; n < _emote.UnitMotions.Count; n++)
                 {
                     _clip = EmotePrefabs[m].UnitMotions[n].Clip;
-                    _original = UnityEngine.Object.Instantiate(_clip.Original);
+                    _original = RelativeResolve(_emote.transform, _clip.Original, ResolveMode.AutoByRelative);
                     CreateHumanoidClip();
                     CreateUnhumanoidClip();
                     CreateBodyShapeBlockerClip();
