@@ -63,12 +63,11 @@ namespace com.github.pandrabox.emoteprefab.runtime
             }
         }
 
-        public void SetEasy(AnimationClip rootClip, bool isEmote, bool isAFK)
+        public void SetEasy(AnimationClip rootClip, bool isEmote = true, bool isAFK = false)
         {
-            RootClip = rootClip;
+            Motion = rootClip;
             IsEmote = isEmote;
             IsAFK = isAFK;
-            if (Name != null) Name = name;
         }
     }
 

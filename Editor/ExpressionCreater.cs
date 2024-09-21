@@ -78,7 +78,7 @@ namespace com.github.pandrabox.emoteprefab.editor
             {
                 return AssetDatabase.LoadAssetAtPath<Texture2D>(Config.OneShotIcon);
             }
-            else if (EmotePrefabs[n].RootMotion.Clip.Original.isLooping)
+            else if (EmotePrefabs[n].RootMotion.Clip.Original.isLooping && EmotePrefabs[n].RootMotion.Clip.Original.length > 2f / 60)
             {
                 return AssetDatabase.LoadAssetAtPath<Texture2D>(Config.LoopIcon);
             }
