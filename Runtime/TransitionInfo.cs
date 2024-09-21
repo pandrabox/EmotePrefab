@@ -16,6 +16,7 @@ namespace com.github.pandrabox.emoteprefab.runtime
         ManualExit,
         Sit,
         Quick,
+        HasQuick,
     }
 
     [Serializable]
@@ -28,6 +29,7 @@ namespace com.github.pandrabox.emoteprefab.runtime
         public float Duration;
         public float Offset;
         public static TransitionInfo Quick = new TransitionInfo(TransitionType.Quick);
+        public static TransitionInfo HasQuick = new TransitionInfo(TransitionType.HasQuick);
 
         public Dictionary<TransitionType, (bool, float, bool, float, float)> DefaultValues = new Dictionary<TransitionType, (bool, float, bool, float, float)>()
         {
@@ -36,6 +38,7 @@ namespace com.github.pandrabox.emoteprefab.runtime
             { TransitionType.ManualExit,    (false, 0.75f, true, 0.25f, 0) },
             { TransitionType.Sit,           (false, 0, false, 0, 0) },
             { TransitionType.Quick,         (false, 0, false, 0, 0) },
+            { TransitionType.HasQuick,      (true, 0, false, 0, 0) },
         };
 
         public TransitionInfo(TransitionType type)
