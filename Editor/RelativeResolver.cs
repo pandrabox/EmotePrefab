@@ -14,6 +14,7 @@ using VRC.SDK3.Avatars.Components;
 using VRC.SDK3.Dynamics.PhysBone.Components;
 using static com.github.pandrabox.emoteprefab.runtime.Generic;
 using static com.github.pandrabox.emoteprefab.editor.EmoteManager;
+using static com.github.pandrabox.emoteprefab.editor.RelativeResolver;
 
 namespace com.github.pandrabox.emoteprefab.editor
 {
@@ -46,11 +47,40 @@ namespace com.github.pandrabox.emoteprefab.editor
                 if (Root.Find(path) && path.Length > 0)
                 {
                     path = $@"{RootPath}/{path}";
+                    path = ResolveMover(path);
+                    WriteWarning("path", path);
                 }
                 clip.SetCurve(path, binding.type, binding.propertyName, curve);
             }
 
             return clip;
+        }
+
+        private static string ResolveMover(string path)
+        {
+            var cTrans = Descriptor.transform.Find(path);
+            var mover = FindMover(cTrans);
+            if (mover == null) return path;
+            var moverToCurrent = FindPathRecursive(mover.transform, cTrans);
+            var MoveTargetPath = FindPathRecursive(Descriptor.transform, MoverTarget(mover));
+            return $@"{MoveTargetPath}/{mover.name}/{moverToCurrent}";
+        }
+
+        private static Transform FindMover(Transform cTrans)
+        {
+            while (cTrans != null)
+            {
+                var m = cTrans.GetComponent<ModularAvatarBoneProxy>();
+                if (m != null) return m.transform;
+                cTrans = cTrans.parent;
+            }
+            return null;
+        }
+        private static Transform MoverTarget(Transform mover)
+        {
+            var m = mover.GetComponent<ModularAvatarBoneProxy>();
+            if (m != null) return m.target;
+            return null;
         }
     }
 }
