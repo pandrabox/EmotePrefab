@@ -17,8 +17,8 @@ namespace com.github.pandrabox.emoteprefab.editor
     {
         public static EmotePrefab[] EmotePrefabs;
         public static VRCAvatarDescriptor Descriptor;
-        public static GameObject EmotePrefabRootObject, ActionObject, FXObject, SyncObject;
-        public static AnimatorController ActionController, FXController;
+        public static GameObject EmotePrefabRootObject, ActionObject, FXObject, FXRelativeObject, SyncObject;
+        public static AnimatorController ActionController, FXController, FXRelativeController;
 
         public static Transform EmotePrefabRootTransform => EmotePrefabRootObject.transform;
         public static bool HasAFK => EmotePrefabs.Where(e => e.IsAFK).Any();

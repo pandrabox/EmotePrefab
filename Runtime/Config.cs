@@ -36,6 +36,11 @@ namespace com.github.pandrabox.emoteprefab.runtime
         public static readonly string OriginalFXLayer = $@"{TemplateDir}FX.controller";
 
         /// <summary>
+        /// FXLayer雛形のパス
+        /// </summary>
+        public static readonly string OriginalFXRelativeLayer = $@"{TemplateDir}FXRelative.controller";
+
+        /// <summary>
         /// 生成ActionLayerのパス
         /// </summary>
         public static readonly string GeneratedActionLayer = $@"{WorkDir}Action.controller";
@@ -44,6 +49,10 @@ namespace com.github.pandrabox.emoteprefab.runtime
         /// 生成FXLayerのパス
         /// </summary>
         public static readonly string GeneratedFXLayer = $@"{WorkDir}FX.controller";
+        /// <summary>
+        /// 生成FXLayerのパス
+        /// </summary>
+        public static readonly string GeneratedFXRelativeLayer = $@"{WorkDir}FXRelative.controller";
 
         /// <summary>
         /// ダミー用2Fクリップのパス

@@ -30,11 +30,13 @@ namespace com.github.pandrabox.emoteprefab.editor
                 {
                     var clip = EmotePrefabs[m].UnitMotions[n].Clip;
                     OutpUnit(clip.Humanoid, "0hum", m, n);
-                    OutpUnit(clip.UnHumanoid, "2unh", m, n);
                     OutpUnit(clip.PokerFace, "1pkf", m, n);
-                    OutpUnit(clip.ShrinkPB, "4spb", m, n);
-                    OutpUnit(clip.ShrinkWD, "5swd", m, n);
+                    OutpUnit(clip.UnHumanoid, "2unh", m, n);
                     OutpUnit(clip.FakeWD, "3fwd", m, n);
+                    OutpUnit(clip.UnHumanoidR, "4unhR", m, n);
+                    OutpUnit(clip.FakeWDR, "5fwdR", m, n);
+                    OutpUnit(clip.ShrinkPB, "6spb", m, n);
+                    OutpUnit(clip.ShrinkWD, "7swd", m, n);
                 }
             }
 

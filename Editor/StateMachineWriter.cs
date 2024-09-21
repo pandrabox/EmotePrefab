@@ -29,6 +29,7 @@ namespace com.github.pandrabox.emoteprefab.editor
             new StateMachineWriterEmotePorkerFace();
             new StateMachineWriterEmoteShrinkPB();
             new StateMachineWriterEmoteUnHumanoid();
+            new StateMachineWriterEmoteUnHumanoidRelative();
         }
     }
 }

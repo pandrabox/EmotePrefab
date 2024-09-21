@@ -25,6 +25,8 @@ namespace com.github.pandrabox.emoteprefab.runtime
         public AnimationClip Humanoid;
         public AnimationClip UnHumanoid;
         public AnimationClip FakeWD;
+        public AnimationClip UnHumanoidR;
+        public AnimationClip FakeWDR;
         public AnimationClip PokerFace;
         public AnimationClip ShrinkPB;
         public AnimationClip ShrinkWD;
@@ -59,7 +61,7 @@ namespace com.github.pandrabox.emoteprefab.runtime
             float positiony = position.y;
             float positionx;
             Rect fieldRect = new Rect(position.x, positiony, position.width, EditorGUIUtility.singleLineHeight);
-            float labelsize = 90;
+            float labelsize = 100;
             float checkSize = EditorGUIUtility.singleLineHeight * 1.5f;
             float unitsize = 30;
             var transProp = property.FindPropertyRelative("TransitionInfo").FindPropertyRelative("AutoExit");
@@ -81,6 +83,11 @@ namespace com.github.pandrabox.emoteprefab.runtime
                 MiniMotion(fieldRect, labelsize, property, "UnHumanoid");
                 fieldRect = new Rect(position.x + position.width / 2, positiony, position.width / 2, EditorGUIUtility.singleLineHeight);
                 MiniMotion(fieldRect, labelsize, property, "FakeWD");
+                positiony += EditorGUIUtility.singleLineHeight;
+                fieldRect = new Rect(position.x, positiony, position.width / 2, EditorGUIUtility.singleLineHeight);
+                MiniMotion(fieldRect, labelsize, property, "UnHumanoidR");
+                fieldRect = new Rect(position.x + position.width / 2, positiony, position.width / 2, EditorGUIUtility.singleLineHeight);
+                MiniMotion(fieldRect, labelsize, property, "FakeWDR");
                 positiony += EditorGUIUtility.singleLineHeight;
                 fieldRect = new Rect(position.x, positiony, position.width / 2, EditorGUIUtility.singleLineHeight);
                 MiniMotion(fieldRect, labelsize, property, "ShrinkPB");
@@ -160,7 +167,7 @@ namespace com.github.pandrabox.emoteprefab.runtime
 
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
-            return EditorGUIUtility.singleLineHeight * (property.FindPropertyRelative("Mode").intValue==2 ? 11 : 2);
+            return EditorGUIUtility.singleLineHeight * (property.FindPropertyRelative("Mode").intValue==2 ? 11.3f : 2);
         }
     }
 }

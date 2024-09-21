@@ -14,7 +14,8 @@ using VRC.SDK3.Avatars.Components;
 using VRC.SDK3.Dynamics.PhysBone.Components;
 using static com.github.pandrabox.emoteprefab.runtime.Generic;
 using static com.github.pandrabox.emoteprefab.editor.EmoteManager;
-using static com.github.pandrabox.emoteprefab.editor.RelativeResolver;
+using static UnityEngine.UI.Image;
+using Boo.Lang.Environments;
 
 namespace com.github.pandrabox.emoteprefab.editor
 {
@@ -37,14 +38,16 @@ namespace com.github.pandrabox.emoteprefab.editor
                 for (int n = 0; n < _emote.UnitMotions.Count; n++)
                 {
                     _clip = EmotePrefabs[m].UnitMotions[n].Clip;
-                    _original = RelativeResolve(_emote.transform, _clip.Original, ResolveMode.AutoByRelative);
+                    _original = UnityEngine.Object.Instantiate(_clip.Original);
                     CreateHumanoidClip();
                     CreateUnhumanoidClip();
                     CreateBodyShapeBlockerClip();
                 }
+                var clip0 = _emote.UnitMotions[0].Clip;
                 CreateShrinkPhysBonesClip();
                 CreateShrinkPhysBonesWriteDefaultClip();
-                CreateFakeWriteDefaultClip();
+                clip0.FakeWD = CreateFakeWriteDefaultClip(clip0.UnHumanoid);
+                clip0.FakeWDR = CreateFakeWriteDefaultClip(clip0.UnHumanoidR);
             }
         }
 
@@ -95,14 +98,34 @@ namespace com.github.pandrabox.emoteprefab.editor
         private void CreateUnhumanoidClip()
         {
             _clip.UnHumanoid = UnityEngine.Object.Instantiate(_original);
+            _clip.UnHumanoidR = UnityEngine.Object.Instantiate(_original);
             foreach (var binding in AnimationUtility.GetCurveBindings(_clip.UnHumanoid))
             {
+                // Delete All(Relative)
+                AnimationUtility.SetEditorCurve(_clip.UnHumanoidR, binding, null);
+
+                // Delete HumanPart(Abs)
                 if (binding.type == typeof(Animator))
                 {
+                    AnimationUtility.SetEditorCurve(_clip.UnHumanoid, binding, null);
+                    continue;
+                }
+
+                // Divide Absolute/Relative
+                AnimationCurve curve = AnimationUtility.GetEditorCurve(_clip.UnHumanoid, binding);
+                var RootPath = FindPathRecursive(Descriptor.transform, _emote.transform);
+                var path = binding.path;
+                if (_emote.transform.Find(path) && path.Length > 0)
+                {
+                    // If Relative, Set RelativePart
+                    path = $@"{RootPath}/{path}";
+                    _clip.UnHumanoidR.SetCurve(path, binding.type, binding.propertyName, curve);
+                    // Delete AbsPart
                     AnimationUtility.SetEditorCurve(_clip.UnHumanoid, binding, null);
                 }
             }
             AddLengthHolder(_clip.UnHumanoid);
+            AddLengthHolder(_clip.UnHumanoidR);
         }
 
         /// <summary>
@@ -131,21 +154,22 @@ namespace com.github.pandrabox.emoteprefab.editor
         /// <summary>
         /// デフォルト値に戻すクリップの生成
         /// </summary>
-        private void CreateFakeWriteDefaultClip()
+        private AnimationClip CreateFakeWriteDefaultClip(AnimationClip fromClip)
         {
-            _emote.UnitMotions[0].Clip.FakeWD = new AnimationClip();
+            var clip = new AnimationClip();
             for (int n = 0; n < _emote.UnitMotions.Count; n++)
             {
-                EditorCurveBinding[] bindings = AnimationUtility.GetCurveBindings(_emote.UnitMotions[n].Clip.UnHumanoid);
+                EditorCurveBinding[] bindings = AnimationUtility.GetCurveBindings(fromClip);
                 foreach (EditorCurveBinding binding in bindings)
                 {
                     float currentValue;
                     AnimationUtility.GetFloatValue(Descriptor.gameObject, binding, out currentValue);
                     Keyframe keyframe = new Keyframe(0, currentValue);
                     AnimationCurve curve = new AnimationCurve(keyframe);
-                    AnimationUtility.SetEditorCurve(_emote.UnitMotions[0].Clip.FakeWD, binding, curve);
+                    AnimationUtility.SetEditorCurve(clip, binding, curve);
                 }
             }
+            return clip;
         }
 
         /// <summary>

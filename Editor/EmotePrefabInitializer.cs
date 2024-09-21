@@ -32,6 +32,7 @@ namespace com.github.pandrabox.emoteprefab.editor
             CreateRootObject();
             CreateActionObject();
             CreateFXObject();
+            CreateFXRelativeObject();
             CreateSyncObject();
             CreateDefaultAFK();
             AnimatePhysBones();
@@ -62,6 +63,10 @@ namespace com.github.pandrabox.emoteprefab.editor
             if (!AssetDatabase.CopyAsset(Config.OriginalFXLayer, Config.GeneratedFXLayer))
             {
                 WriteWarning("WorkSpace", "GeneratedFXLayerの生成に失敗しました");
+            }
+            if (!AssetDatabase.CopyAsset(Config.OriginalFXRelativeLayer, Config.GeneratedFXRelativeLayer))
+            {
+                WriteWarning("WorkSpace", "GeneratedFXRelativeLayerの生成に失敗しました");
             }
         }
 
@@ -99,6 +104,22 @@ namespace com.github.pandrabox.emoteprefab.editor
             mergeAnimator.pathMode = MergeAnimatorPathMode.Absolute;
             mergeAnimator.matchAvatarWriteDefaults = true;
             mergeAnimator.layerPriority = 9999999;
+        }
+
+        /// <summary>
+        /// FXRelative追加オブジェクト生成
+        /// </summary>
+        private void CreateFXRelativeObject()
+        {
+            FXRelativeObject = new GameObject("FXRelative");
+            FXRelativeObject.transform.SetParent(EmotePrefabRootTransform);
+            FXRelativeController = AssetDatabase.LoadAssetAtPath<AnimatorController>(Config.GeneratedFXRelativeLayer);
+            var mergeAnimator = FXRelativeObject.AddComponent<ModularAvatarMergeAnimator>();
+            mergeAnimator.animator = FXRelativeController;
+            mergeAnimator.pathMode = MergeAnimatorPathMode.Relative;
+            mergeAnimator.matchAvatarWriteDefaults = true;
+            mergeAnimator.layerPriority = 9999999;
+            mergeAnimator.relativePathRoot.Set(Descriptor.gameObject);
         }
 
         /// <summary>
