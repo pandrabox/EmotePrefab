@@ -97,6 +97,11 @@ namespace com.github.pandrabox.emoteprefab.editor
         {
             return $@"{prefix}{ID(index):D3}";
         }
+        protected AnimatorState GetState(string prefix, int m)
+        {
+            string name = StateName(prefix, m);
+            return GetState(name);
+        }
         protected string StateName(string prefix, int m, int n)
         {
             return $@"{prefix}{(m + 1):D3}_{n}";

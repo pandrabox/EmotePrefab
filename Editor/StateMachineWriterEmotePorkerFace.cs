@@ -23,6 +23,8 @@ namespace com.github.pandrabox.emoteprefab.editor
         {
         }
 
+        protected override void CreateState() { }
+
         protected override void CreateStates()
         {
             if (_clip.PokerFace == null) return;

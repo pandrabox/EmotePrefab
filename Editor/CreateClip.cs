@@ -51,33 +51,10 @@ namespace com.github.pandrabox.emoteprefab.editor
             }
         }
 
-        /// <summary>
-        /// clipの全キーの最終フレームを打つ(分割後の長さ調整の為)
-        /// </summary>
-        private void AddKeyframesAtEnd()
-        {
-            float clipLength = _original.length;
-            EditorCurveBinding[] curves = AnimationUtility.GetCurveBindings(_original);
-
-            foreach (var binding in curves)
-            {
-                AnimationCurve curve = AnimationUtility.GetEditorCurve(_original, binding);
-
-                if (curve != null && curve.keys.Length > 0)
-                {
-                    Keyframe lastKey = curve.keys[curve.keys.Length - 1];
-                    if (lastKey.time < clipLength)
-                    {
-                        curve.AddKey(new Keyframe(clipLength, lastKey.value, lastKey.inTangent, lastKey.outTangent));
-                        AnimationUtility.SetEditorCurve(_original, binding, curve);
-                    }
-                }
-            }
-        }
-
         private void AddLengthHolder(AnimationClip target)
         {
-            AnimationCurve curve = AnimationCurve.Constant(0, _original.length, 0);
+            float length = _original.length > 4 ? _original.length : 4; // PBの切り替えに最小4フレーム必要
+            AnimationCurve curve = AnimationCurve.Constant(0, length, 0);
             target.SetCurve(string.Empty, typeof(Animator), $"pandrabox/dummy", curve);
         }
 

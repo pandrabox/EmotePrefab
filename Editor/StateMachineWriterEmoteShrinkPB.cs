@@ -23,12 +23,16 @@ namespace com.github.pandrabox.emoteprefab.editor
         {
         }
 
+        protected override void CreateState()
+        {
+            CreateState(StateName("W", _nEmote), EmotePrefabs[_nEmote].UnitMotions[0].Clip.ShrinkWD);
+        }
+
         protected override void CreateStates()
         {
             if (_clip.ShrinkPB == null) return;
             if (_nChain > 0) return;
             CreateState(StateName("E", _nEmote, _nChain), _clip.ShrinkPB);
-            CreateState(StateName("W", _nEmote, _nChain), _clip.ShrinkWD);
         }
 
         protected override void CreateTransition()
@@ -37,13 +41,13 @@ namespace com.github.pandrabox.emoteprefab.editor
             if (_clip.ShrinkPB != null)
             {
                 var currentState = GetState("E", _nEmote, _nChain);
-                var wdState = GetState("W", _nEmote, _nChain);
+                var wdState = GetState("W", _nEmote);
                 var nextState = GetState("E", _nEmote, _nChain + 1) ?? wdState;
                 StartTransition(_initialState, currentState, _trans.Quick);
                 OneshotTransition(currentState, nextState, _trans.Quick);
                 ManualExitTransition(currentState, nextState, _trans.Quick);
                 ForceExitTransition(currentState, wdState, _trans.Quick);
-                WDExitTransition(wdState,_exitState, _trans.Quick);
+                if(_nChain==0)  WDExitTransition(wdState,_exitState, _trans.Quick);
             }
             else
             {

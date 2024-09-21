@@ -33,6 +33,7 @@ namespace com.github.pandrabox.emoteprefab.editor
         {
             for (_nEmote = 0; _nEmote < EmotePrefabs.Length; _nEmote++)
             {
+                CreateState();
                 for (_nChain = 0; _nChain < EmotePrefabs[_nEmote].UnitMotions.Count; _nChain++)
                 {
                     RenewUnit();
@@ -77,7 +78,14 @@ namespace com.github.pandrabox.emoteprefab.editor
             QuickExitTransition(from, to, trans);
         }
 
-        protected abstract void CreateStates();
+        /// <summary>
+        /// ChainEmote全体で1つのState (WD関連)の生成
+        /// </summary>
+        protected abstract void CreateState();
+        /// <summary>
+        /// 1Unitで1つのStateの生成
+        /// </summary>
+        protected abstract void CreateStates();  
         protected abstract void CreateTransition();
     }
 }
