@@ -37,7 +37,6 @@ namespace com.github.pandrabox.emoteprefab.editor
                 {
                     _clip = EmotePrefabs[m].UnitMotions[n].Clip;
                     _original = UnityEngine.Object.Instantiate(_clip.Original);
-                    //AddKeyframesAtEnd();
                     CreateHumanoidClip();
                     CreateUnhumanoidClip();
                     CreateBodyShapeBlockerClip();
