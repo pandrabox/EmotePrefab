@@ -41,19 +41,34 @@ namespace com.github.pandrabox.emoteprefab.editor
                     CreateHumanoidClip();
                     CreateUnhumanoidClip();
                     CreateBodyShapeBlockerClip();
-                    if (n == 0)
-                    {
-                        CreateShrinkPhysBonesClip();
-                        CreateShrinkPhysBonesWriteDefaultClip();
-                    }
                 }
+                CreateShrinkPhysBonesClip();
+                CreateShrinkPhysBonesWriteDefaultClip();
                 CreateFakeWriteDefaultClip();
             }
         }
 
+        /// <summary>
+        /// 1モーションの長さを合わせるためのキーを生成する
+        /// </summary>
+        /// <param name="target"></param>
         private void AddLengthHolder(AnimationClip target)
         {
             float length = _original.length > 4 ? _original.length : 4; // PBの切り替えに最小4フレーム必要
+            AnimationCurve curve = AnimationCurve.Constant(0, length, 0);
+            target.SetCurve(string.Empty, typeof(Animator), $"pandrabox/dummy", curve);
+        }
+
+        /// <summary>
+        /// 1チェインの長さを合わせるためのキーを生成する
+        /// </summary>
+        private void AddLengthHolderForChain(AnimationClip target)
+        {
+            float length = 0;
+            for (int n = 0; n < _emote.UnitMotions.Count; n++)
+            {
+                length += _emote.UnitMotions[n].Clip.Humanoid.length;
+            }
             AnimationCurve curve = AnimationCurve.Constant(0, length, 0);
             target.SetCurve(string.Empty, typeof(Animator), $"pandrabox/dummy", curve);
         }
@@ -187,13 +202,13 @@ namespace com.github.pandrabox.emoteprefab.editor
 
         private void CreateShrinkPhysBonesClip()
         {
-            _clip.ShrinkPB = CreateShrinkPhysBonesClipGeneral(false);
-            AddLengthHolder(_clip.ShrinkPB);
+            _emote.UnitMotions[0].Clip.ShrinkPB = CreateShrinkPhysBonesClipGeneral(false);
+            AddLengthHolderForChain(_emote.UnitMotions[0].Clip.ShrinkPB);
         }
 
         private void CreateShrinkPhysBonesWriteDefaultClip()
         {
-            _clip.ShrinkWD = CreateShrinkPhysBonesClipGeneral(true);
+            _emote.UnitMotions[0].Clip.ShrinkWD = CreateShrinkPhysBonesClipGeneral(true);
         }
     }
 }
