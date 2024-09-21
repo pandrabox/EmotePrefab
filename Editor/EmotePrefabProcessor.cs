@@ -24,7 +24,7 @@ namespace com.github.pandrabox.emoteprefab.editor
             new EmotePrefabInitializer(descriptor);
             if (!HasTask) return;
             new CreateClip();
-            new DbgOutpAnim();
+            // new DbgOutpAnim();
             new StateMachineWriter();
             new ExpressionCreater();
         }

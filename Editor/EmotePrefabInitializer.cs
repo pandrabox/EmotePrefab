@@ -34,6 +34,7 @@ namespace com.github.pandrabox.emoteprefab.editor
             CreateFXObject();
             CreateSyncObject();
             CreateDefaultAFK();
+            AnimatePhysBones();
         }
 
         private static void GetEmotePrefabs()
