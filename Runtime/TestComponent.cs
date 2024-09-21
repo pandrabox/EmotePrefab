@@ -10,6 +10,7 @@ namespace com.github.pandrabox.emoteprefab.runtime
         public PhysBoneSelection ShrinkPhysBone;
         public PhysBoneSelection Test2;
         public PhysBoneSelection Test3;
+        public TransitionInfo a;
     }
 }
 #endif

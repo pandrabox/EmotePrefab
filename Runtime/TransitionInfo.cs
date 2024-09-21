@@ -1,42 +1,53 @@
-﻿// <copyright file="TransitionInfo.cs"></copyright>
-
-#if UNITY_EDITOR
-
-#pragma warning disable SA1401 // Fields should be private
+﻿#if UNITY_EDITOR
 
 using System;
+using System.Collections.Generic;
+using com.github.pandrabox.emoteprefab.runtime;
+using System.Runtime.InteropServices.WindowsRuntime;
+using UnityEditor;
+using UnityEngine;
 
 namespace com.github.pandrabox.emoteprefab.runtime
 {
-    /// <summary>
-    /// Transitionパラメータを管理するクラス
-    /// </summary>
+    public enum TransitionType
+    {
+        Start,
+        AutoExit,
+        ManualExit,
+        Sit,
+        Quick,
+    }
+
     [Serializable]
     public class TransitionInfo
     {
+        public TransitionType Type;
         public bool HasExitTime;
         public float ExitTime;
         public bool HasFixedDuration;
         public float Duration;
         public float Offset;
+        public static TransitionInfo Quick = new TransitionInfo(TransitionType.Quick);
 
-        /// <summary>
-        /// 初期化
-        /// </summary>
-        /// <param name="hasExitTime">From完了まで待つならTrue, 条件ですぐ遷移ならfalse</param>
-        /// <param name="exitTime">hasExitTimeがtrueのとき遷移開始するタイミング(%)</param>
-        /// <param name="hasFixedDuration">durationの単位指定。trueなら秒,falseならState正規時間への%</param>
-        /// <param name="duration">遷移時間</param>
-        /// <param name="offset">遷移後のStateのOffset</param>
-        public TransitionInfo(bool hasExitTime, float exitTime, bool hasFixedDuration, float duration, float offset = 0)
+        public Dictionary<TransitionType, (bool, float, bool, float, float)> DefaultValues = new Dictionary<TransitionType, (bool, float, bool, float, float)>()
         {
-            HasExitTime = hasExitTime;
-            ExitTime = exitTime;
-            HasFixedDuration = hasFixedDuration;
-            Duration = duration;
-            Offset = offset;
+            { TransitionType.Start,         (false, 0.75f, true, 0.25f, 0) },
+            { TransitionType.AutoExit,      (true, 0.75f, true, 0.25f, 0) },
+            { TransitionType.ManualExit,    (false, 0.75f, true, 0.25f, 0) },
+            { TransitionType.Sit,           (false, 0, false, 0, 0) },
+            { TransitionType.Quick,         (false, 0, false, 0, 0) },
+        };
+
+        public TransitionInfo(TransitionType type)
+        {
+            Type = type;
+            ValReset();
+        }
+
+        public void ValReset()
+        {
+            (HasExitTime, ExitTime, HasFixedDuration, Duration, Offset) = DefaultValues[Type];
         }
     }
 }
-
 #endif

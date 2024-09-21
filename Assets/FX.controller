@@ -124,7 +124,7 @@ AnimatorStateMachine:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: EmotePrefab/NonAAPPart
+  m_Name: EmotePrefab/NonAAP
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 6321021897602023970}
@@ -518,7 +518,7 @@ AnimatorStateMachine:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: EmotePrefab/ShrinkPhysBones
+  m_Name: EmotePrefab/ShrinkPB
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 3709948352745077742}
@@ -777,7 +777,7 @@ AnimatorStateMachine:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: EmotePrefab/BodyBlendShape0
+  m_Name: EmotePrefab/PorkerFace
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 6333119031731400726}
@@ -1439,7 +1439,7 @@ AnimatorController:
     m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
-    m_Name: EmotePrefab/BodyBlendShape0
+    m_Name: EmotePrefab/PorkerFace
     m_StateMachine: {fileID: -4910400273973180527}
     m_Mask: {fileID: 0}
     m_Motions: []
@@ -1451,7 +1451,7 @@ AnimatorController:
     m_SyncedLayerAffectsTiming: 0
     m_Controller: {fileID: 9100000}
   - serializedVersion: 5
-    m_Name: EmotePrefab/NonAAPPart
+    m_Name: EmotePrefab/NonAAP
     m_StateMachine: {fileID: -8307811210518344709}
     m_Mask: {fileID: 0}
     m_Motions: []
@@ -1463,7 +1463,7 @@ AnimatorController:
     m_SyncedLayerAffectsTiming: 0
     m_Controller: {fileID: 9100000}
   - serializedVersion: 5
-    m_Name: EmotePrefab/ShrinkPhysBones
+    m_Name: EmotePrefab/ShrinkPB
     m_StateMachine: {fileID: -6063116423188294346}
     m_Mask: {fileID: 0}
     m_Motions: []

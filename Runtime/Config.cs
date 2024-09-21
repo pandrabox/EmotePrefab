@@ -1,5 +1,8 @@
 ﻿// <copyright file="Config.cs" ></copyright>
 
+using System.Collections.Generic;
+using static com.github.pandrabox.emoteprefab.runtime.TransitionInfo;
+
 namespace com.github.pandrabox.emoteprefab.runtime
 {
     /// <summary>

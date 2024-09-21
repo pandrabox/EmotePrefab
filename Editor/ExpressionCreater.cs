@@ -1,6 +1,4 @@
-﻿// <copyright file="ExpressionCreater.cs"></copyright>
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using com.github.pandrabox.emoteprefab.editor;
@@ -13,6 +11,7 @@ using UnityEditor.Animations;
 using UnityEngine;
 using VRC.SDK3.Avatars.Components;
 using static com.github.pandrabox.emoteprefab.runtime.Generic;
+using static com.github.pandrabox.emoteprefab.editor.EmoteManager;
 
 #pragma warning disable SA1600 // Elements should be documented
 namespace com.github.pandrabox.emoteprefab.editor
@@ -26,13 +25,13 @@ namespace com.github.pandrabox.emoteprefab.editor
 
         public ExpressionCreater()
         {
-            if (!EmoteManager.HasItem)
+            if (!HasTask)
             {
                 return;
             }
 
             _emoteObjRoot = new GameObject("Emote");
-            _emoteObjRoot.transform.SetParent(Avatar.RootTransform);
+            _emoteObjRoot.transform.SetParent(EmotePrefabRootTransform);
 
             _emoteObjRoot.AddComponent<ModularAvatarMenuInstaller>();
 
@@ -48,9 +47,9 @@ namespace com.github.pandrabox.emoteprefab.editor
             menu.MenuSource = SubmenuSource.Children;
             menu.Control.icon = AssetDatabase.LoadAssetAtPath<Texture2D>(Config.EmotePrefabIcon);
 
-            for (int i = 0; i < EmoteManager.Length; i++)
+            for (int i = 0; i < EmotePrefabs.Length; i++)
             {
-                if (EmoteManager.IsEmote(i))
+                if (EmotePrefabs[i].IsEmote)
                 {
                     CreateUnitMenu(i);
                 }
@@ -59,20 +58,13 @@ namespace com.github.pandrabox.emoteprefab.editor
 
         private void CreateUnitMenu(int eI)
         {
-            var obj = new GameObject(EmoteManager.EmoteName(eI));
+            var obj = new GameObject(EmotePrefabs[eI].Name);
             obj.transform.SetParent(_emoteObjRoot.transform);
             var unitMenu = obj.AddComponent<ModularAvatarMenuItem>();
             unitMenu.Control.parameter = new VRC.SDK3.Avatars.ScriptableObjects.VRCExpressionsMenu.Control.Parameter() { name = "VRCEmote" };
-            unitMenu.Control.value = EmoteManager.ID(eI);
+            unitMenu.Control.value = eI+1;
             unitMenu.Control.type = VRC.SDK3.Avatars.ScriptableObjects.VRCExpressionsMenu.Control.ControlType.Toggle;
-            unitMenu.Control.icon = EmoteManager.Icon(eI);
+            unitMenu.Control.icon = EmotePrefabs[eI].Icon;
         }
     }
 }
-
-
-/* For Reviwer
- * Project policy : To set WriteDefault to OFF for all AnimatorStates.
- * Please review this code for each element and identify areas for improvement, providing a final score out of 100.
- * Please review this code in Japanese.
- */
