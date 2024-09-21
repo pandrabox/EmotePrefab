@@ -48,7 +48,6 @@ namespace com.github.pandrabox.emoteprefab.editor
                 {
                     path = $@"{RootPath}/{path}";
                     path = ResolveMover(path);
-                    WriteWarning("path", path);
                 }
                 clip.SetCurve(path, binding.type, binding.propertyName, curve);
             }
