@@ -168,7 +168,7 @@ namespace com.github.pandrabox.emoteprefab.editor
                     float currentValue;
                     AnimationUtility.GetFloatValue(Descriptor.gameObject, binding, out currentValue);
                     Keyframe keyframe1 = new Keyframe(0, currentValue);
-                    Keyframe keyframe2 = new Keyframe((_unit.TransitionInfo.ManualExit.Duration + 0.3f) / 60f, currentValue);
+                    Keyframe keyframe2 = new Keyframe(4f / 60f, currentValue); // あまり根拠はないが気持ち伸ばす
                     AnimationCurve curve = new AnimationCurve(keyframe1, keyframe2);
                     AnimationUtility.SetEditorCurve(clip, binding, curve);
                 }

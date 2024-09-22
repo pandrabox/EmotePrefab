@@ -1,4 +1,4 @@
-﻿// <copyright file="Config.cs" ></copyright>
+﻿#if UNITY_EDITOR
 
 using System.Collections.Generic;
 using static com.github.pandrabox.emoteprefab.runtime.TransitionInfo;
@@ -131,3 +131,4 @@ namespace com.github.pandrabox.emoteprefab.runtime
  * Please review this code for each element and identify areas for improvement, providing a final score out of 100.
  * Please review this code in Japanese.
  */
+#endif

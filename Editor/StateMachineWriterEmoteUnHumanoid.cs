@@ -42,9 +42,9 @@ namespace com.github.pandrabox.emoteprefab.editor
                 var wdState = GetState("W", _nEmote);
                 var nextState = GetState("E", _nEmote, _nChain + 1) ?? wdState;
                 StartTransition(_initialState, currentState, _trans.Start);
-                OneshotTransition(currentState, nextState, _trans.AutoExit);
-                ManualExitTransition(currentState, nextState, _trans.ManualExit);
-                ForceExitTransition(currentState, wdState, _trans.Sit);
+                OneshotTransition(currentState, nextState, TransitionInfo.HasQuick);
+                ManualExitTransition(currentState, nextState, TransitionInfo.Quick);
+                ForceExitTransition(currentState, wdState, TransitionInfo.Quick);
                 if (_nChain==0) WDExitTransition(wdState, _exitState, TransitionInfo.HasQuick);
             }
             else
