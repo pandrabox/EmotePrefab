@@ -15,7 +15,6 @@ using VRC.SDK3.Dynamics.PhysBone.Components;
 using static com.github.pandrabox.emoteprefab.runtime.Generic;
 using static com.github.pandrabox.emoteprefab.editor.EmoteManager;
 using static UnityEngine.UI.Image;
-using Boo.Lang.Environments;
 using UnityEngine.UIElements;
 
 namespace com.github.pandrabox.emoteprefab.editor
