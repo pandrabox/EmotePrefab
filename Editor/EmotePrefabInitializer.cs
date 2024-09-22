@@ -34,6 +34,7 @@ namespace com.github.pandrabox.emoteprefab.editor
             CreateFXObject();
             CreateFXRelativeObject();
             CreateSyncObject();
+            CreateVRCEmote();
             CreateDefaultAFK();
             AnimatePhysBones();
         }
@@ -131,7 +132,7 @@ namespace com.github.pandrabox.emoteprefab.editor
             SyncObject.transform.SetParent(EmotePrefabRootTransform);
             ModularAvatarParameters mparams = SyncObject.AddComponent<ModularAvatarParameters>();
             string[] addBoolLocalParameters = new string[] { "CN_IS_ACTION_ACTIVE", "CN_IS_ACTION_ACTIVE_FX1", "CN_IS_ACTION_ACTIVE_FX2" };
-            foreach(string addBoolLocalParameter in addBoolLocalParameters)
+            foreach (string addBoolLocalParameter in addBoolLocalParameters)
             {
                 mparams.parameters.Add(new ParameterConfig()
                 {
@@ -140,6 +141,22 @@ namespace com.github.pandrabox.emoteprefab.editor
                     localOnly = true,
                 });
             }
+        }
+
+        /// <summary>
+        /// エモート用パラメータ
+        /// </summary>
+        private void CreateVRCEmote()
+        {
+            SyncObject = new GameObject("VRCEmote");
+            SyncObject.transform.SetParent(EmotePrefabRootTransform);
+            ModularAvatarParameters mparams = SyncObject.AddComponent<ModularAvatarParameters>();
+            mparams.parameters.Add(new ParameterConfig()
+            {
+                nameOrPrefix = "VRCEmote",
+                syncType = ParameterSyncType.Int,
+                localOnly = false,
+            });
         }
 
         /// <summary>
