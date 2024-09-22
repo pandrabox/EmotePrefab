@@ -48,8 +48,8 @@ namespace com.github.pandrabox.emoteprefab.editor
                 var clip0 = _emote.UnitMotions[0].Clip;
                 CreateShrinkPhysBonesClip();
                 CreateShrinkPhysBonesWriteDefaultClip();
-                clip0.FakeWD = CreateFakeWriteDefaultClip(clip0.UnHumanoid);
-                clip0.FakeWDR = CreateFakeWriteDefaultClip(clip0.UnHumanoidR);
+                clip0.FakeWD = CreateFakeWriteDefaultClip(false);
+                clip0.FakeWDR = CreateFakeWriteDefaultClip(true);
             }
         }
 
@@ -156,11 +156,12 @@ namespace com.github.pandrabox.emoteprefab.editor
         /// <summary>
         /// デフォルト値に戻すクリップの生成
         /// </summary>
-        private AnimationClip CreateFakeWriteDefaultClip(AnimationClip fromClip)
+        private AnimationClip CreateFakeWriteDefaultClip(bool IsRelative=false)
         {
             var clip = new AnimationClip();
             for (int n = 0; n < _emote.UnitMotions.Count; n++)
             {
+                AnimationClip fromClip = IsRelative ? _emote.UnitMotions[n].Clip.UnHumanoidR : _emote.UnitMotions[n].Clip.UnHumanoid;
                 EditorCurveBinding[] bindings = AnimationUtility.GetCurveBindings(fromClip);
                 foreach (EditorCurveBinding binding in bindings)
                 {
