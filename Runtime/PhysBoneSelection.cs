@@ -30,42 +30,36 @@ namespace com.github.pandrabox.emoteprefab.runtime
         {
             EditorGUI.BeginProperty(position, label, property);
 
-            var labelProperty = property.FindPropertyRelative("label");
             var allProperty = property.FindPropertyRelative("All");
             var physBonesProperty = property.FindPropertyRelative("PhysBones");
 
-
-            var spAll = allProperty;
-            var spPB = physBonesProperty;
-
             Rect fieldRect = new Rect(position.x, position.y, position.width, EditorGUIUtility.singleLineHeight);
 
-            if (spAll.boolValue)
+            if (allProperty.boolValue)
             {
                 var allStr = label.text.Contains("Phys") ? label.text.Replace("Phys", "All Phys") : $"{label.text}All";
-                EditorGUI.PropertyField(fieldRect, spAll, new GUIContent(allStr));
+                EditorGUI.PropertyField(fieldRect, allProperty, new GUIContent(allStr));
             }
             else
             {
                 // ALL ボタンとリスト操作のUI
                 EditorGUI.LabelField(fieldRect, label.text);
-                //fieldRect.y += EditorGUIUtility.singleLineHeight;
 
                 fieldRect.width = position.width / 4;
                 fieldRect.x += fieldRect.width;
 
                 if (GUI.Button(fieldRect, "ALL"))
                 {
-                    spAll.boolValue = true;
+                    allProperty.boolValue = true;
                 }
 
                 fieldRect.x += fieldRect.width;
 
                 if (GUI.Button(fieldRect, "-"))
                 {
-                    if (spPB.arraySize > 0)
+                    if (physBonesProperty.arraySize > 0)
                     {
-                        spPB.arraySize--;
+                        physBonesProperty.arraySize--;
                     }
                 }
 
@@ -73,7 +67,7 @@ namespace com.github.pandrabox.emoteprefab.runtime
 
                 if (GUI.Button(fieldRect, "+"))
                 {
-                    spPB.arraySize++;
+                    physBonesProperty.arraySize++;
                 }
 
                 // VRCPhysBone リストの表示
@@ -81,9 +75,9 @@ namespace com.github.pandrabox.emoteprefab.runtime
                 fieldRect.x = position.x;
                 fieldRect.width = position.width;
                 fieldRect.y += EditorGUIUtility.singleLineHeight;
-                for (int i = 0; i < spPB.arraySize; i++)
+                for (int i = 0; i < physBonesProperty.arraySize; i++)
                 {
-                    EditorGUI.PropertyField(fieldRect, spPB.GetArrayElementAtIndex(i), GUIContent.none);
+                    EditorGUI.PropertyField(fieldRect, physBonesProperty.GetArrayElementAtIndex(i), GUIContent.none);
                     fieldRect.y += EditorGUIUtility.singleLineHeight;
                 }
                 EditorGUI.indentLevel--;
