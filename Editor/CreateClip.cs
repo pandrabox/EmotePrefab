@@ -16,6 +16,7 @@ using static com.github.pandrabox.emoteprefab.runtime.Generic;
 using static com.github.pandrabox.emoteprefab.editor.EmoteManager;
 using static UnityEngine.UI.Image;
 using Boo.Lang.Environments;
+using UnityEngine.UIElements;
 
 namespace com.github.pandrabox.emoteprefab.editor
 {
@@ -27,6 +28,7 @@ namespace com.github.pandrabox.emoteprefab.editor
         private AnimationClip _original;
         private UnitMotionClips _clip;
         private EmotePrefab _emote;
+        private UnitMotion _unit;
         /// <summary>
         /// EmoteClipの分割
         /// </summary>
@@ -37,7 +39,8 @@ namespace com.github.pandrabox.emoteprefab.editor
                 _emote = EmotePrefabs[m];
                 for (int n = 0; n < _emote.UnitMotions.Count; n++)
                 {
-                    _clip = EmotePrefabs[m].UnitMotions[n].Clip;
+                    _unit = _emote.UnitMotions[n];
+                    _clip = _unit.Clip;
                     _original = UnityEngine.Object.Instantiate(_clip.Original);
                     CreateHumanoidClip();
                     CreateUnhumanoidClip();
@@ -164,8 +167,9 @@ namespace com.github.pandrabox.emoteprefab.editor
                 {
                     float currentValue;
                     AnimationUtility.GetFloatValue(Descriptor.gameObject, binding, out currentValue);
-                    Keyframe keyframe = new Keyframe(0, currentValue);
-                    AnimationCurve curve = new AnimationCurve(keyframe);
+                    Keyframe keyframe1 = new Keyframe(0, currentValue);
+                    Keyframe keyframe2 = new Keyframe((_unit.TransitionInfo.ManualExit.Duration + 0.3f) / 60f, currentValue);
+                    AnimationCurve curve = new AnimationCurve(keyframe1, keyframe2);
                     AnimationUtility.SetEditorCurve(clip, binding, curve);
                 }
             }
