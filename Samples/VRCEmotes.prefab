@@ -1,0 +1,912 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &933636184781388458
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5991582322041194905}
+  m_Layer: 0
+  m_Name: VRCEmotes
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5991582322041194905
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 933636184781388458}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 761205122549110572}
+  - {fileID: 2205615209470951609}
+  - {fileID: 5643818447647247641}
+  - {fileID: 1493078403127905498}
+  - {fileID: 6319429090133241240}
+  - {fileID: 7902348368099769635}
+  - {fileID: 1839921965862678084}
+  - {fileID: 2014775831697807535}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1083563926334257150
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 761205122549110572}
+  - component: {fileID: 3501552752987211185}
+  m_Layer: 0
+  m_Name: E_Wave
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &761205122549110572
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1083563926334257150}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5991582322041194905}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3501552752987211185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1083563926334257150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2811c4e709a521c45bf91cd7041f1db2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsEmote: 1
+  IsAFK: 0
+  Icon: {fileID: 0}
+  _name: Wave
+  AnimatePhysBone:
+    All: 0
+    PhysBones: []
+  ShrinkPhysBone:
+    All: 0
+    PhysBones: []
+  UnitMotions:
+  - IsOneShot: 1
+    Clip:
+      Original: {fileID: 7400000, guid: 58ac0634a294b2245ab34f0ff49a349b, type: 2}
+      Humanoid: {fileID: 0}
+      UnHumanoid: {fileID: 0}
+      FakeWD: {fileID: 0}
+      UnHumanoidR: {fileID: 0}
+      FakeWDR: {fileID: 0}
+      PokerFace: {fileID: 0}
+      ShrinkPB: {fileID: 0}
+      ShrinkWD: {fileID: 0}
+    TransitionInfo:
+      Start:
+        Type: 0
+        HasExitTime: 0
+        ExitTime: 0.75
+        HasFixedDuration: 1
+        Duration: 0.25
+        Offset: 0
+      AutoExit:
+        Type: 1
+        HasExitTime: 1
+        ExitTime: 0.75
+        HasFixedDuration: 1
+        Duration: 0.25
+        Offset: 0
+      ManualExit:
+        Type: 2
+        HasExitTime: 0
+        ExitTime: 0.75
+        HasFixedDuration: 1
+        Duration: 0.25
+        Offset: 0
+      Sit:
+        Type: 3
+        HasExitTime: 0
+        ExitTime: 0
+        HasFixedDuration: 0
+        Duration: 0
+        Offset: 0
+      Quick:
+        Type: 4
+        HasExitTime: 0
+        ExitTime: 0
+        HasFixedDuration: 0
+        Duration: 0
+        Offset: 0
+    Mode: 1
+  ViewAdvancedOptions: 0
+--- !u!1 &2626718730663488201
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2014775831697807535}
+  - component: {fileID: 6678243045859618530}
+  m_Layer: 0
+  m_Name: E_Die
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2014775831697807535
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2626718730663488201}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5991582322041194905}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6678243045859618530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2626718730663488201}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2811c4e709a521c45bf91cd7041f1db2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsEmote: 1
+  IsAFK: 0
+  Icon: {fileID: 0}
+  _name: Die
+  AnimatePhysBone:
+    All: 0
+    PhysBones: []
+  ShrinkPhysBone:
+    All: 0
+    PhysBones: []
+  UnitMotions:
+  - IsOneShot: 0
+    Clip:
+      Original: {fileID: 7400000, guid: 6ef13f0f88e4acc49839505a82c313c9, type: 2}
+      Humanoid: {fileID: 0}
+      UnHumanoid: {fileID: 0}
+      FakeWD: {fileID: 0}
+      UnHumanoidR: {fileID: 0}
+      FakeWDR: {fileID: 0}
+      PokerFace: {fileID: 0}
+      ShrinkPB: {fileID: 0}
+      ShrinkWD: {fileID: 0}
+    TransitionInfo:
+      Start:
+        Type: 0
+        HasExitTime: 0
+        ExitTime: 0.75
+        HasFixedDuration: 1
+        Duration: 0.25
+        Offset: 0
+      AutoExit:
+        Type: 1
+        HasExitTime: 1
+        ExitTime: 0.75
+        HasFixedDuration: 1
+        Duration: 0.25
+        Offset: 0
+      ManualExit:
+        Type: 2
+        HasExitTime: 0
+        ExitTime: 0.75
+        HasFixedDuration: 1
+        Duration: 0.25
+        Offset: 0
+      Sit:
+        Type: 3
+        HasExitTime: 0
+        ExitTime: 0
+        HasFixedDuration: 0
+        Duration: 0
+        Offset: 0
+      Quick:
+        Type: 4
+        HasExitTime: 0
+        ExitTime: 0
+        HasFixedDuration: 0
+        Duration: 0
+        Offset: 0
+    Mode: 1
+  - IsOneShot: 1
+    Clip:
+      Original: {fileID: 7400000, guid: 33227c9d7fc19f64bb7c7da5b04a997d, type: 2}
+      Humanoid: {fileID: 0}
+      UnHumanoid: {fileID: 0}
+      FakeWD: {fileID: 0}
+      UnHumanoidR: {fileID: 0}
+      FakeWDR: {fileID: 0}
+      PokerFace: {fileID: 0}
+      ShrinkPB: {fileID: 0}
+      ShrinkWD: {fileID: 0}
+    TransitionInfo:
+      Start:
+        Type: 0
+        HasExitTime: 0
+        ExitTime: 0.75
+        HasFixedDuration: 1
+        Duration: 0.25
+        Offset: 0
+      AutoExit:
+        Type: 1
+        HasExitTime: 1
+        ExitTime: 0.75
+        HasFixedDuration: 1
+        Duration: 0.25
+        Offset: 0
+      ManualExit:
+        Type: 2
+        HasExitTime: 0
+        ExitTime: 0.75
+        HasFixedDuration: 1
+        Duration: 0.25
+        Offset: 0
+      Sit:
+        Type: 3
+        HasExitTime: 0
+        ExitTime: 0
+        HasFixedDuration: 0
+        Duration: 0
+        Offset: 0
+      Quick:
+        Type: 4
+        HasExitTime: 0
+        ExitTime: 0
+        HasFixedDuration: 0
+        Duration: 0
+        Offset: 0
+    Mode: 1
+  ViewAdvancedOptions: 0
+--- !u!1 &4230410411975074173
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1493078403127905498}
+  - component: {fileID: 6968536911279498802}
+  m_Layer: 0
+  m_Name: E_Cheer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1493078403127905498
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4230410411975074173}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5991582322041194905}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6968536911279498802
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4230410411975074173}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2811c4e709a521c45bf91cd7041f1db2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsEmote: 1
+  IsAFK: 0
+  Icon: {fileID: 0}
+  _name: Cheer
+  AnimatePhysBone:
+    All: 0
+    PhysBones: []
+  ShrinkPhysBone:
+    All: 0
+    PhysBones: []
+  UnitMotions:
+  - IsOneShot: 0
+    Clip:
+      Original: {fileID: 7400000, guid: 97ae0b03a8a67524fb05ea8558b011e9, type: 2}
+      Humanoid: {fileID: 0}
+      UnHumanoid: {fileID: 0}
+      FakeWD: {fileID: 0}
+      UnHumanoidR: {fileID: 0}
+      FakeWDR: {fileID: 0}
+      PokerFace: {fileID: 0}
+      ShrinkPB: {fileID: 0}
+      ShrinkWD: {fileID: 0}
+    TransitionInfo:
+      Start:
+        Type: 0
+        HasExitTime: 0
+        ExitTime: 0.75
+        HasFixedDuration: 1
+        Duration: 0.25
+        Offset: 0
+      AutoExit:
+        Type: 1
+        HasExitTime: 1
+        ExitTime: 0.75
+        HasFixedDuration: 1
+        Duration: 0.25
+        Offset: 0
+      ManualExit:
+        Type: 2
+        HasExitTime: 0
+        ExitTime: 0.75
+        HasFixedDuration: 1
+        Duration: 0.25
+        Offset: 0
+      Sit:
+        Type: 3
+        HasExitTime: 0
+        ExitTime: 0
+        HasFixedDuration: 0
+        Duration: 0
+        Offset: 0
+      Quick:
+        Type: 4
+        HasExitTime: 0
+        ExitTime: 0
+        HasFixedDuration: 0
+        Duration: 0
+        Offset: 0
+    Mode: 0
+  ViewAdvancedOptions: 0
+--- !u!1 &4423079788857098935
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5643818447647247641}
+  - component: {fileID: 4013031668723710919}
+  m_Layer: 0
+  m_Name: E_Point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5643818447647247641
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4423079788857098935}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5991582322041194905}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4013031668723710919
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4423079788857098935}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2811c4e709a521c45bf91cd7041f1db2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsEmote: 1
+  IsAFK: 0
+  Icon: {fileID: 0}
+  _name: Point
+  AnimatePhysBone:
+    All: 0
+    PhysBones: []
+  ShrinkPhysBone:
+    All: 0
+    PhysBones: []
+  UnitMotions:
+  - IsOneShot: 1
+    Clip:
+      Original: {fileID: 7400000, guid: cfffb1559ce1b9d478152d33d0da1573, type: 2}
+      Humanoid: {fileID: 0}
+      UnHumanoid: {fileID: 0}
+      FakeWD: {fileID: 0}
+      UnHumanoidR: {fileID: 0}
+      FakeWDR: {fileID: 0}
+      PokerFace: {fileID: 0}
+      ShrinkPB: {fileID: 0}
+      ShrinkWD: {fileID: 0}
+    TransitionInfo:
+      Start:
+        Type: 0
+        HasExitTime: 0
+        ExitTime: 0.75
+        HasFixedDuration: 1
+        Duration: 0.25
+        Offset: 0
+      AutoExit:
+        Type: 1
+        HasExitTime: 1
+        ExitTime: 0.75
+        HasFixedDuration: 1
+        Duration: 0.25
+        Offset: 0
+      ManualExit:
+        Type: 2
+        HasExitTime: 0
+        ExitTime: 0.75
+        HasFixedDuration: 1
+        Duration: 0.25
+        Offset: 0
+      Sit:
+        Type: 3
+        HasExitTime: 0
+        ExitTime: 0
+        HasFixedDuration: 0
+        Duration: 0
+        Offset: 0
+      Quick:
+        Type: 4
+        HasExitTime: 0
+        ExitTime: 0
+        HasFixedDuration: 0
+        Duration: 0
+        Offset: 0
+    Mode: 1
+  ViewAdvancedOptions: 0
+--- !u!1 &7423786144886625312
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1839921965862678084}
+  - component: {fileID: 1664887971980802731}
+  m_Layer: 0
+  m_Name: E_SadKick
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1839921965862678084
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7423786144886625312}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5991582322041194905}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1664887971980802731
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7423786144886625312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2811c4e709a521c45bf91cd7041f1db2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsEmote: 1
+  IsAFK: 0
+  Icon: {fileID: 0}
+  _name: SadKick
+  AnimatePhysBone:
+    All: 0
+    PhysBones: []
+  ShrinkPhysBone:
+    All: 0
+    PhysBones: []
+  UnitMotions:
+  - IsOneShot: 1
+    Clip:
+      Original: {fileID: 7400000, guid: 7e42766a22a02fb49a8e59b1224868f3, type: 2}
+      Humanoid: {fileID: 0}
+      UnHumanoid: {fileID: 0}
+      FakeWD: {fileID: 0}
+      UnHumanoidR: {fileID: 0}
+      FakeWDR: {fileID: 0}
+      PokerFace: {fileID: 0}
+      ShrinkPB: {fileID: 0}
+      ShrinkWD: {fileID: 0}
+    TransitionInfo:
+      Start:
+        Type: 0
+        HasExitTime: 0
+        ExitTime: 0.75
+        HasFixedDuration: 1
+        Duration: 0.25
+        Offset: 0
+      AutoExit:
+        Type: 1
+        HasExitTime: 1
+        ExitTime: 0.75
+        HasFixedDuration: 1
+        Duration: 0.25
+        Offset: 0
+      ManualExit:
+        Type: 2
+        HasExitTime: 0
+        ExitTime: 0.75
+        HasFixedDuration: 1
+        Duration: 0.25
+        Offset: 0
+      Sit:
+        Type: 3
+        HasExitTime: 0
+        ExitTime: 0
+        HasFixedDuration: 0
+        Duration: 0
+        Offset: 0
+      Quick:
+        Type: 4
+        HasExitTime: 0
+        ExitTime: 0
+        HasFixedDuration: 0
+        Duration: 0
+        Offset: 0
+    Mode: 1
+  ViewAdvancedOptions: 0
+--- !u!1 &7488154061960425791
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2205615209470951609}
+  - component: {fileID: 3716125271717474956}
+  m_Layer: 0
+  m_Name: E_Clap
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2205615209470951609
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7488154061960425791}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5991582322041194905}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3716125271717474956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7488154061960425791}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2811c4e709a521c45bf91cd7041f1db2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsEmote: 1
+  IsAFK: 0
+  Icon: {fileID: 0}
+  _name: Clap
+  AnimatePhysBone:
+    All: 0
+    PhysBones: []
+  ShrinkPhysBone:
+    All: 0
+    PhysBones: []
+  UnitMotions:
+  - IsOneShot: 0
+    Clip:
+      Original: {fileID: 7400000, guid: 23396618fffc46b49b23d40bdd9e59ef, type: 2}
+      Humanoid: {fileID: 0}
+      UnHumanoid: {fileID: 0}
+      FakeWD: {fileID: 0}
+      UnHumanoidR: {fileID: 0}
+      FakeWDR: {fileID: 0}
+      PokerFace: {fileID: 0}
+      ShrinkPB: {fileID: 0}
+      ShrinkWD: {fileID: 0}
+    TransitionInfo:
+      Start:
+        Type: 0
+        HasExitTime: 0
+        ExitTime: 0.75
+        HasFixedDuration: 1
+        Duration: 0.25
+        Offset: 0
+      AutoExit:
+        Type: 1
+        HasExitTime: 1
+        ExitTime: 0.75
+        HasFixedDuration: 1
+        Duration: 0.25
+        Offset: 0
+      ManualExit:
+        Type: 2
+        HasExitTime: 0
+        ExitTime: 0.75
+        HasFixedDuration: 1
+        Duration: 0.25
+        Offset: 0
+      Sit:
+        Type: 3
+        HasExitTime: 0
+        ExitTime: 0
+        HasFixedDuration: 0
+        Duration: 0
+        Offset: 0
+      Quick:
+        Type: 4
+        HasExitTime: 0
+        ExitTime: 0
+        HasFixedDuration: 0
+        Duration: 0
+        Offset: 0
+    Mode: 0
+  ViewAdvancedOptions: 0
+--- !u!1 &8196568529000979112
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7902348368099769635}
+  - component: {fileID: 5468972014734386410}
+  m_Layer: 0
+  m_Name: E_Backflip
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7902348368099769635
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8196568529000979112}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5991582322041194905}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5468972014734386410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8196568529000979112}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2811c4e709a521c45bf91cd7041f1db2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsEmote: 1
+  IsAFK: 0
+  Icon: {fileID: 0}
+  _name: Backflip
+  AnimatePhysBone:
+    All: 0
+    PhysBones: []
+  ShrinkPhysBone:
+    All: 0
+    PhysBones: []
+  UnitMotions:
+  - IsOneShot: 1
+    Clip:
+      Original: {fileID: 7400000, guid: 6c8e2d2e9d3544f44b063d7661a74698, type: 2}
+      Humanoid: {fileID: 0}
+      UnHumanoid: {fileID: 0}
+      FakeWD: {fileID: 0}
+      UnHumanoidR: {fileID: 0}
+      FakeWDR: {fileID: 0}
+      PokerFace: {fileID: 0}
+      ShrinkPB: {fileID: 0}
+      ShrinkWD: {fileID: 0}
+    TransitionInfo:
+      Start:
+        Type: 0
+        HasExitTime: 0
+        ExitTime: 0.75
+        HasFixedDuration: 1
+        Duration: 0.25
+        Offset: 0
+      AutoExit:
+        Type: 1
+        HasExitTime: 1
+        ExitTime: 0.75
+        HasFixedDuration: 1
+        Duration: 0.25
+        Offset: 0
+      ManualExit:
+        Type: 2
+        HasExitTime: 0
+        ExitTime: 0.75
+        HasFixedDuration: 1
+        Duration: 0.25
+        Offset: 0
+      Sit:
+        Type: 3
+        HasExitTime: 0
+        ExitTime: 0
+        HasFixedDuration: 0
+        Duration: 0
+        Offset: 0
+      Quick:
+        Type: 4
+        HasExitTime: 0
+        ExitTime: 0
+        HasFixedDuration: 0
+        Duration: 0
+        Offset: 0
+    Mode: 1
+  ViewAdvancedOptions: 0
+--- !u!1 &8773810434037895141
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6319429090133241240}
+  - component: {fileID: 3090692852693714990}
+  m_Layer: 0
+  m_Name: E_Dance
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6319429090133241240
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8773810434037895141}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5991582322041194905}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3090692852693714990
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8773810434037895141}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2811c4e709a521c45bf91cd7041f1db2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsEmote: 1
+  IsAFK: 0
+  Icon: {fileID: 0}
+  _name: Dance
+  AnimatePhysBone:
+    All: 0
+    PhysBones: []
+  ShrinkPhysBone:
+    All: 0
+    PhysBones: []
+  UnitMotions:
+  - IsOneShot: 0
+    Clip:
+      Original: {fileID: 7400000, guid: 06403722f682c9a4fbc4417f215f49a1, type: 2}
+      Humanoid: {fileID: 0}
+      UnHumanoid: {fileID: 0}
+      FakeWD: {fileID: 0}
+      UnHumanoidR: {fileID: 0}
+      FakeWDR: {fileID: 0}
+      PokerFace: {fileID: 0}
+      ShrinkPB: {fileID: 0}
+      ShrinkWD: {fileID: 0}
+    TransitionInfo:
+      Start:
+        Type: 0
+        HasExitTime: 0
+        ExitTime: 0.75
+        HasFixedDuration: 1
+        Duration: 0.25
+        Offset: 0
+      AutoExit:
+        Type: 1
+        HasExitTime: 1
+        ExitTime: 0.75
+        HasFixedDuration: 1
+        Duration: 0.25
+        Offset: 0
+      ManualExit:
+        Type: 2
+        HasExitTime: 0
+        ExitTime: 0.75
+        HasFixedDuration: 1
+        Duration: 0.25
+        Offset: 0
+      Sit:
+        Type: 3
+        HasExitTime: 0
+        ExitTime: 0
+        HasFixedDuration: 0
+        Duration: 0
+        Offset: 0
+      Quick:
+        Type: 4
+        HasExitTime: 0
+        ExitTime: 0
+        HasFixedDuration: 0
+        Duration: 0
+        Offset: 0
+    Mode: 0
+  ViewAdvancedOptions: 0
