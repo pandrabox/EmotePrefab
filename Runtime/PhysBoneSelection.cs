@@ -20,6 +20,17 @@ namespace com.github.pandrabox.emoteprefab.runtime
     {
         public bool All;
         public List<VRCPhysBone> PhysBones = new List<VRCPhysBone>();
+        public List<string> paths = new List<string>();
+
+        public void RestorePhysBones(Transform Root)
+        {
+            for(int i = 0; i < Mathf.Min(paths.Count, PhysBones.Count); i++) {
+                if (PhysBones[i] == null)
+                {
+                    PhysBones[i] = Root.Find(paths[i])?.GetComponent<VRCPhysBone>();
+                }
+            }
+        }
     }
 
 
@@ -30,8 +41,14 @@ namespace com.github.pandrabox.emoteprefab.runtime
         {
             EditorGUI.BeginProperty(position, label, property);
 
+
             var allProperty = property.FindPropertyRelative("All");
             var physBonesProperty = property.FindPropertyRelative("PhysBones");
+            var pathsProperty = property.FindPropertyRelative("paths");
+            if (pathsProperty.arraySize != physBonesProperty.arraySize)
+            {
+                pathsProperty.arraySize = physBonesProperty.arraySize;
+            }
 
             Rect fieldRect = new Rect(position.x, position.y, position.width, EditorGUIUtility.singleLineHeight);
 
@@ -60,6 +77,7 @@ namespace com.github.pandrabox.emoteprefab.runtime
                     if (physBonesProperty.arraySize > 0)
                     {
                         physBonesProperty.arraySize--;
+                        pathsProperty.arraySize = physBonesProperty.arraySize;
                     }
                 }
 
@@ -68,6 +86,7 @@ namespace com.github.pandrabox.emoteprefab.runtime
                 if (GUI.Button(fieldRect, "+"))
                 {
                     physBonesProperty.arraySize++;
+                    pathsProperty.arraySize = physBonesProperty.arraySize;
                 }
 
                 // VRCPhysBone リストの表示
@@ -75,9 +94,22 @@ namespace com.github.pandrabox.emoteprefab.runtime
                 fieldRect.x = position.x;
                 fieldRect.width = position.width;
                 fieldRect.y += EditorGUIUtility.singleLineHeight;
+                float xButtonSize = 20f;
+                var leftrect = new Rect(fieldRect.x, fieldRect.y, fieldRect.width - xButtonSize, fieldRect.height);
+                var rightrect = new Rect(fieldRect.x+ leftrect.width, fieldRect.y, xButtonSize, fieldRect.height);
                 for (int i = 0; i < physBonesProperty.arraySize; i++)
                 {
-                    EditorGUI.PropertyField(fieldRect, physBonesProperty.GetArrayElementAtIndex(i), GUIContent.none);
+                    var physBoneProperty = physBonesProperty.GetArrayElementAtIndex(i);
+                    var cashProperty = pathsProperty.GetArrayElementAtIndex(i);
+                    EditorGUI.PropertyField(leftrect, physBoneProperty, GUIContent.none);
+
+                    if (GUI.Button(rightrect, "x"))
+                    {
+                        cashProperty.stringValue = string.Empty;
+                        physBoneProperty.objectReferenceValue = null;
+                    }
+
+                    cashProperty.stringValue = PBPath((VRCPhysBone)physBoneProperty.objectReferenceValue) ?? cashProperty.stringValue;
                     fieldRect.y += EditorGUIUtility.singleLineHeight;
                 }
                 EditorGUI.indentLevel--;
@@ -99,6 +131,14 @@ namespace com.github.pandrabox.emoteprefab.runtime
                 int extraLines = spPB.arraySize + 1;
                 return EditorGUIUtility.singleLineHeight * extraLines;
             }
+        }
+
+        private string PBPath(VRCPhysBone physBone)
+        {
+            if (physBone == null) return null;
+            var descriptor = FindComponentFromParent<VRCAvatarDescriptor>(physBone.gameObject);
+            if (descriptor == null) return null;
+            return FindPathRecursive(descriptor.transform, physBone.transform);
         }
     }
 }

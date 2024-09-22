@@ -7,6 +7,8 @@ using UnityEngine;
 using System.Collections.Generic;
 using VRC.SDK3.Dynamics.PhysBone.Components;
 using System.Linq;
+using VRC.SDK3.Avatars.Components;
+using static com.github.pandrabox.emoteprefab.runtime.Generic;
 
 namespace com.github.pandrabox.emoteprefab.runtime
 {
@@ -69,6 +71,16 @@ namespace com.github.pandrabox.emoteprefab.runtime
             IsEmote = isEmote;
             IsAFK = isAFK;
         }
+
+        public void RestorePhysBones()
+        {
+            var descriptor = FindComponentFromParent<VRCAvatarDescriptor>(gameObject);
+            if (descriptor != null)
+            {
+                if (AnimatePhysBone != null) AnimatePhysBone.RestorePhysBones(descriptor.transform);
+                if (ShrinkPhysBone != null) ShrinkPhysBone.RestorePhysBones(descriptor.transform);
+            }
+        }
     }
 
     [CustomEditor(typeof(EmotePrefab))]
@@ -77,6 +89,7 @@ namespace com.github.pandrabox.emoteprefab.runtime
         public override void OnInspectorGUI()
         {
             var nowInstance = (EmotePrefab)target;
+            nowInstance.RestorePhysBones();
             var exMode = nowInstance.UnitMotions.FirstOrDefault().Mode;
             serializedObject.Update();
             try
