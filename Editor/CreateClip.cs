@@ -211,17 +211,16 @@ namespace com.github.pandrabox.emoteprefab.editor
             return clip;
         }
 
-        static VRCPhysBone[] ShrinkBones()
+        private VRCPhysBone[] ShrinkBones()
         {
-            if (EmotePrefabs.Any(e => e.ShrinkPhysBone.All))
+            if (_emote.ShrinkPhysBone.All)
             {
                 return Descriptor.transform.GetComponentsInChildren<VRCPhysBone>(true);
             }
             else
             {
-                return EmotePrefabs
-                    .Where(prefab => prefab.ShrinkPhysBone.PhysBones != null)
-                    .SelectMany(prefab => prefab.ShrinkPhysBone.PhysBones.Where(bone => bone != null))
+                return _emote.ShrinkPhysBone.PhysBones?
+                    .Where(bone => bone != null)
                     .Distinct()
                     .ToArray();
             }
