@@ -74,17 +74,21 @@ namespace com.github.pandrabox.emoteprefab.editor
             {
                 return EmotePrefabs[n].Icon;
             }
-            else if (EmotePrefabs[n].RootMotion.MotionType == MotionType.OneShot)
-            {
-                return AssetDatabase.LoadAssetAtPath<Texture2D>(Config.OneShotIcon);
-            }
             else if (EmotePrefabs[n].RootMotion.MotionType == MotionType.Loop)
             {
                 return AssetDatabase.LoadAssetAtPath<Texture2D>(Config.LoopIcon);
             }
-            else
+            else if (EmotePrefabs[n].RootMotion.MotionType == MotionType.Hold)
             {
                 return AssetDatabase.LoadAssetAtPath<Texture2D>(Config.HoldIcon);
+            }
+            else if (EmotePrefabs[n].RootMotion.MotionType == MotionType.UnstoppableOneshot)
+            {
+                return AssetDatabase.LoadAssetAtPath<Texture2D>(Config.UnstoppableIcon);
+            }
+            else
+            {
+                return AssetDatabase.LoadAssetAtPath<Texture2D>(Config.OneShotIcon);
             }
         }
     }
