@@ -45,6 +45,15 @@ namespace com.github.pandrabox.emoteprefab.runtime
                     {
                         RootClip = value;
                         Name = RootClip.name.Replace("proxy_stand_", string.Empty).Replace("proxy_", string.Empty);
+
+                        if (RootClip.isLooping && RootClip.length > 2f / 60)
+                        {
+                            RootMotion.MotionType = MotionType.Loop;
+                        }
+                        else
+                        {
+                            RootMotion.MotionType = MotionType.Hold;
+                        }
                     }
                 }
                 finally
@@ -128,6 +137,7 @@ namespace com.github.pandrabox.emoteprefab.runtime
                         }
                     }
                 }
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("UnitMotions").GetArrayElementAtIndex(0).FindPropertyRelative("MotionType"));
 
                 if (exMode > 0)
                 {

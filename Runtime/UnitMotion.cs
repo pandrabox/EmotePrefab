@@ -1,5 +1,6 @@
 ﻿#if UNITY_EDITOR
 using System;
+using System.Reflection;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
@@ -8,10 +9,18 @@ using static UnityEngine.GraphicsBuffer;
 
 namespace com.github.pandrabox.emoteprefab.runtime
 {
+
+    public enum MotionType{
+        OneShot,
+        Loop,
+        Hold,
+        UnstoppableOneshot
+    }
+
     [Serializable]
     public class UnitMotion
     {
-        public bool IsOneShot;
+        public MotionType MotionType;
         public UnitMotionClips Clip = new UnitMotionClips();
         public UnitMotionTransitionInfo TransitionInfo = new UnitMotionTransitionInfo();
         public int Mode=0;
@@ -55,6 +64,7 @@ namespace com.github.pandrabox.emoteprefab.runtime
 
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
+            var originalClipID = property.FindPropertyRelative("Clip").FindPropertyRelative("Original").objectReferenceInstanceIDValue; //UI開始時のOriginalClipIDを取得(最後に使う)
             var Mode = property.FindPropertyRelative("Mode").intValue;
             EditorGUI.BeginProperty(position, label, property);
             float positiony = position.y;
@@ -71,7 +81,7 @@ namespace com.github.pandrabox.emoteprefab.runtime
                 fieldRect = new Rect(position.x, positiony, position.width / 2, EditorGUIUtility.singleLineHeight);
                 MiniMotion(fieldRect, labelsize, property, "Original");
                 fieldRect = new Rect(position.x + position.width / 2, positiony, position.width / 2, EditorGUIUtility.singleLineHeight);
-                EditorGUI.PropertyField(fieldRect, property.FindPropertyRelative("IsOneShot"));
+                EditorGUI.PropertyField(fieldRect, property.FindPropertyRelative("MotionType"));
                 positiony += EditorGUIUtility.singleLineHeight;
                 fieldRect = new Rect(position.x, positiony, position.width / 2, EditorGUIUtility.singleLineHeight);
                 MiniMotion(fieldRect, labelsize, property, "Humanoid");
@@ -92,7 +102,6 @@ namespace com.github.pandrabox.emoteprefab.runtime
                 MiniMotion(fieldRect, labelsize, property, "ShrinkPB");
                 fieldRect = new Rect(position.x + position.width / 2, positiony, position.width / 2, EditorGUIUtility.singleLineHeight);
                 MiniMotion(fieldRect, labelsize, property, "ShrinkWD");
-
 
 
                 positiony += EditorGUIUtility.singleLineHeight;
@@ -139,8 +148,8 @@ namespace com.github.pandrabox.emoteprefab.runtime
 
                 leftlabel.y += row.height;
                 leftval.y += row.height;
-                EditorGUI.LabelField(leftlabel, "IsOneShot");
-                EditorGUI.PropertyField(leftval, property.FindPropertyRelative("IsOneShot"), new GUIContent());
+                EditorGUI.LabelField(leftlabel, "MotionType");
+                EditorGUI.PropertyField(leftval, property.FindPropertyRelative("MotionType"), new GUIContent());
 
                 var right = new Rect(row.x + row.width / 2, row.y, row.width / 2, row.height);
                 var rightlabel = new Rect(right.x, row.y, labelsize, row.height);
@@ -160,6 +169,19 @@ namespace com.github.pandrabox.emoteprefab.runtime
                 EditorGUI.PropertyField(rightval, transProp.FindPropertyRelative("Duration"), new GUIContent());
                 EditorGUI.LabelField(rightunit, (transProp.FindPropertyRelative("HasFixedDuration").boolValue ? "s" : "%"));
             }
+
+            if (originalClipID != property.FindPropertyRelative("Clip").FindPropertyRelative("Original").objectReferenceInstanceIDValue) //UI開始時とOriginalClipIDが違ったらType更新
+            {
+                var originalClip = (AnimationClip)property.FindPropertyRelative("Clip").FindPropertyRelative("Original").objectReferenceValue;
+                if (originalClip.isLooping && originalClip.length > 2f / 60)
+                {
+                    property.FindPropertyRelative("MotionType").enumValueIndex = (int)MotionType.Loop;
+                }
+                else
+                {
+                    property.FindPropertyRelative("MotionType").enumValueIndex = (int)MotionType.Hold;
+                }
+            };
             EditorGUI.EndProperty();
         }
 
