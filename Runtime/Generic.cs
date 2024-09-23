@@ -10,7 +10,9 @@ using UnityEditor;
 using UnityEditor.Animations;
 #endif
 using UnityEngine;
+using UnityEngine.UIElements;
 using VRC.SDK3.Avatars.Components;
+using static UnityEngine.GraphicsBuffer;
 
 namespace com.github.pandrabox.emoteprefab.runtime
 {
@@ -56,6 +58,13 @@ namespace com.github.pandrabox.emoteprefab.runtime
 
             pathSegments.Reverse();
             return String.Join("/", pathSegments);
+        }
+        public static AnimationClip DummyClip(int flame)
+        {
+            var clip = new AnimationClip();
+            AnimationCurve curve = AnimationCurve.Constant(0, (float)flame/60f, 0);
+            clip.SetCurve(string.Empty, typeof(Animator), $"pandrabox/dummy", curve);
+            return clip;
         }
 #endif
     }
