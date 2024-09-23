@@ -41,6 +41,7 @@ namespace com.github.pandrabox.emoteprefab.editor
                     _unit = _emote.UnitMotions[n];
                     _clip = _unit.Clip;
                     _original = UnityEngine.Object.Instantiate(_clip.Original);
+                    SetLoop(_original, _unit.MotionType == MotionType.Loop || _unit.MotionType == MotionType.Hold);
                     CreateHumanoidClip();
                     CreateUnhumanoidClip();
                     CreateBodyShapeBlockerClip();
@@ -236,6 +237,13 @@ namespace com.github.pandrabox.emoteprefab.editor
         private void CreateShrinkPhysBonesWriteDefaultClip()
         {
             _emote.UnitMotions[0].Clip.ShrinkWD = CreateShrinkPhysBonesClipGeneral(true);
+        }
+
+        private void SetLoop(AnimationClip clip, bool key)
+        {
+            AnimationClipSettings settings = AnimationUtility.GetAnimationClipSettings(clip);
+            settings.loopTime = key;
+            AnimationUtility.SetAnimationClipSettings(clip, settings);
         }
     }
 }
