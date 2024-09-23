@@ -185,11 +185,14 @@ namespace com.github.pandrabox.emoteprefab.editor
         private AnimationClip CreateShrinkPhysBonesClipGeneral(bool inverce)
         {
             var clip = new AnimationClip();
+            var aShrinkBones = ShrinkBones();
+            if (aShrinkBones.Length == 0) return clip;
+
             float setValue;
             var PhysBoneType = typeof(VRC.SDK3.Dynamics.PhysBone.Components.VRCPhysBone);
             float exitFlame;
             float frameRate = 60;
-            foreach (var PB in ShrinkBones())
+            foreach (var PB in aShrinkBones)
             {
                 var PBPath = FindPathRecursive(Descriptor.transform, PB.transform);
                 var bindingPhysBoneRadius = new EditorCurveBinding() { path = PBPath, propertyName = "radius", type = PhysBoneType };
