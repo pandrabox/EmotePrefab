@@ -41,7 +41,7 @@ namespace com.github.pandrabox.emoteprefab.editor
                     _unit = _emote.UnitMotions[n];
                     _clip = _unit.Clip;
                     _original = UnityEngine.Object.Instantiate(_clip.Original);
-                    SetLoop(_original, _unit.MotionType == MotionType.Loop || _unit.MotionType == MotionType.Hold);
+                    SetLoop(_original, _unit.MotionType == MotionType.Loop);
                     CreateHumanoidClip();
                     CreateUnhumanoidClip();
                     CreateBodyShapeBlockerClip();
