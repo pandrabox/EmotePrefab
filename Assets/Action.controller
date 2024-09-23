@@ -1539,7 +1539,7 @@ MonoBehaviour:
     sourceMax: 0
     destMin: 0
     destMax: 0
-  localOnly: 0
+  localOnly: 1
   debugString: 
 --- !u!1101 &-96462110519689416
 AnimatorStateTransition:
