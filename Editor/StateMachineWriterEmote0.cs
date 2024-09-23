@@ -75,7 +75,7 @@ namespace com.github.pandrabox.emoteprefab.editor
         }
         protected void WDExitTransition(AnimatorState from, AnimatorState to, TransitionInfo trans)
         {
-            QuickExitTransition(from, to, trans);
+            SetTransition(from, to, trans);
         }
 
         /// <summary>
