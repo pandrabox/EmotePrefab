@@ -33,10 +33,11 @@ namespace com.github.pandrabox.emoteprefab.editor
         protected override void CreateTransition()
         {
             var currentState = GetState("E", _nEmote, _nChain);
-            var nextState = GetState("E", _nEmote, _nChain + 1) ?? GetState("Recovery standing");
+            var autoNext = GetState("E", _nEmote, _nChain + 1) ?? GetState("Recovery standing");
+            var manualNext = GetState("E", _nEmote, _nChain + 1) ?? GetState("Memory Next Emote");
             StartTransition(_initialState, currentState, _trans.Start);
-            OneshotTransition(currentState, nextState, _trans.AutoExit);
-            ManualExitTransition(currentState, nextState, _trans.ManualExit);
+            OneshotTransition(currentState, autoNext, _trans.AutoExit);
+            ManualExitTransition(currentState, manualNext, _trans.ManualExit);
             ForceExitTransition(currentState, GetState("Force Exit"), _trans.Sit);
         }
     }
