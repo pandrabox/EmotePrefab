@@ -60,14 +60,9 @@ namespace com.github.pandrabox.emoteprefab.runtime
         public static readonly string Dummy2FClip = $@"{TemplateDir}dummy2F.anim";
 
         /// <summary>
-        /// Official AFKClipのパス
+        /// AFKのパス
         /// </summary>
-        public static readonly string OfficialAFKClip = $@"Packages/com.vrchat.avatars/Samples/AV3 Demo Assets/Animation/ProxyAnim/proxy_afk.anim";
-
-        /// <summary>
-        /// BackupAFKClipのパス(Officialが見つからなかった時用)
-        /// </summary>
-        public static readonly string BackupAFKClip = $@"{TemplateDir}proxy_afk.anim";
+        public static readonly string AFKClip = $@"{TemplateDir}AFK.anim";
 
         /// <summary>
         /// Iconのパス

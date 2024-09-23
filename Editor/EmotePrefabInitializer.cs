@@ -172,7 +172,7 @@ namespace com.github.pandrabox.emoteprefab.editor
             var obj = new GameObject("DefaultAFK");
             obj.transform.SetParent(EmotePrefabRootTransform);
             var emotePrefab = obj.AddComponent<EmotePrefab>();
-            var AFKClip = AssetDatabase.LoadAssetAtPath<AnimationClip>(Config.OfficialAFKClip) ?? AssetDatabase.LoadAssetAtPath<AnimationClip>(Config.BackupAFKClip);
+            var AFKClip = AssetDatabase.LoadAssetAtPath<AnimationClip>(Config.AFKClip);
             emotePrefab.SetEasy(AFKClip, false, true);
             GetEmotePrefabs();
         }
