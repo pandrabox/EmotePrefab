@@ -21,6 +21,7 @@ namespace com.github.pandrabox.emoteprefab.runtime
         public Texture2D Icon;
         [SerializeField]
         private string _name;
+        public int ID;
         public PhysBoneSelection AnimatePhysBone = new PhysBoneSelection();
         public PhysBoneSelection ShrinkPhysBone = new PhysBoneSelection();
         public List<UnitMotion> UnitMotions = new List<UnitMotion> { new UnitMotion() };

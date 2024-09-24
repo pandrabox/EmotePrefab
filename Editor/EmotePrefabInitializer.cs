@@ -42,9 +42,10 @@ namespace com.github.pandrabox.emoteprefab.editor
         private static void GetEmotePrefabs()
         {
             EmotePrefabs = Descriptor.transform.GetComponentsInChildren<EmotePrefab>(false).Where(e => e.Enable).ToArray();
-            foreach(var prefab in EmotePrefabs)
+            for(int i = 0; i < EmotePrefabs.Length; i++)
             {
-                prefab.RestorePhysBones();
+                EmotePrefabs[i].RestorePhysBones();
+                EmotePrefabs[i].ID = i + 1;
             }
         }
 

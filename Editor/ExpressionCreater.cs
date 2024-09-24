@@ -47,42 +47,66 @@ namespace com.github.pandrabox.emoteprefab.editor
             menu.MenuSource = SubmenuSource.Children;
             menu.Control.icon = AssetDatabase.LoadAssetAtPath<Texture2D>(Config.EmotePrefabIcon);
 
-            for (int i = 0; i < EmotePrefabs.Length; i++)
+            CreateFoldedMenu(Descriptor.transform, menu.transform);
+        }
+
+
+        private void CreateFoldedMenu(Transform currentTrans, Transform currentFolder)
+        {
+
+            var emoteFolder = currentTrans.GetComponent<EmoteFolder>();
+            if (emoteFolder!=null)
             {
-                if (EmotePrefabs[i].IsEmote)
-                {
-                    CreateUnitMenu(i);
-                }
+                var subFolderObj = new GameObject(emoteFolder.FolderName);
+                subFolderObj.transform.SetParent(currentFolder);
+                currentFolder=subFolderObj.transform;
+
+                var folderMenu = subFolderObj.AddComponent<ModularAvatarMenuItem>();
+                folderMenu.Control.type = VRC.SDK3.Avatars.ScriptableObjects.VRCExpressionsMenu.Control.ControlType.SubMenu;
+                folderMenu.MenuSource = SubmenuSource.Children;
+                //folderMenu.Control.icon = Icon(eI);
+            }
+            var emotePrefab = currentTrans.GetComponent<EmotePrefab>();
+            if (emotePrefab!=null)
+            {
+                CreateUnitMenu(emotePrefab, currentFolder);
+            }
+
+            // 次の探索
+            var childCount = currentTrans.childCount;
+            for (var i = 0; i < childCount; i++)
+            {
+                CreateFoldedMenu(currentTrans.GetChild(i), currentFolder);
             }
         }
 
-        private void CreateUnitMenu(int eI)
+        private void CreateUnitMenu(EmotePrefab emotePrefab, Transform folder)
         {
-            var obj = new GameObject(EmotePrefabs[eI].Name);
-            obj.transform.SetParent(_emoteObjRoot.transform);
+            var obj = new GameObject(emotePrefab.Name);
+            obj.transform.SetParent(folder);
             var unitMenu = obj.AddComponent<ModularAvatarMenuItem>();
             unitMenu.Control.parameter = new VRC.SDK3.Avatars.ScriptableObjects.VRCExpressionsMenu.Control.Parameter() { name = "VRCEmote" };
-            unitMenu.Control.value = eI+1;
+            unitMenu.Control.value = emotePrefab.ID;
             unitMenu.Control.type = VRC.SDK3.Avatars.ScriptableObjects.VRCExpressionsMenu.Control.ControlType.Toggle;
-            unitMenu.Control.icon = Icon(eI);
+            unitMenu.Control.icon = Icon(emotePrefab);
         }
 
 
-        public static Texture2D Icon(int n)
+        public static Texture2D Icon(EmotePrefab emotePrefab)
         {
-            if (EmotePrefabs[n].Icon != null)
+            if (emotePrefab.Icon != null)
             {
-                return EmotePrefabs[n].Icon;
+                return emotePrefab.Icon;
             }
-            else if (EmotePrefabs[n].RootMotion.MotionType == MotionType.Loop)
+            else if (emotePrefab.RootMotion.MotionType == MotionType.Loop)
             {
                 return AssetDatabase.LoadAssetAtPath<Texture2D>(Config.LoopIcon);
             }
-            else if (EmotePrefabs[n].RootMotion.MotionType == MotionType.Hold)
+            else if (emotePrefab.RootMotion.MotionType == MotionType.Hold)
             {
                 return AssetDatabase.LoadAssetAtPath<Texture2D>(Config.HoldIcon);
             }
-            else if (EmotePrefabs[n].RootMotion.MotionType == MotionType.UnstoppableOneshot)
+            else if (emotePrefab.RootMotion.MotionType == MotionType.UnstoppableOneshot)
             {
                 return AssetDatabase.LoadAssetAtPath<Texture2D>(Config.UnstoppableIcon);
             }
