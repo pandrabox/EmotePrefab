@@ -67,7 +67,7 @@ namespace com.github.pandrabox.emoteprefab.editor
                 //folderMenu.Control.icon = Icon(eI);
             }
             var emotePrefab = currentTrans.GetComponent<EmotePrefab>();
-            if (emotePrefab!=null)
+            if (emotePrefab!=null && emotePrefab.IsEmote)
             {
                 CreateUnitMenu(emotePrefab, currentFolder);
             }
