@@ -87,6 +87,11 @@ namespace com.github.pandrabox.emoteprefab.runtime
         /// <summary>
         /// HoldIconのパス
         /// </summary>
+        public static readonly string FolderIcon = $@"{TemplateDir}Ico/Folder.png";
+
+        /// <summary>
+        /// HoldIconのパス
+        /// </summary>
         public static readonly string UnstoppableIcon = $@"{TemplateDir}Ico/Unstoppable.png";
 
         /// <summary>

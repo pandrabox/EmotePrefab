@@ -64,7 +64,7 @@ namespace com.github.pandrabox.emoteprefab.editor
                 var folderMenu = subFolderObj.AddComponent<ModularAvatarMenuItem>();
                 folderMenu.Control.type = VRC.SDK3.Avatars.ScriptableObjects.VRCExpressionsMenu.Control.ControlType.SubMenu;
                 folderMenu.MenuSource = SubmenuSource.Children;
-                //folderMenu.Control.icon = Icon(eI);
+                folderMenu.Control.icon = FolderIcon(emoteFolder);
             }
             var emotePrefab = currentTrans.GetComponent<EmotePrefab>();
             if (emotePrefab!=null && emotePrefab.IsEmote && emotePrefab.gameObject.activeInHierarchy)
@@ -91,6 +91,17 @@ namespace com.github.pandrabox.emoteprefab.editor
             unitMenu.Control.icon = Icon(emotePrefab);
         }
 
+        public static Texture2D FolderIcon(EmoteFolder folder)
+        {
+            if(folder.Icon != null)
+            {
+                return folder.Icon;
+            }
+            else
+            {
+                return AssetDatabase.LoadAssetAtPath<Texture2D>(Config.FolderIcon);
+            }
+        }
 
         public static Texture2D Icon(EmotePrefab emotePrefab)
         {

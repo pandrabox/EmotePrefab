@@ -15,6 +15,7 @@ namespace com.github.pandrabox.emoteprefab.runtime
     public class EmoteFolder : MonoBehaviour, VRC.SDKBase.IEditorOnly
     {
         public string FolderName;
+        public Texture2D Icon;
     }
 }
 #endif
