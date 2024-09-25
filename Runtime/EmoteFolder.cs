@@ -12,7 +12,7 @@ namespace com.github.pandrabox.emoteprefab.runtime
 {
     [DisallowMultipleComponent]
     [AddComponentMenu("Pan/EmoteFolder")]
-    public class EmoteFolder : MonoBehaviour, VRC.SDKBase.IEditorOnly
+    public class EmoteFolder : EmoteMenuInfo
     {
         public string FolderName;
         public Texture2D Icon;

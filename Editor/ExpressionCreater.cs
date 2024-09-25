@@ -30,24 +30,40 @@ namespace com.github.pandrabox.emoteprefab.editor
                 return;
             }
 
+
             _emoteObjRoot = new GameObject("Emote");
             _emoteObjRoot.transform.SetParent(EmotePrefabRootTransform);
 
-            _emoteObjRoot.AddComponent<ModularAvatarMenuInstaller>();
-
-            var param = _emoteObjRoot.AddComponent<ModularAvatarParameters>();
-            param.parameters.Add(new ParameterConfig()
-            {
-                nameOrPrefix = "VRCEmote",
-                syncType = ParameterSyncType.Int,
-            });
+            var emoteMenuInfo = _emoteObjRoot.AddComponent<EmoteMenuInfo>();
+            emoteMenuInfo.Sort = true;
+            emoteMenuInfo.AutoFolderMode = EmoteMenuInfo.AutoFolderModeType.sub;
 
             var menu = _emoteObjRoot.AddComponent<ModularAvatarMenuItem>();
             menu.Control.type = VRC.SDK3.Avatars.ScriptableObjects.VRCExpressionsMenu.Control.ControlType.SubMenu;
             menu.MenuSource = SubmenuSource.Children;
             menu.Control.icon = AssetDatabase.LoadAssetAtPath<Texture2D>(Config.EmotePrefabIcon);
 
+            _emoteObjRoot.AddComponent<ModularAvatarMenuInstaller>();
+
             CreateFoldedMenu(Descriptor.transform, menu.transform);
+            SortFolders();
+        }
+
+        private Transform CreateSubFolder(Transform currentFolder, EmoteFolder emoteFolder)
+        {
+            var subFolderObj = new GameObject(emoteFolder.FolderName);
+            subFolderObj.transform.SetParent(currentFolder);
+
+            var emoteMenuInfo = subFolderObj.AddComponent<EmoteMenuInfo>();
+            emoteMenuInfo.Sort = emoteFolder.Sort;
+            emoteMenuInfo.AutoFolderMode = emoteFolder.AutoFolderMode;
+
+            var folderMenu = subFolderObj.AddComponent<ModularAvatarMenuItem>();
+            folderMenu.Control.type = VRC.SDK3.Avatars.ScriptableObjects.VRCExpressionsMenu.Control.ControlType.SubMenu;
+            folderMenu.MenuSource = SubmenuSource.Children;
+            folderMenu.Control.icon = FolderIcon(emoteFolder);
+
+            return subFolderObj.transform;
         }
 
 
@@ -57,14 +73,7 @@ namespace com.github.pandrabox.emoteprefab.editor
             var emoteFolder = currentTrans.GetComponent<EmoteFolder>();
             if (emoteFolder!=null)
             {
-                var subFolderObj = new GameObject(emoteFolder.FolderName);
-                subFolderObj.transform.SetParent(currentFolder);
-                currentFolder=subFolderObj.transform;
-
-                var folderMenu = subFolderObj.AddComponent<ModularAvatarMenuItem>();
-                folderMenu.Control.type = VRC.SDK3.Avatars.ScriptableObjects.VRCExpressionsMenu.Control.ControlType.SubMenu;
-                folderMenu.MenuSource = SubmenuSource.Children;
-                folderMenu.Control.icon = FolderIcon(emoteFolder);
+                currentFolder = CreateSubFolder(currentFolder, emoteFolder);
             }
             var emotePrefab = currentTrans.GetComponent<EmotePrefab>();
             if (emotePrefab!=null && emotePrefab.IsEmote && emotePrefab.gameObject.activeInHierarchy)
@@ -124,6 +133,52 @@ namespace com.github.pandrabox.emoteprefab.editor
             else
             {
                 return AssetDatabase.LoadAssetAtPath<Texture2D>(Config.OneShotIcon);
+            }
+        }
+
+
+        private void SortFolders()
+        {
+            EmoteMenuInfo[] folders = _emoteObjRoot.transform.GetComponentsInChildren<EmoteMenuInfo>();
+            foreach (var folder in folders)
+            {
+                if (folder.Sort)
+                {
+                    SortChildren(folder.transform);
+                }
+            }
+        }
+
+        private void SortChildren(Transform parent)
+        {
+            // Get the children and sort them by name
+            var children = parent.Cast<Transform>().OrderBy(t => t.name).ToList();
+
+            // Bring EmoteFolder objects to the front
+            var emoteFolders = children.Where(t => t.GetComponent<EmoteMenuInfo>() != null).ToList();
+            var otherObjects = children.Where(t => t.GetComponent<EmoteMenuInfo>() == null).ToList();
+
+            // Clear the existing hierarchy
+            foreach (Transform child in children)
+            {
+                child.SetParent(null);
+            }
+
+            // Reattach EmoteFolder objects first, followed by other objects
+            foreach (var emoteFolder in emoteFolders)
+            {
+                emoteFolder.SetParent(parent);
+            }
+
+            foreach (var other in otherObjects)
+            {
+                other.SetParent(parent);
+            }
+
+            // Set the siblings order based on the list
+            for (int i = 0; i < parent.childCount; i++)
+            {
+                parent.GetChild(i).SetSiblingIndex(i);
             }
         }
     }
