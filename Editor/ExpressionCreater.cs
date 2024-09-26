@@ -46,7 +46,7 @@ namespace com.github.pandrabox.emoteprefab.editor
             _emoteObjRoot.AddComponent<ModularAvatarMenuInstaller>();
 
             CreateFoldedMenu(Descriptor.transform, menu.transform);
-            SortFolders();
+            ResolveEmoteMenuInfo();
         }
 
         private Transform CreateSubFolder(Transform currentFolder, EmoteFolder emoteFolder)
@@ -102,7 +102,7 @@ namespace com.github.pandrabox.emoteprefab.editor
 
         public static Texture2D FolderIcon(EmoteFolder folder)
         {
-            if(folder.Icon != null)
+            if(folder != null && folder.Icon != null)
             {
                 return folder.Icon;
             }
@@ -137,7 +137,7 @@ namespace com.github.pandrabox.emoteprefab.editor
         }
 
 
-        private void SortFolders()
+        private void ResolveEmoteMenuInfo()
         {
             EmoteMenuInfo[] folders = _emoteObjRoot.transform.GetComponentsInChildren<EmoteMenuInfo>();
             foreach (var folder in folders)
@@ -145,8 +145,68 @@ namespace com.github.pandrabox.emoteprefab.editor
                 if (folder.Sort)
                 {
                     SortChildren(folder.transform);
+                    PackFolder(folder);
                 }
             }
+        }
+
+        private void PackFolder(EmoteMenuInfo parent)
+        {
+            if (parent.AutoFolderMode == EmoteMenuInfo.AutoFolderModeType.none) return;
+            if (parent.transform.childCount < 16) return;
+            //int folderNum = (int)Math.Ceiling((double)parent.transform.childCount / 8f);
+
+            int itemIndex = 0;
+            GameObject currentPack=null;
+            int itemNum = parent.transform.childCount;
+            string startItem=null, exitItem, suffix=null;
+            for (int m = 0; m < itemNum; m++)
+            {
+                if (itemIndex == 0)
+                {
+                    currentPack = new GameObject();
+                    if (parent.AutoFolderMode == EmoteMenuInfo.AutoFolderModeType.sub)
+                    {
+                        currentPack.transform.SetParent(parent.transform, false);
+                    }
+                    else
+                    {
+                        currentPack.transform.SetParent(parent.transform.parent, false);
+                        suffix = $@"{parent.name} ";
+                    }
+                    startItem = getItemName(parent);
+
+                    var folderMenu = currentPack.AddComponent<ModularAvatarMenuItem>();
+                    folderMenu.Control.type = VRC.SDK3.Avatars.ScriptableObjects.VRCExpressionsMenu.Control.ControlType.SubMenu;
+                    folderMenu.MenuSource = SubmenuSource.Children;
+                    folderMenu.Control.icon = parent.gameObject.GetComponent<ModularAvatarMenuItem>().Control.icon;
+                }
+                exitItem = getItemName(parent);
+                parent.transform.GetChild(0).SetParent(currentPack.transform);
+                itemIndex = itemIndex++ <7 ? itemIndex : 0;
+                if (itemIndex == 0 || m+1==itemNum)
+                {
+                    if (startItem != exitItem)
+                    {
+                        currentPack.name = $@"{suffix}{startItem}～{exitItem}";
+                    }
+                    else
+                    {
+                        currentPack.name = $@"{suffix}{startItem}";
+                    }
+                }
+            }
+            if (parent.AutoFolderMode == EmoteMenuInfo.AutoFolderModeType.parallel)
+            {
+                GameObject.DestroyImmediate(parent.gameObject);
+            }
+        }
+
+        private string getItemName(EmoteMenuInfo em)
+        {
+            var nm = em?.transform?.GetChild(0)?.GetComponent<EmotePrefab>()?.Name;
+            if (nm != null) { return nm; }
+            return em?.transform?.GetChild(0)?.name;
         }
 
         private void SortChildren(Transform parent)
