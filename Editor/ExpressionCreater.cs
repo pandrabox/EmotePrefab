@@ -63,6 +63,7 @@ namespace com.github.pandrabox.emoteprefab.editor
                     name = "Pandrabox/EmotePrefab/Height"
                 }
             };
+            menu.Control.icon = AssetDatabase.LoadAssetAtPath<Texture2D>(Config.HeightIcon);
         }
 
         private void AddFootLockControl()
@@ -76,6 +77,7 @@ namespace com.github.pandrabox.emoteprefab.editor
                 {
                     name = "EmotePrefab/FootLock"
                 };
+            menu.Control.icon = AssetDatabase.LoadAssetAtPath<Texture2D>(Config.FootLockIcon);
         }
 
         private Transform CreateSubFolder(Transform currentFolder, EmoteFolder emoteFolder)
