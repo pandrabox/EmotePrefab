@@ -55,6 +55,7 @@ namespace com.github.pandrabox.emoteprefab.editor
         {
             var obj = new GameObject("Height");
             obj.transform.SetParent(_emoteObjRoot.transform);
+            obj.transform.SetSiblingIndex(0);
             var menu=obj.AddComponent<ModularAvatarMenuItem> ();
             menu.Control.type = VRC.SDK3.Avatars.ScriptableObjects.VRCExpressionsMenu.Control.ControlType.RadialPuppet;
             menu.Control.subParameters = new[] {
@@ -70,6 +71,7 @@ namespace com.github.pandrabox.emoteprefab.editor
         {
             var obj = new GameObject("FootLock");
             obj.transform.SetParent(_emoteObjRoot.transform);
+            obj.transform.SetSiblingIndex(0);
             var menu = obj.AddComponent<ModularAvatarMenuItem>();
             menu.Control.type = VRC.SDK3.Avatars.ScriptableObjects.VRCExpressionsMenu.Control.ControlType.Toggle;
             menu.Control.parameter =
