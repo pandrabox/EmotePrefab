@@ -93,6 +93,39 @@ namespace com.github.pandrabox.emoteprefab.editor
                 }
             }
             AddLengthHolder(_clip.Humanoid);
+            CreateHumanoidBlendTree();
+        }
+
+        private void CreateHumanoidBlendTree()
+        {
+            var HumanoidH = CreateOtherHeightClip(_clip.Humanoid, 3);
+            var HumanoidL = CreateOtherHeightClip(_clip.Humanoid, -3);
+            _clip.HumanoidBlendTree = new BlendTree()
+            {
+                blendType = BlendTreeType.Simple1D,
+                blendParameter ="Pandrabox/EmotePrefab/Height",
+            };
+            _clip.HumanoidBlendTree.AddChild(HumanoidL, 0f);
+            _clip.HumanoidBlendTree.AddChild(HumanoidH, 1f); 
+        }
+
+        private AnimationClip CreateOtherHeightClip(AnimationClip original, float delta) { 
+            var clip  = UnityEngine.Object.Instantiate(original);
+            foreach (var binding in AnimationUtility.GetCurveBindings(clip))
+            {
+                if (binding.propertyName == "RootT.y")
+                {
+                    AnimationCurve curve = AnimationUtility.GetEditorCurve(clip, binding);
+                    for (int i = 0; i < curve.keys.Length; i++)
+                    {
+                        Keyframe key = curve.keys[i];
+                        key.value += delta;
+                        curve.MoveKey(i, key);
+                    }
+                    AnimationUtility.SetEditorCurve(clip, binding, curve);
+                }
+            }
+            return clip;
         }
 
         /// <summary>

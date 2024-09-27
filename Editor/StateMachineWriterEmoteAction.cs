@@ -27,7 +27,7 @@ namespace com.github.pandrabox.emoteprefab.editor
 
         protected override void CreateStates()
         {
-            CreateState(StateName("E", _nEmote, _nChain), _clip.Humanoid);
+            CreateState(StateName("E", _nEmote, _nChain), _clip.HumanoidBlendTree);
         }
 
         protected override void CreateTransition()

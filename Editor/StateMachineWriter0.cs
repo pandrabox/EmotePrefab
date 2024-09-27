@@ -61,7 +61,7 @@ namespace com.github.pandrabox.emoteprefab.editor
         /// <param name="clip">AnimationClip</param>
         /// <param name="setCurrent">CurrentStateにセットする場合true</param>
         /// <returns>作成したステート</returns>
-        protected AnimatorState CreateState(string name, AnimationClip clip)
+        protected AnimatorState CreateState(string name, Motion clip)
         {
             AnimatorState animatorState = _currentStateMachine.AddState(name);
             animatorState.motion = clip;

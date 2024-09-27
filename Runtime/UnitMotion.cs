@@ -2,6 +2,7 @@
 using System;
 using System.Reflection;
 using UnityEditor;
+using UnityEditor.Animations;
 using UnityEditor.UIElements;
 using UnityEngine;
 using static com.github.pandrabox.emoteprefab.runtime.TransitionInfo;
@@ -38,6 +39,7 @@ namespace com.github.pandrabox.emoteprefab.runtime
         public AnimationClip PokerFace;
         public AnimationClip ShrinkPB;
         public AnimationClip ShrinkWD;
+        public BlendTree HumanoidBlendTree;
     }
     [Serializable]
     public class UnitMotionTransitionInfo

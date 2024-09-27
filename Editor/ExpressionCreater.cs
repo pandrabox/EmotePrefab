@@ -47,6 +47,21 @@ namespace com.github.pandrabox.emoteprefab.editor
 
             CreateFoldedMenu(Descriptor.transform, menu.transform);
             ResolveEmoteMenuInfo();
+            AddHeightControl();
+        }
+
+        private void AddHeightControl()
+        {
+            var obj = new GameObject("Height");
+            obj.transform.SetParent(_emoteObjRoot.transform);
+            var menu=obj.AddComponent<ModularAvatarMenuItem> ();
+            menu.Control.type = VRC.SDK3.Avatars.ScriptableObjects.VRCExpressionsMenu.Control.ControlType.RadialPuppet;
+            menu.Control.subParameters = new[] {
+                new VRC.SDK3.Avatars.ScriptableObjects.VRCExpressionsMenu.Control.Parameter()
+                {
+                    name = "Pandrabox/EmotePrefab/Height"
+                }
+            };
         }
 
         private Transform CreateSubFolder(Transform currentFolder, EmoteFolder emoteFolder)

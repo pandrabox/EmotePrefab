@@ -35,6 +35,7 @@ namespace com.github.pandrabox.emoteprefab.editor
             CreateFXRelativeObject();
             CreateSyncObject();
             CreateVRCEmote();
+            CreateHeightParameter();
             CreateDefaultAFK();
             AnimatePhysBones();
         }
@@ -160,6 +161,23 @@ namespace com.github.pandrabox.emoteprefab.editor
             {
                 nameOrPrefix = "VRCEmote",
                 syncType = ParameterSyncType.Int,
+                localOnly = false,
+            });
+        }
+
+        /// <summary>
+        /// 高さパラメータ
+        /// </summary>
+        private void CreateHeightParameter()
+        {
+            SyncObject = new GameObject("Height");
+            SyncObject.transform.SetParent(EmotePrefabRootTransform);
+            ModularAvatarParameters mparams = SyncObject.AddComponent<ModularAvatarParameters>();
+            mparams.parameters.Add(new ParameterConfig()
+            {
+                nameOrPrefix = "Pandrabox/EmotePrefab/Height",
+                syncType = ParameterSyncType.Float,
+                defaultValue = 0.5f,
                 localOnly = false,
             });
         }
