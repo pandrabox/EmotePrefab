@@ -48,6 +48,7 @@ namespace com.github.pandrabox.emoteprefab.editor
             CreateFoldedMenu(Descriptor.transform, menu.transform);
             ResolveEmoteMenuInfo();
             AddHeightControl();
+            AddFootLockControl();
         }
 
         private void AddHeightControl()
@@ -62,6 +63,19 @@ namespace com.github.pandrabox.emoteprefab.editor
                     name = "Pandrabox/EmotePrefab/Height"
                 }
             };
+        }
+
+        private void AddFootLockControl()
+        {
+            var obj = new GameObject("FootLock");
+            obj.transform.SetParent(_emoteObjRoot.transform);
+            var menu = obj.AddComponent<ModularAvatarMenuItem>();
+            menu.Control.type = VRC.SDK3.Avatars.ScriptableObjects.VRCExpressionsMenu.Control.ControlType.Toggle;
+            menu.Control.parameter =
+                new VRC.SDK3.Avatars.ScriptableObjects.VRCExpressionsMenu.Control.Parameter()
+                {
+                    name = "EmotePrefab/FootLock"
+                };
         }
 
         private Transform CreateSubFolder(Transform currentFolder, EmoteFolder emoteFolder)

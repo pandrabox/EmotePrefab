@@ -36,6 +36,7 @@ namespace com.github.pandrabox.emoteprefab.editor
             CreateSyncObject();
             CreateVRCEmote();
             CreateHeightParameter();
+            CreateFootLockParameter();
             CreateDefaultAFK();
             AnimatePhysBones();
         }
@@ -179,6 +180,22 @@ namespace com.github.pandrabox.emoteprefab.editor
                 syncType = ParameterSyncType.Float,
                 defaultValue = 0.5f,
                 localOnly = false,
+            });
+        }
+
+        /// <summary>
+        /// 足固定パラメータ
+        /// </summary>
+        private void CreateFootLockParameter()
+        {
+            SyncObject = new GameObject("FootLock");
+            SyncObject.transform.SetParent(EmotePrefabRootTransform);
+            ModularAvatarParameters mparams = SyncObject.AddComponent<ModularAvatarParameters>();
+            mparams.parameters.Add(new ParameterConfig()
+            {
+                nameOrPrefix = "EmotePrefab/FootLock",
+                syncType = ParameterSyncType.Bool,
+                localOnly = true,
             });
         }
 
