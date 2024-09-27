@@ -42,6 +42,7 @@ namespace com.github.pandrabox.emoteprefab.editor
                     _clip = _unit.Clip;
                     _original = UnityEngine.Object.Instantiate(_clip.Original);
                     SetLoop(_original, _unit.MotionType == MotionType.Loop);
+                    AddOnEmoteObj();
                     CreateHumanoidClip();
                     CreateUnhumanoidClip();
                     CreateBodyShapeBlockerClip();
@@ -51,6 +52,18 @@ namespace com.github.pandrabox.emoteprefab.editor
                 CreateShrinkPhysBonesWriteDefaultClip();
                 clip0.FakeWD = CreateFakeWriteDefaultClip(false);
                 clip0.FakeWDR = CreateFakeWriteDefaultClip(true);
+            }
+        }
+
+        private void AddOnEmoteObj()
+        {
+            foreach (var obj in _emote.OnEmoteObject.GameObjects)
+            {
+                if (obj == null) continue;
+                var path = FindPathRecursive(_emote.transform, obj.transform) ?? FindPathRecursive(Descriptor.transform, obj.transform);
+                AnimationCurve curve = AnimationCurve.Constant(0, _original.length, 1);
+                _original.SetCurve(path, typeof(GameObject), "m_IsActive", curve);
+                obj.SetActive(false);
             }
         }
 

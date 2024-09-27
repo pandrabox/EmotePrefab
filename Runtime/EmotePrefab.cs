@@ -24,6 +24,7 @@ namespace com.github.pandrabox.emoteprefab.runtime
         public int ID;
         public PhysBoneSelection AnimatePhysBone = new PhysBoneSelection();
         public PhysBoneSelection ShrinkPhysBone = new PhysBoneSelection();
+        public GameObjectSelection OnEmoteObject = new GameObjectSelection();
         public List<UnitMotion> UnitMotions = new List<UnitMotion> { new UnitMotion() };
         public UnitMotion RootMotion => UnitMotions.FirstOrDefault();
         public AnimationClip RootClip { get => RootMotion.Clip.Original; set => RootMotion.Clip.Original = value; }
@@ -162,6 +163,7 @@ namespace com.github.pandrabox.emoteprefab.runtime
                     {
                         EditorGUILayout.PropertyField(serializedObject.FindProperty("AnimatePhysBone"));
                         EditorGUILayout.PropertyField(serializedObject.FindProperty("ShrinkPhysBone"));
+                        EditorGUILayout.PropertyField(serializedObject.FindProperty("OnEmoteObject"));
                     }
                 }
                 else

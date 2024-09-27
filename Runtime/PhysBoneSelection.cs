@@ -95,10 +95,10 @@ namespace com.github.pandrabox.emoteprefab.runtime
                 fieldRect.width = position.width;
                 fieldRect.y += EditorGUIUtility.singleLineHeight;
                 float xButtonSize = 20f;
-                var leftrect = new Rect(fieldRect.x, fieldRect.y, fieldRect.width - xButtonSize, fieldRect.height);
-                var rightrect = new Rect(fieldRect.x+ leftrect.width, fieldRect.y, xButtonSize, fieldRect.height);
                 for (int i = 0; i < physBonesProperty.arraySize; i++)
                 {
+                    var leftrect = new Rect(fieldRect.x, fieldRect.y, fieldRect.width - xButtonSize, fieldRect.height);
+                    var rightrect = new Rect(fieldRect.x + leftrect.width, fieldRect.y, xButtonSize, fieldRect.height);
                     var physBoneProperty = physBonesProperty.GetArrayElementAtIndex(i);
                     var cashProperty = pathsProperty.GetArrayElementAtIndex(i);
                     EditorGUI.PropertyField(leftrect, physBoneProperty, GUIContent.none);
