@@ -43,13 +43,13 @@ namespace com.github.pandrabox.emoteprefab.editor
         private void CreateUnitAFKState(int eI)
         {
             var currentState = CreateState(StateName("AFK", eI), DummyClip(18));
-            SetTransition(currentState, currentState, TransitionInfo.HasQuick).AddCondition(AnimatorConditionMode.NotEqual, eI + 1, "VRCEmote");
+            SetTransition(currentState, currentState, TransitionInfo.HasQuick).AddCondition(AnimatorConditionMode.NotEqual, eI + 1, "NBitVRCEmote");
             SetTransition(_randomizeState, currentState, TransitionInfo.Quick).AddCondition(AnimatorConditionMode.Equals, _currentIndex, "EmotePrefab/AFKIndex");
             SetTransition(currentState, _exitState, TransitionInfo.Quick).AddCondition(AnimatorConditionMode.IfNot, 0, "AFK");
             var apdParameter = new VRC_AvatarParameterDriver.Parameter()
             {
                 type = VRC_AvatarParameterDriver.ChangeType.Set,
-                name = "VRCEmote",
+                name = "NBitVRCEmote",
                 value = eI + 1,
             };
             currentState.behaviours = new StateMachineBehaviour[] { ScriptableObject.CreateInstance<VRCAvatarParameterDriver>() };

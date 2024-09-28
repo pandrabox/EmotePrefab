@@ -39,6 +39,7 @@ namespace com.github.pandrabox.emoteprefab.runtime
         /// FXLayer雛形のパス
         /// </summary>
         public static readonly string OriginalFXRelativeLayer = $@"{TemplateDir}FXRelative.controller";
+        public static readonly string OriginalNBitIntLayer = $@"{TemplateDir}NBitInt.controller";
 
         /// <summary>
         /// 生成ActionLayerのパス

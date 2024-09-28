@@ -345,13 +345,19 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 3
-    m_ConditionEvent: VRCEmote
+    m_ConditionEvent: NBitVRCEmote
     m_EventTreshold: 0
   - m_ConditionMode: 2
     m_ConditionEvent: CN_IS_ACTION_ACTIVE
     m_EventTreshold: 0
   - m_ConditionMode: 2
     m_ConditionEvent: CN_IS_ACTION_ACTIVE_FX1
+    m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: CN_IS_ACTION_ACTIVE_FX2
+    m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: CN_IS_ACTION_ACTIVE_FX3
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: -9209389980807788247}
   m_DstState: {fileID: 0}
@@ -713,13 +719,19 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 3
-    m_ConditionEvent: VRCEmote
+    m_ConditionEvent: NBitVRCEmote
     m_EventTreshold: 0
   - m_ConditionMode: 2
     m_ConditionEvent: CN_IS_ACTION_ACTIVE
     m_EventTreshold: 0
   - m_ConditionMode: 2
+    m_ConditionEvent: CN_IS_ACTION_ACTIVE_FX1
+    m_EventTreshold: 0
+  - m_ConditionMode: 2
     m_ConditionEvent: CN_IS_ACTION_ACTIVE_FX2
+    m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: CN_IS_ACTION_ACTIVE_FX3
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 4232417910747690239}
   m_DstState: {fileID: 0}
@@ -1418,7 +1430,7 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
-  - m_Name: VRCEmote
+  - m_Name: NBitVRCEmote
     m_Type: 3
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -1467,6 +1479,12 @@ AnimatorController:
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
   - m_Name: EmotePrefab/FootLock
+    m_Type: 4
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
+  - m_Name: CN_IS_ACTION_ACTIVE_FX3
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -3186,7 +3204,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 3
-    m_ConditionEvent: VRCEmote
+    m_ConditionEvent: NBitVRCEmote
     m_EventTreshold: 0
   - m_ConditionMode: 2
     m_ConditionEvent: CN_IS_ACTION_ACTIVE
@@ -3196,6 +3214,9 @@ AnimatorStateTransition:
     m_EventTreshold: 0
   - m_ConditionMode: 2
     m_ConditionEvent: CN_IS_ACTION_ACTIVE_FX2
+    m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: CN_IS_ACTION_ACTIVE_FX3
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: -7805221959949688670}
   m_DstState: {fileID: 0}

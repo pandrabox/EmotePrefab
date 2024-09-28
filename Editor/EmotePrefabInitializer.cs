@@ -34,7 +34,7 @@ namespace com.github.pandrabox.emoteprefab.editor
             CreateFXObject();
             CreateFXRelativeObject();
             CreateSyncObject();
-            CreateVRCEmote();
+            CreateNBitVRCEmote();
             CreateHeightParameter();
             CreateFootLockParameter();
             CreateDefaultAFK();
@@ -153,17 +153,14 @@ namespace com.github.pandrabox.emoteprefab.editor
         /// <summary>
         /// エモート用パラメータ
         /// </summary>
-        private void CreateVRCEmote()
+        private void CreateNBitVRCEmote()
         {
-            SyncObject = new GameObject("VRCEmote");
-            SyncObject.transform.SetParent(EmotePrefabRootTransform);
-            ModularAvatarParameters mparams = SyncObject.AddComponent<ModularAvatarParameters>();
-            mparams.parameters.Add(new ParameterConfig()
-            {
-                nameOrPrefix = "VRCEmote",
-                syncType = ParameterSyncType.Int,
-                localOnly = false,
-            });
+            var obj = new GameObject("NBitVRCEmote");
+            obj.transform.SetParent(EmotePrefabRootTransform);
+            var com = obj.AddComponent<NBitInt>();
+            com.ParameterName = "NBitVRCEmote";
+            com.MaxValue = EmotePrefabs.Max(c => c.ID);
+            new NBitIntRun(obj.transform);
         }
 
         /// <summary>

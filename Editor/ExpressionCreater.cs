@@ -127,7 +127,7 @@ namespace com.github.pandrabox.emoteprefab.editor
             var obj = new GameObject(emotePrefab.Name);
             obj.transform.SetParent(folder);
             var unitMenu = obj.AddComponent<ModularAvatarMenuItem>();
-            unitMenu.Control.parameter = new VRC.SDK3.Avatars.ScriptableObjects.VRCExpressionsMenu.Control.Parameter() { name = "VRCEmote" };
+            unitMenu.Control.parameter = new VRC.SDK3.Avatars.ScriptableObjects.VRCExpressionsMenu.Control.Parameter() { name = "NBitVRCEmote" };
             unitMenu.Control.value = emotePrefab.ID;
             unitMenu.Control.type = VRC.SDK3.Avatars.ScriptableObjects.VRCExpressionsMenu.Control.ControlType.Toggle;
             unitMenu.Control.icon = Icon(emotePrefab);

@@ -55,7 +55,7 @@ namespace com.github.pandrabox.emoteprefab.editor
         }
         protected void StartTransition(AnimatorState from, AnimatorState to, TransitionInfo trans)
         {
-            if (_nChain==0) SetTransition(from, to, trans).AddCondition(AnimatorConditionMode.Equals, _id, "VRCEmote");
+            if (_nChain==0) SetTransition(from, to, trans).AddCondition(AnimatorConditionMode.Equals, _id, "NBitVRCEmote");
         }
         protected void OneshotTransition(AnimatorState from, AnimatorState to, TransitionInfo trans)
         {
@@ -63,7 +63,7 @@ namespace com.github.pandrabox.emoteprefab.editor
         }
         protected void ManualExitTransition(AnimatorState from, AnimatorState to, TransitionInfo trans)
         {
-            if(_unit.MotionType != MotionType.UnstoppableOneshot) SetTransition(from, to, trans).AddCondition(AnimatorConditionMode.NotEqual, _id, "VRCEmote");
+            if(_unit.MotionType != MotionType.UnstoppableOneshot) SetTransition(from, to, trans).AddCondition(AnimatorConditionMode.NotEqual, _id, "NBitVRCEmote");
         }
         protected void ForceExitTransition(AnimatorState from, AnimatorState to, TransitionInfo trans)
         {
