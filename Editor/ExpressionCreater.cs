@@ -104,7 +104,7 @@ namespace com.github.pandrabox.emoteprefab.editor
         {
 
             var emoteFolder = currentTrans.GetComponent<EmoteFolder>();
-            if (emoteFolder!=null)
+            if (emoteFolder!=null && emoteFolder.gameObject.activeInHierarchy)
             {
                 currentFolder = CreateSubFolder(currentFolder, emoteFolder);
             }
@@ -187,8 +187,7 @@ namespace com.github.pandrabox.emoteprefab.editor
         {
             if (parent.AutoFolderMode == EmoteMenuInfo.AutoFolderModeType.none) return;
             if (parent.transform.childCount < 16) return;
-            //int folderNum = (int)Math.Ceiling((double)parent.transform.childCount / 8f);
-
+            
             int itemIndex = 0;
             GameObject currentPack=null;
             int itemNum = parent.transform.childCount;
