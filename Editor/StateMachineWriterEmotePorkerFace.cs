@@ -19,32 +19,42 @@ namespace com.github.pandrabox.emoteprefab.editor
 {
     public class StateMachineWriterEmotePorkerFace : StateMachineWriterEmote0
     {
-        public StateMachineWriterEmotePorkerFace() : base(FXController, "EmotePrefab/PorkerFace", "Emote", "Prepare standing")
+        AnimatorState _emoteState;
+        public StateMachineWriterEmotePorkerFace() : base(ActionController, "EmotePrefab/PorkerFace", "Emote", "Normal")
         {
+
+            int[] emotionLayers = new int[]{ 1,2 };
+            foreach(int layer in emotionLayers)
+            {
+                var beh = _initialState.AddStateMachineBehaviour<VRCAnimatorLayerControl>();
+                beh.playable = VRC.SDKBase.VRC_AnimatorLayerControl.BlendableLayer.FX;
+                beh.layer = layer;
+                beh.goalWeight = 1;
+                beh.blendDuration = 0.1f;
+            }
+            foreach (int layer in emotionLayers)
+            {
+                var beh = _emoteState.AddStateMachineBehaviour<VRCAnimatorLayerControl>();
+                beh.playable = VRC.SDKBase.VRC_AnimatorLayerControl.BlendableLayer.FX;
+                beh.layer = layer;
+                beh.goalWeight = 0;
+                beh.blendDuration = 0.1f;
+            }
         }
 
-        protected override void CreateState() { }
-
-        protected override void CreateStates()
+        protected override void CreateState()
         {
-            if (_clip.PokerFace == null) return;
-            CreateState(StateName("E", _nEmote, _nChain), _clip.PokerFace);
+            _emoteState = GetState("Emote");
         }
+
+        protected override void CreateStates() { }
 
         protected override void CreateTransition()
         {
-            if (_clip.PokerFace != null)
+            EditorCurveBinding[] curves = AnimationUtility.GetCurveBindings(_clip.Original);
+            if (curves.Any(c => (c.path.ToLower() == "body" && c.propertyName.StartsWith("blendShape."))))
             {
-                var currentState = GetState("E", _nEmote, _nChain);
-                var nextState = GetState("E", _nEmote, _nChain + 1) ?? GetState("Recovery standing");
-                StartTransition(_initialState, currentState, _trans.Start);
-                OneshotTransition(currentState, nextState, _trans.AutoExit);
-                ManualExitTransition(currentState, nextState, _trans.ManualExit);
-                ForceExitTransition(currentState, GetState("Force Exit"), _trans.Sit);
-            }
-            else
-            {
-                QuickExitTransition(_initialState, _exitState, _trans.Quick);
+                SetTransition(_initialState, _emoteState, TransitionInfo.Quick).AddCondition(AnimatorConditionMode.Equals, _id, "NBitVRCEmote");
             }
         }
     }
