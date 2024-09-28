@@ -45,7 +45,6 @@ namespace com.github.pandrabox.emoteprefab.editor
                     AddOnEmoteObj();
                     CreateHumanoidClip();
                     CreateUnhumanoidClip();
-                    CreateBodyShapeBlockerClip();
                 }
                 var clip0 = _emote.UnitMotions[0].Clip;
                 CreateShrinkPhysBonesClip();
@@ -175,29 +174,6 @@ namespace com.github.pandrabox.emoteprefab.editor
             }
             AddLengthHolder(_clip.UnHumanoid);
             AddLengthHolder(_clip.UnHumanoidR);
-        }
-
-        /// <summary>
-        /// Bodyのシェイプキーを0にするクリップの生成
-        /// </summary>
-        private void CreateBodyShapeBlockerClip()
-        {
-            EditorCurveBinding[] curves = AnimationUtility.GetCurveBindings(_clip.Original);
-            if (!curves.Any(c => (c.path.ToLower() == "body" && c.propertyName.StartsWith("blendShape.")))) return;
-            SkinnedMeshRenderer bodyMesh = Descriptor.transform.Find("Body")?.GetComponent<SkinnedMeshRenderer>();
-            _clip.PokerFace = new AnimationClip()
-            {
-                wrapMode = WrapMode.ClampForever,
-            };
-            float referenceClipLength = _original.length;
-            int blendShapeCount = bodyMesh.sharedMesh.blendShapeCount;
-            for (int i = 0; i < blendShapeCount; i++)
-            {
-                var name = bodyMesh.sharedMesh.GetBlendShapeName(i);
-                AnimationCurve curve = AnimationCurve.Constant(0, referenceClipLength, 0);
-                _clip.PokerFace.SetCurve(string.Empty, typeof(SkinnedMeshRenderer), $"blendShape.{name}", curve);
-            }
-            AddLengthHolder(_clip.PokerFace);
         }
 
         /// <summary>
