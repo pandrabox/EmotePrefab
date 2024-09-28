@@ -17,7 +17,7 @@ namespace com.github.pandrabox.emoteprefab.runtime
     public class ControlPanel : MonoBehaviour, VRC.SDKBase.IEditorOnly
     {
         public bool Enable = false;
-        public List<int> FaxialExpressionLayer = new List<int>() { 1, 2 };
+        public IntSelection FaxialExpressionLayer = new IntSelection(1, 2);
         public int UseSyncBitNum;
         public bool UseHeightControl = true;
         public float HeightUpper=3, HeightLower=-3;

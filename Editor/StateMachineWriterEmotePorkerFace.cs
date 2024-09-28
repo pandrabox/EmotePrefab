@@ -22,22 +22,19 @@ namespace com.github.pandrabox.emoteprefab.editor
         AnimatorState _emoteState;
         public StateMachineWriterEmotePorkerFace() : base(ActionController, "EmotePrefab/PorkerFace", "Emote", "Normal")
         {
+            foreach(int layer in PanelSetting.FaxialExpressionLayer.Ints.Distinct())
+            {
+                var initialBeh = _initialState.AddStateMachineBehaviour<VRCAnimatorLayerControl>();
+                initialBeh.playable = VRC.SDKBase.VRC_AnimatorLayerControl.BlendableLayer.FX;
+                initialBeh.layer = layer;
+                initialBeh.goalWeight = 1;
+                initialBeh.blendDuration = 0.1f;
 
-            foreach(int layer in PanelSetting.FaxialExpressionLayer)
-            {
-                var beh = _initialState.AddStateMachineBehaviour<VRCAnimatorLayerControl>();
-                beh.playable = VRC.SDKBase.VRC_AnimatorLayerControl.BlendableLayer.FX;
-                beh.layer = layer;
-                beh.goalWeight = 1;
-                beh.blendDuration = 0.1f;
-            }
-            foreach (int layer in PanelSetting.FaxialExpressionLayer)
-            {
-                var beh = _emoteState.AddStateMachineBehaviour<VRCAnimatorLayerControl>();
-                beh.playable = VRC.SDKBase.VRC_AnimatorLayerControl.BlendableLayer.FX;
-                beh.layer = layer;
-                beh.goalWeight = 0;
-                beh.blendDuration = 0.1f;
+                var emoteBeh = _emoteState.AddStateMachineBehaviour<VRCAnimatorLayerControl>();
+                emoteBeh.playable = VRC.SDKBase.VRC_AnimatorLayerControl.BlendableLayer.FX;
+                emoteBeh.layer = layer;
+                emoteBeh.goalWeight = 0;
+                emoteBeh.blendDuration = 0.1f;
             }
         }
 
