@@ -22,6 +22,7 @@ namespace com.github.pandrabox.emoteprefab.runtime
         public bool UseHeightControl = true;
         public float HeightUpper=3, HeightLower=-3;
         public bool LegacySupport = true;
+        public bool PreferFirst = true;
     }
 
 
@@ -117,8 +118,12 @@ namespace com.github.pandrabox.emoteprefab.runtime
                 GUILayout.Label("既存Actionに登録されている全Animationを登録", TitleStyle());
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("LegacySupport"));
 
-                GUILayout.Label("EmotePrefab一括生成", TitleStyle());
-                if (GUILayout.Button("起動"))
+                GUILayout.Label("EmotePrefabをExpressionメニューのなるべく上に表示", TitleStyle());
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("PreferFirst"));
+
+                GUILayout.Box("", GUILayout.ExpandWidth(true), GUILayout.Height(1));
+                GUILayout.Label("EmotePrefab一括生成ツール", TitleStyle());
+                if (GUILayout.Button("ツール起動"))
                 {
                     BulkGeneration.ShowWindow();
                 }

@@ -104,6 +104,14 @@ namespace com.github.pandrabox.emoteprefab.editor
         {
             EmotePrefabRootObject = new GameObject("EmotePrefabRootObject");
             EmotePrefabRootObject.transform.SetParent(Descriptor.transform);
+            if (PanelSetting.PreferFirst)
+            {
+                EmotePrefabRootObject.transform.SetSiblingIndex(0);
+            }
+            else
+            {
+                EmotePrefabRootObject.transform.SetSiblingIndex(PanelSetting.transform.GetSiblingIndex());
+            }
         }
 
         /// <summary>
