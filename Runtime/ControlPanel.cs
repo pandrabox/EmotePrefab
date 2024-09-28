@@ -115,19 +115,23 @@ namespace com.github.pandrabox.emoteprefab.runtime
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("FaxialExpressionLayer"));
 
 
-                GUILayout.Label("既存Actionに登録されている全Animationを登録", TitleStyle());
+                GUILayout.Label("既存Action上の全Animationを登録", TitleStyle());
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("LegacySupport"));
 
                 GUILayout.Label("EmotePrefabをExpressionメニューのなるべく上に表示", TitleStyle());
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("PreferFirst"));
 
                 GUILayout.Box("", GUILayout.ExpandWidth(true), GUILayout.Height(1));
-                GUILayout.Label("EmotePrefab一括生成ツール", TitleStyle());
-                if (GUILayout.Button("ツール起動"))
+                GUILayout.Label("便利ツール", TitleStyle());
+                using(new EditorGUILayout.HorizontalScope())
                 {
-                    BulkGeneration.ShowWindow();
+                    GUILayout.Label("EmotePrefab一括生成");
+                    if (GUILayout.Button("起動"))
+                    {
+                        BulkGeneration.ShowWindow();
+                    }
                 }
-                
+
             }
             finally
             {
