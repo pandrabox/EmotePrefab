@@ -37,11 +37,14 @@ namespace com.github.pandrabox.emoteprefab.editor
                     OutpUnit(clip.FakeWDR, "5fwdR", m, n);
                     OutpUnit(clip.ShrinkPB, "6spb", m, n);
                     OutpUnit(clip.ShrinkWD, "7swd", m, n);
+                    OutpUnit(clip.HumanoidH, "8humH", m, n);
+                    OutpUnit(clip.HumanoidL, "9humL", m, n);
+                    OutpUnit(clip.HumanoidBlendTree, "10hum", m, n);
                 }
             }
 
         }
-        public void OutpUnit(AnimationClip c, string p, int m, int n)
+        public void OutpUnit(Motion c, string p, int m, int n)
         {
             if (c == null) return;
             var filename = $@"{Config.WorkDir}anim/e{m + 1}c{n}_{p}.anim";

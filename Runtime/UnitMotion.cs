@@ -39,6 +39,7 @@ namespace com.github.pandrabox.emoteprefab.runtime
         public AnimationClip PokerFace;
         public AnimationClip ShrinkPB;
         public AnimationClip ShrinkWD;
+        public AnimationClip HumanoidH, HumanoidL;
         public BlendTree HumanoidBlendTree;
     }
     [Serializable]
