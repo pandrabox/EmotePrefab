@@ -53,6 +53,7 @@ namespace com.github.pandrabox.emoteprefab.editor
 
         private void AddHeightControl()
         {
+            if (!PanelSetting.UseHeightControl) return;
             var obj = new GameObject("Height");
             obj.transform.SetParent(_emoteObjRoot.transform);
             obj.transform.SetSiblingIndex(0);

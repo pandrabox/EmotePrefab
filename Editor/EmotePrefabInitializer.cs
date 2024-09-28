@@ -30,6 +30,7 @@ namespace com.github.pandrabox.emoteprefab.editor
             CreateWorkDir();
             CopyControllers();
             CreateRootObject();
+            GetControlPanel();
             CreateActionObject();
             CreateFXObject();
             CreateFXRelativeObject();
@@ -49,6 +50,16 @@ namespace com.github.pandrabox.emoteprefab.editor
                 EmotePrefabs[i].RestorePhysBones();
                 EmotePrefabs[i].ID = i + 1;
             }
+        }
+
+        private static void GetControlPanel()
+        {
+            PanelSetting = Descriptor.transform.GetComponentsInChildren<ControlPanel>(false).Where(e => e.Enable).FirstOrDefault();
+            if (PanelSetting != null) return;
+            var obj = new GameObject("EmotePrefab_ControlPanel");
+            obj.transform.SetParent(Descriptor.transform);
+            PanelSetting = obj.AddComponent<ControlPanel>();
+            if (PanelSetting != null) WriteWarning("GetControlPanel", "不明なエラーが発生しました");
         }
 
         /// <summary>
@@ -168,6 +179,7 @@ namespace com.github.pandrabox.emoteprefab.editor
         /// </summary>
         private void CreateHeightParameter()
         {
+            if (!PanelSetting.UseHeightControl) return;
             SyncObject = new GameObject("Height");
             SyncObject.transform.SetParent(EmotePrefabRootTransform);
             ModularAvatarParameters mparams = SyncObject.AddComponent<ModularAvatarParameters>();

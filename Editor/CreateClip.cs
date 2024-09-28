@@ -110,8 +110,9 @@ namespace com.github.pandrabox.emoteprefab.editor
 
         private void CreateHumanoidBlendTree()
         {
-            _clip.HumanoidH = CreateOtherHeightClip(_clip.Humanoid, 3);
-            _clip.HumanoidL = CreateOtherHeightClip(_clip.Humanoid, -3);
+            if (!PanelSetting.UseHeightControl) return;
+            _clip.HumanoidH = CreateOtherHeightClip(_clip.Humanoid, PanelSetting.HeightUpper);
+            _clip.HumanoidL = CreateOtherHeightClip(_clip.Humanoid, PanelSetting.HeightLower);
             _clip.HumanoidBlendTree = new BlendTree()
             {
                 blendType = BlendTreeType.Simple1D,

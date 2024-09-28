@@ -98,6 +98,7 @@ namespace com.github.pandrabox.emoteprefab.runtime
         public static readonly string HeightIcon = $@"{TemplateDir}Ico/Height.png";
 
         public static readonly string FootLockIcon = $@"{TemplateDir}Ico/FootLock.png";
+        public static readonly string LogoAndTitleIcon = $@"{TemplateDir}Ico/LogoAndTitle.png";
 
         /// <summary>
         /// EmotePrefabObjectの前置詞

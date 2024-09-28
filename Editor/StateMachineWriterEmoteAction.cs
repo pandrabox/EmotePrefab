@@ -27,7 +27,14 @@ namespace com.github.pandrabox.emoteprefab.editor
 
         protected override void CreateStates()
         {
-            CreateState(StateName("E", _nEmote, _nChain), _clip.HumanoidBlendTree);
+            if (PanelSetting.UseHeightControl)
+            {
+                CreateState(StateName("E", _nEmote, _nChain), _clip.HumanoidBlendTree);
+            }
+            else
+            {
+                CreateState(StateName("E", _nEmote, _nChain), _clip.Humanoid);
+            }
         }
 
         protected override void CreateTransition()

@@ -23,8 +23,7 @@ namespace com.github.pandrabox.emoteprefab.editor
         public StateMachineWriterEmotePorkerFace() : base(ActionController, "EmotePrefab/PorkerFace", "Emote", "Normal")
         {
 
-            int[] emotionLayers = new int[]{ 1,2 };
-            foreach(int layer in emotionLayers)
+            foreach(int layer in PanelSetting.FaxialExpressionLayer)
             {
                 var beh = _initialState.AddStateMachineBehaviour<VRCAnimatorLayerControl>();
                 beh.playable = VRC.SDKBase.VRC_AnimatorLayerControl.BlendableLayer.FX;
@@ -32,7 +31,7 @@ namespace com.github.pandrabox.emoteprefab.editor
                 beh.goalWeight = 1;
                 beh.blendDuration = 0.1f;
             }
-            foreach (int layer in emotionLayers)
+            foreach (int layer in PanelSetting.FaxialExpressionLayer)
             {
                 var beh = _emoteState.AddStateMachineBehaviour<VRCAnimatorLayerControl>();
                 beh.playable = VRC.SDKBase.VRC_AnimatorLayerControl.BlendableLayer.FX;

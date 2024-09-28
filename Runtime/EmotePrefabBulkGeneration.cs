@@ -1,11 +1,9 @@
-﻿using System;
+﻿#if UNITY_EDITOR
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using com.github.pandrabox.emoteprefab.editor;
 using com.github.pandrabox.emoteprefab.runtime;
-using nadena.dev.modular_avatar.core;
-using nadena.dev.modular_avatar.core.editor;
 using nadena.dev.ndmf;
 using UnityEditor;
 using UnityEditor.Animations;
@@ -14,18 +12,16 @@ using VRC.SDK3.Avatars.Components;
 using VRC.SDK3.Dynamics.PhysBone.Components;
 using static com.github.pandrabox.emoteprefab.runtime.Generic;
 
-public class EmotePrefabConsole : EditorWindow
+public class EmotePrefabBulkGeneration : EditorWindow
 {
     private DefaultAsset targetFolder;
     private Vector2 scrollPosition;
     private string[] animFiles;
 
-    // メニューアイテムを作成
-    [MenuItem("Pan/EmotePrefabConsole")]
     public static void ShowWindow()
     {
         // ウィンドウを表示
-        GetWindow<EmotePrefabConsole>("Emote Prefab Console");
+        GetWindow<EmotePrefabBulkGeneration>("EmotePrefabBulkGeneration");
     }
 
     // エディタウィンドウの内容を描画
@@ -73,3 +69,5 @@ public class EmotePrefabConsole : EditorWindow
         }
     }
 }
+
+#endif
