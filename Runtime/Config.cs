@@ -134,6 +134,9 @@ namespace com.github.pandrabox.emoteprefab.runtime
         /// GemeratedFXレイヤにおけるShrinkPhysBonesレイヤのIndex
         /// </summary>
         public static readonly int ShrinkPhysBonesIndex = 2;
+
+        public static readonly string LegacyObjName = "EmotePrefab_Legacies";
+        public static readonly string ControlPanelObjName = "EmotePrefab_ControlPanel";
     }
 }
 

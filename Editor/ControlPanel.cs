@@ -20,7 +20,6 @@ namespace com.github.pandrabox.emoteprefab.editor
 {
     public class PutControlPanel
     {
-        public const string OBJNAME = "EmotePrefab_ControlPanel";
         /// <summary>
         /// To call from Unity menu
         /// </summary>
@@ -34,7 +33,7 @@ namespace com.github.pandrabox.emoteprefab.editor
                 EditorUtility.DisplayDialog("PutControlPanel", "この機能はHierarchyでControlPanelをアクティブにしたいアバターを選択してから使って下さい","OK");
                 return;
             }
-            var existController = descriptor.transform.Find(OBJNAME);
+            var existController = descriptor.transform.Find(Config.ControlPanelObjName);
             if (existController != null)
             {
                 if (existController.GetComponent<ControlPanel>()== null)
@@ -44,7 +43,7 @@ namespace com.github.pandrabox.emoteprefab.editor
                 Selection.activeGameObject = existController.gameObject;
                 return;
             }
-            var obj = new GameObject(OBJNAME);
+            var obj = new GameObject(Config.ControlPanelObjName);
             obj.transform.SetParent(descriptor.transform);
             obj.AddComponent<ControlPanel>();
             Selection.activeGameObject = obj;

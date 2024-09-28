@@ -12,7 +12,7 @@ using VRC.SDK3.Avatars.Components;
 using VRC.SDK3.Dynamics.PhysBone.Components;
 using static com.github.pandrabox.emoteprefab.runtime.Generic;
 
-public class EmotePrefabBulkGeneration : EditorWindow
+public class BulkGeneration : EditorWindow
 {
     private DefaultAsset targetFolder;
     private Vector2 scrollPosition;
@@ -21,13 +21,48 @@ public class EmotePrefabBulkGeneration : EditorWindow
     public static void ShowWindow()
     {
         // ウィンドウを表示
-        GetWindow<EmotePrefabBulkGeneration>("EmotePrefabBulkGeneration");
+        GetWindow<BulkGeneration>("BulkGeneration");
     }
+    private void LegacySupporArea()
+    {
 
+        GUIStyle labelStyle = new GUIStyle(GUI.skin.label);
+        var selectObj = Selection.gameObjects.FirstOrDefault();
+        if (selectObj == null)
+        {
+            GUILayout.Label("この機能を使うためには、対象のアバターをHierarchyでクリックして下さい", labelStyle);
+            return;
+        }
+        var descriptor = FindComponentFromParent<VRCAvatarDescriptor>(selectObj);
+        if (descriptor == null)
+        {
+            GUILayout.Label("この機能を使うためには、対象のアバターをHierarchyでクリックして下さい", labelStyle);
+            return;
+        }
+        GUILayout.Label($@"対象アバター：{descriptor.name}");
+        if (descriptor.transform.Find(Config.LegacyObjName) != null)
+        {
+            GUILayout.Label("実行済み", labelStyle);
+            return;
+        }
+        if (GUILayout.Button("実行"))
+        {
+            new LegacySupport(descriptor);
+            var cp = descriptor.transform.Find(Config.ControlPanelObjName).GetComponent<ControlPanel>();
+            cp.LegacySupport = false;
+            EditorUtility.DisplayDialog("一括生成", $@"アバター直下に{Config.LegacyObjName}オブジェクトを生成し、重複防止のためControlPanelのLegacySupportをOFFにしました。", "OK");
+        }
+    }
     // エディタウィンドウの内容を描画
     private void OnGUI()
     {
-        GUILayout.Label("一括生成", EditorStyles.boldLabel);
+        GUILayout.Label("一括生成(既存Actionから)", EditorStyles.boldLabel);
+        LegacySupporArea();
+
+        GUILayout.Box("", GUILayout.ExpandWidth(true), GUILayout.Height(1));
+
+
+        GUILayout.Label("一括生成(フォルダから)", EditorStyles.boldLabel);
         targetFolder = (DefaultAsset)EditorGUILayout.ObjectField("対象フォルダ", targetFolder, typeof(DefaultAsset), false);
 
         if (targetFolder == null) return;

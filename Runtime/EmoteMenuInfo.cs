@@ -27,7 +27,7 @@ namespace com.github.pandrabox.emoteprefab.runtime
             parallel,
             none
         }
-        public bool Sort;
+        public bool Sort=true;
         public AutoFolderModeType AutoFolderMode;
     }
 }

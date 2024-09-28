@@ -21,6 +21,7 @@ namespace com.github.pandrabox.emoteprefab.runtime
         public int UseSyncBitNum;
         public bool UseHeightControl = true;
         public float HeightUpper=3, HeightLower=-3;
+        public bool LegacySupport = true;
     }
 
 
@@ -71,14 +72,14 @@ namespace com.github.pandrabox.emoteprefab.runtime
                 {
                     Disable("親オブジェクトにVRCAvatarDescriptorが見つかりませんでした。親のオブジェクトの状態を確認するか、このオブジェクトを削除して「Pan→PutControlPanel」より再導入して下さい。");
                 }
-                var controlPanelsCount = descriptor.transform.Cast<Transform>().Count(c => c.name == "EmotePrefab_ControlPanel" && c.GetComponent<ControlPanel>() != null);
+                var controlPanelsCount = descriptor.transform.Cast<Transform>().Count(c => c.name == Config.ControlPanelObjName && c.GetComponent<ControlPanel>() != null);
                 if (controlPanelsCount > 1)
                 {
                     Disable("ControlPanelが複数見つかりました。1つのアバターに導入できるControlPanelは1つのみです。不要なオブジェクトを削除して下さい。");
                 }
-                if (nowinstance.gameObject.name != "EmotePrefab_ControlPanel")
+                if (nowinstance.gameObject.name != Config.ControlPanelObjName)
                 {
-                    Disable("このコンポーネントは「EmotePrefab_ControlPanel」という名前のオブジェクトにアタッチされているときのみ有効です。オブジェクトの名前を修正するか、削除して「Pan→PutControlPanel」より再導入して下さい。");
+                    Disable($@"このコンポーネントは「{Config.ControlPanelObjName}」という名前のオブジェクトにアタッチされているときのみ有効です。オブジェクトの名前を修正するか、削除して「Pan→PutControlPanel」より再導入して下さい。");
                 }
                 //if (descriptor.transform.chil)
 
@@ -112,10 +113,14 @@ namespace com.github.pandrabox.emoteprefab.runtime
                 GUILayout.Label("表情レイヤ", TitleStyle());
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("FaxialExpressionLayer"));
 
+
+                GUILayout.Label("既存Actionに登録されている全Animationを登録", TitleStyle());
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("LegacySupport"));
+
                 GUILayout.Label("EmotePrefab一括生成", TitleStyle());
                 if (GUILayout.Button("起動"))
                 {
-                    EmotePrefabBulkGeneration.ShowWindow();
+                    BulkGeneration.ShowWindow();
                 }
                 
             }

@@ -25,12 +25,13 @@ namespace com.github.pandrabox.emoteprefab.editor
         public EmotePrefabInitializer(VRCAvatarDescriptor descriptor)
         {
             Descriptor = descriptor;
+            GetControlPanel();
+            CreateLegacys();
             GetEmotePrefabs();
             if (!HasTask) return;
             CreateWorkDir();
             CopyControllers();
             CreateRootObject();
-            GetControlPanel();
             CreateActionObject();
             CreateFXObject();
             CreateFXRelativeObject();
@@ -52,6 +53,13 @@ namespace com.github.pandrabox.emoteprefab.editor
             }
         }
 
+        private static void CreateLegacys()
+        {
+            if(PanelSetting.LegacySupport)
+            {
+                new LegacySupport(Descriptor);
+            }
+        }
         private static void GetControlPanel()
         {
             PanelSetting = Descriptor.transform.GetComponentsInChildren<ControlPanel>(false).Where(e => e.Enable).FirstOrDefault();
