@@ -176,7 +176,7 @@ namespace com.github.pandrabox.emoteprefab.editor
             ModularAvatarParameters mparams = SyncObject.AddComponent<ModularAvatarParameters>();
             mparams.parameters.Add(new ParameterConfig()
             {
-                nameOrPrefix = "Pandrabox/EmotePrefab/Height",
+                nameOrPrefix = "EmotePrefab/Height",
                 syncType = ParameterSyncType.Float,
                 defaultValue = 0.5f,
                 localOnly = false,

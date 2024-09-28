@@ -75,7 +75,7 @@ namespace com.github.pandrabox.emoteprefab.editor
         {
             float length = _original.length > 4/60 ? _original.length : 4 / 60; // PBの切り替えに最小4フレーム必要
             AnimationCurve curve = AnimationCurve.Constant(0, length, 0);
-            target.SetCurve(string.Empty, typeof(Animator), $"pandrabox/dummy", curve);
+            target.SetCurve(string.Empty, typeof(Animator), $"EmotePrefab/dummy", curve);
         }
 
         /// <summary>
@@ -89,7 +89,7 @@ namespace com.github.pandrabox.emoteprefab.editor
                 length += _emote.UnitMotions[n].Clip.Humanoid.length;
             }
             AnimationCurve curve = AnimationCurve.Constant(0, length, 0);
-            target.SetCurve(string.Empty, typeof(Animator), $"pandrabox/dummy", curve);
+            target.SetCurve(string.Empty, typeof(Animator), $"EmotePrefab/dummy", curve);
         }
 
         /// <summary>
@@ -116,7 +116,7 @@ namespace com.github.pandrabox.emoteprefab.editor
             _clip.HumanoidBlendTree = new BlendTree()
             {
                 blendType = BlendTreeType.Simple1D,
-                blendParameter ="Pandrabox/EmotePrefab/Height",
+                blendParameter ="EmotePrefab/Height",
             };
             _clip.HumanoidBlendTree.AddChild(_clip.HumanoidL, 0f);
             _clip.HumanoidBlendTree.AddChild(_clip.HumanoidH, 1f); 

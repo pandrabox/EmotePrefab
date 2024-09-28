@@ -24,7 +24,7 @@ namespace com.github.pandrabox.emoteprefab.editor
         private readonly int _currentIndex;
         private readonly AnimatorState _randomizeState;
 
-        public StateMachineWriterAFK() : base(ActionController, "Pandrabox/EmotePrefab/AFKController", "AFK", "Randomize")
+        public StateMachineWriterAFK() : base(ActionController, "EmotePrefab/AFKController", "AFK", "Randomize")
         {
             _dummy2FClip = AssetDatabase.LoadAssetAtPath<AnimationClip>(Config.Dummy2FClip);
             _currentIndex = 0;
@@ -44,7 +44,7 @@ namespace com.github.pandrabox.emoteprefab.editor
         {
             var currentState = CreateState(StateName("AFK", eI), DummyClip(18));
             SetTransition(currentState, currentState, TransitionInfo.HasQuick).AddCondition(AnimatorConditionMode.NotEqual, eI + 1, "VRCEmote");
-            SetTransition(_randomizeState, currentState, TransitionInfo.Quick).AddCondition(AnimatorConditionMode.Equals, _currentIndex, "Pandrabox/EmotePrefab/AFKIndex");
+            SetTransition(_randomizeState, currentState, TransitionInfo.Quick).AddCondition(AnimatorConditionMode.Equals, _currentIndex, "EmotePrefab/AFKIndex");
             SetTransition(currentState, _exitState, TransitionInfo.Quick).AddCondition(AnimatorConditionMode.IfNot, 0, "AFK");
             var apdParameter = new VRC_AvatarParameterDriver.Parameter()
             {

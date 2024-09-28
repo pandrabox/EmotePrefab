@@ -61,7 +61,7 @@ namespace com.github.pandrabox.emoteprefab.editor
             menu.Control.subParameters = new[] {
                 new VRC.SDK3.Avatars.ScriptableObjects.VRCExpressionsMenu.Control.Parameter()
                 {
-                    name = "Pandrabox/EmotePrefab/Height"
+                    name = "EmotePrefab/Height"
                 }
             };
             menu.Control.icon = AssetDatabase.LoadAssetAtPath<Texture2D>(Config.HeightIcon);

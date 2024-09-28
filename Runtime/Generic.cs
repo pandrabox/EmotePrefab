@@ -63,7 +63,7 @@ namespace com.github.pandrabox.emoteprefab.runtime
         {
             var clip = new AnimationClip();
             AnimationCurve curve = AnimationCurve.Constant(0, (float)flame/60f, 0);
-            clip.SetCurve(string.Empty, typeof(Animator), $"pandrabox/dummy", curve);
+            clip.SetCurve(string.Empty, typeof(Animator), $"EmotePrefab/dummy", curve);
             return clip;
         }
 #endif
