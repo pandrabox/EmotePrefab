@@ -2378,7 +2378,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   parameters:
   - type: 0
-    name: VRCEmote
+    name: NBitVRCEmote
     source: 
     value: 0
     valueMin: 0
