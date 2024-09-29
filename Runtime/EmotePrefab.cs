@@ -140,6 +140,9 @@ namespace com.github.pandrabox.emoteprefab.runtime
                         }
                     }
                 }
+
+                serializedObject.ApplyModifiedProperties();
+                serializedObject.Update();
                 EditorGUILayout.PropertyField(serializedObject.FindProperty("UnitMotions").GetArrayElementAtIndex(0).FindPropertyRelative("MotionType"));
 
                 if (exMode > 0)
