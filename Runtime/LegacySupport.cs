@@ -20,7 +20,9 @@ namespace com.github.pandrabox.emoteprefab.runtime
     {
         public LegacySupport(VRCAvatarDescriptor descriptor)
         {
-            AnimationClip[] clips = descriptor.baseAnimationLayers[3].animatorController?.animationClips;
+            var ac = descriptor.baseAnimationLayers[3].animatorController;
+            if (ac == null) return;
+            AnimationClip[] clips = ac.animationClips;
             if (clips == null) return;
             HashSet<AnimationClip> uniqueClipsSet = new HashSet<AnimationClip>(clips);
             AnimationClip[] uniqueClips = new AnimationClip[uniqueClipsSet.Count];
