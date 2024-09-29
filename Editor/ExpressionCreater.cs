@@ -31,7 +31,7 @@ namespace com.github.pandrabox.emoteprefab.editor
             }
 
 
-            _emoteObjRoot = new GameObject("Emote Prefab");
+            _emoteObjRoot = new GameObject("EmotePrefab");
             _emoteObjRoot.transform.SetParent(EmotePrefabRootTransform);
 
             var emoteMenuInfo = _emoteObjRoot.AddComponent<EmoteMenuInfo>();
