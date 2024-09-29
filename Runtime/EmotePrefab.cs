@@ -95,10 +95,11 @@ namespace com.github.pandrabox.emoteprefab.runtime
     }
 
     [CustomEditor(typeof(EmotePrefab))]
-    public class EmotePrefabEditor : Editor
+    public class EmotePrefabEditor : EmotePrefabEditorLayout
     {
         public override void OnInspectorGUI()
         {
+            DrawIcoAndLogo();
             var nowInstance = (EmotePrefab)target;
             nowInstance.RestorePhysBones();
             var exMode = nowInstance.UnitMotions.FirstOrDefault().Mode;
