@@ -18,7 +18,6 @@ namespace com.github.pandrabox.emoteprefab.runtime
 {
     [Serializable]
     [DisallowMultipleComponent]
-    [AddComponentMenu("Pan/EmoteMenuInfo")]
     public class EmoteMenuInfo : MonoBehaviour, VRC.SDKBase.IEditorOnly
     {
         public enum AutoFolderModeType

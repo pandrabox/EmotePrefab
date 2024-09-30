@@ -13,7 +13,6 @@ using System.IO;
 namespace com.github.pandrabox.emoteprefab.runtime
 {
     [DisallowMultipleComponent]
-    [AddComponentMenu("Pan/ControlPanel")]
     public class ControlPanel : MonoBehaviour, VRC.SDKBase.IEditorOnly
     {
         public bool Enable = false;

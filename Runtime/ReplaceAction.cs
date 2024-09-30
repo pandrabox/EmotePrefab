@@ -12,7 +12,6 @@ using UnityEditor.Animations;
 namespace com.github.pandrabox.emoteprefab.runtime
 {
     [DisallowMultipleComponent]
-    [AddComponentMenu("Pan/EmotePrefab")]
     public class ReplaceAction : MonoBehaviour, VRC.SDKBase.IEditorOnly
     {
         public AnimatorController ActionController;

@@ -11,7 +11,6 @@ using UnityEditor.Animations;
 
 namespace com.github.pandrabox.emoteprefab.runtime
 {
-    [AddComponentMenu("Pan/NBitInt")]
     public class NBitInt : MonoBehaviour, VRC.SDKBase.IEditorOnly
     {
         public string ParameterName;
