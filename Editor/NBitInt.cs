@@ -125,6 +125,13 @@ namespace com.github.pandrabox.emoteprefab.editor
                         value = (n >> bit) & 1,
                     });
                 }
+
+                //Self Transition (Fix Synchronization gap)
+                for (int bit = 0; bit < config.BitNum; bit++)
+                {
+                    var v = ((n >> bit) & 1) == 1;
+                    SetTransition(state, state, config.QuickTrans).AddCondition(v ? AnimatorConditionMode.IfNot : AnimatorConditionMode.If, 0, config.BitName[bit]);
+                }
             }
         }
         protected override void OnInstantiate() { }
@@ -152,6 +159,9 @@ namespace com.github.pandrabox.emoteprefab.editor
                     name = config.ParameterName,
                     value = n,
                 });
+
+                //Self Transition (Fix Synchronization gap)
+                SetTransition(state, state, config.QuickTrans).AddCondition(AnimatorConditionMode.NotEqual, n, config.ParameterName);
             }
         }
         protected override void OnInstantiate() { }
